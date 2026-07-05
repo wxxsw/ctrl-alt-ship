@@ -10,90 +10,110 @@ const scenarioMeta = [
     slug: 'requirements-to-tasks',
     en: {
       card: 'Turn a vague request into something an engineer can safely start.',
+      label: 'Clarify',
     },
     zh: {
       card: '把模糊需求收成工程师可以安全开工的一块任务。',
+      label: '澄清',
     },
   },
   {
     slug: 'project-context-memory',
     en: {
       card: 'Stop repeating the same setup, structure, and convention notes.',
+      label: 'Context',
     },
     zh: {
       card: '少一点重复解释，让 AI 和新人更快理解项目。',
+      label: '上下文',
     },
   },
   {
     slug: 'coding-and-refactoring',
     en: {
       card: 'Use AI for implementation and refactoring without losing control.',
+      label: 'Build',
     },
     zh: {
       card: '让 AI 帮忙写代码，但改动仍然能被人 review。',
+      label: '实现',
     },
   },
   {
     slug: 'debugging',
     en: {
       card: 'Move from symptom to evidence before changing code.',
+      label: 'Debug',
     },
     zh: {
       card: '先从现象走到证据，再动手修。',
+      label: '排障',
     },
   },
   {
     slug: 'automated-verification',
     en: {
       card: 'Turn “seems fine” into repeatable proof.',
+      label: 'Verify',
     },
     zh: {
       card: '把“看起来没问题”变成可重复证据。',
+      label: '验证',
     },
   },
   {
     slug: 'code-review-quality-gates',
     en: {
       card: 'Review AI-assisted work before it becomes maintenance debt.',
+      label: 'Review',
     },
     zh: {
       card: '在 AI-assisted work 变成维护债之前先拦一下。',
+      label: '审查',
     },
   },
   {
     slug: 'documentation-knowledge',
     en: {
       card: 'Rescue decisions and lessons from chat before they disappear.',
+      label: 'Document',
     },
     zh: {
       card: '别让决策和经验继续散落在聊天里。',
+      label: '沉淀',
     },
   },
   {
     slug: 'release-change-management',
     en: {
       card: 'Ship changes with notes, rollout signals, and rollback thinking.',
+      label: 'Release',
     },
     zh: {
       card: '把发布、灰度、迁移和回滚想清楚。',
+      label: '发布',
     },
   },
   {
     slug: 'incident-response',
     en: {
       card: 'Turn alerts, logs, dashboards, and chat into one shared picture.',
+      label: 'Incident',
     },
     zh: {
       card: '把告警、日志、dashboard 和聊天整理成一张事故图景。',
+      label: '事故',
     },
   },
   {
     slug: 'team-ai-governance',
     en: {
       card: 'Set practical boundaries for AI tools, data, review, and ownership.',
+      label: 'Govern',
     },
     zh: {
       card: '给 AI 工具、数据、review 和 ownership 设清边界。',
+      label: '治理',
     },
   },
 ];
@@ -486,14 +506,39 @@ function homePage(lang) {
   const home = parseHomeReadme(lang);
   const otherHref = isZh ? 'index.html' : 'zh-CN.html';
   const introHtml = home.intro.map((line) => inlineHomeMarkdown(line, lang)).join(' ');
-  const scenarioCards = home.scenarios.map((item) => {
+  const scenarioCards = home.scenarios.map((item, index) => {
+    const meta = scenarioMeta.find((scenario) => scenario.slug === item.slug);
     const title = escapeHtml(item.title);
     const situation = inlineHomeMarkdown(item.situation, lang);
     const href = escapeHtml(item.href);
-    return `<a class="card" href="${href}">
+    const note = escapeHtml(meta?.[lang]?.card || '');
+    const label = escapeHtml(meta?.[lang]?.label || (isZh ? '场景' : 'Scenario'));
+    const number = String(index + 1).padStart(2, '0');
+    return `<a class="card scenario-card reveal" href="${href}">
+              <span class="card-topline">
+                <span class="card-number">${number}</span>
+                <span class="card-label">${label}</span>
+              </span>
               <h3>${title}</h3>
-              <p>${situation}</p>
+              <p class="card-situation">${situation}</p>
+              <p class="card-note">${note}</p>
             </a>`;
+  }).join('\n');
+  const loopSteps = isZh ? [
+    ['01', '看处境', '先判断现在卡住的是需求、上下文、实现、验证，还是协作。'],
+    ['02', '选路线', '进入对应场景页，看路线、适用条件、避坑和最小实践。'],
+    ['03', '拿证据', '用检查、测试、review 或发布信号证明这条工作流可信。'],
+  ] : [
+    ['01', 'Read the situation', 'Decide whether the work is blocked by scope, context, implementation, proof, or coordination.'],
+    ['02', 'Choose a route', 'Open the matching scenario and compare routes, tradeoffs, traps, and the smallest useful move.'],
+    ['03', 'Collect proof', 'Use checks, tests, review, or rollout signals before trusting the workflow.'],
+  ];
+  const loopHtml = loopSteps.map(([number, title, copy]) => {
+    return `<div class="home-loop-step reveal">
+              <span>${number}</span>
+              <strong>${escapeHtml(title)}</strong>
+              <p>${escapeHtml(copy)}</p>
+            </div>`;
   }).join('\n');
 
   return `<!doctype html>
@@ -505,7 +550,7 @@ function homePage(lang) {
     <meta name="description" content="${escapeHtml(home.intro.join(' '))}">
     <link rel="stylesheet" href="styles.css">
   </head>
-  <body>
+  <body class="home-page">
     <div class="page">
       <header class="topbar">
         <a class="brand" href="${isZh ? 'zh-CN.html' : 'index.html'}">Ctrl Alt Ship</a>
@@ -517,31 +562,49 @@ function homePage(lang) {
       </header>
 
       <main>
-        <section class="hero tutorial-hero">
-          <div>
+        <section class="hero home-hero">
+          <img class="hero-map" src="assets/scenario-route-map.svg" alt="${isZh ? '场景路线图' : 'Scenario route map'}">
+          <div class="home-hero-copy reveal">
             <p class="eyebrow">${isZh ? '从真实工程工作出发' : 'AI engineering, from the work outward'}</p>
             <h1>Ctrl Alt Ship</h1>
+            <p class="home-thesis">${isZh ? '一张从场景开始的 AI 工程路线图。' : 'A scenario-first map for AI engineering work.'}</p>
             <p class="lede">${introHtml}</p>
             <div class="actions">
               <a class="button" href="#scenarios">${isZh ? '查看场景' : 'Browse scenarios'}</a>
               <a class="button secondary" href="${otherHref}">${isZh ? 'Read in English' : 'Read in Chinese'}</a>
             </div>
           </div>
-          <img class="hero-map" src="assets/scenario-route-map.svg" alt="${isZh ? '场景路线图' : 'Scenario route map'}">
+          <div class="home-signals reveal" aria-label="${isZh ? '使用路径' : 'Use path'}">
+            <span>${isZh ? '处境' : 'Situation'}</span>
+            <span>${isZh ? '路线' : 'Route'}</span>
+            <span>${isZh ? '证据' : 'Evidence'}</span>
+            <span>${isZh ? '审查' : 'Review'}</span>
+          </div>
         </section>
 
-        <section class="section" id="scenarios">
-          <h2>${isZh ? '场景地图' : 'Scenario map'}</h2>
-          <p>${isZh ? '选择最贴近当前工作的场景。每个场景都会打开成一份独立教程，而不是一个工具列表。' : 'Pick the situation that matches your current work. Each scenario opens as a standalone tutorial instead of a tool list.'}</p>
-          <div class="grid">
+        <section class="section scenario-index" id="scenarios">
+          <div class="section-heading reveal">
+            <p class="eyebrow">${isZh ? 'Scenario Index' : 'Scenario Index'}</p>
+            <h2>${isZh ? '先选正在发生的事' : 'Start with what is happening'}</h2>
+            <p>${isZh ? '选择最贴近当前工作的场景。每个场景都会打开成一份独立教程，而不是一个工具列表。' : 'Pick the situation that matches your current work. Each scenario opens as a standalone tutorial instead of a tool list.'}</p>
+          </div>
+          <div class="grid scenario-grid">
             ${scenarioCards}
           </div>
         </section>
 
-        <section class="section" id="how">
-          <h2>${escapeHtml(home.howTitle)}</h2>
-          <div class="home-copy">
-            ${home.howHtml}
+        <section class="section home-practice" id="how">
+          <div class="section-heading reveal">
+            <p class="eyebrow">${isZh ? 'How It Works' : 'How It Works'}</p>
+            <h2>${escapeHtml(home.howTitle)}</h2>
+          </div>
+          <div class="home-practice-panel">
+            <div class="home-copy reveal">
+              ${home.howHtml}
+            </div>
+            <div class="home-loop">
+              ${loopHtml}
+            </div>
           </div>
         </section>
       </main>
@@ -550,6 +613,7 @@ function homePage(lang) {
         <p>${isZh ? 'Ctrl Alt Ship 是一张面向 AI 辅助工程工作的开放场景地图。' : 'Ctrl Alt Ship is an open scenario map for practical AI-assisted engineering work.'}</p>
       </footer>
     </div>
+    <script src="app.js" defer></script>
   </body>
 </html>
 `;

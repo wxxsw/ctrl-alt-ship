@@ -7,7 +7,7 @@
     <meta name="description" content="AI coding tools are moving fast. The hard part is still knowing what to try in a real engineering situation. Ctrl Alt Ship is a scenario map for that moment. Start with the work in front of you, then open the matching scenario as a standalone guide.">
     <link rel="stylesheet" href="styles.css">
   </head>
-  <body>
+  <body class="home-page">
     <div class="page">
       <header class="topbar">
         <a class="brand" href="index.html">Ctrl Alt Ship</a>
@@ -19,71 +19,153 @@
       </header>
 
       <main>
-        <section class="hero tutorial-hero">
-          <div>
+        <section class="hero home-hero">
+          <img class="hero-map" src="assets/scenario-route-map.svg" alt="Scenario route map">
+          <div class="home-hero-copy reveal">
             <p class="eyebrow">AI engineering, from the work outward</p>
             <h1>Ctrl Alt Ship</h1>
+            <p class="home-thesis">A scenario-first map for AI engineering work.</p>
             <p class="lede">AI coding tools are moving fast. The hard part is still knowing what to try in a real engineering situation. Ctrl Alt Ship is a scenario map for that moment. Start with the work in front of you, then open the matching scenario as a standalone guide.</p>
             <div class="actions">
               <a class="button" href="#scenarios">Browse scenarios</a>
               <a class="button secondary" href="zh-CN.html">Read in Chinese</a>
             </div>
           </div>
-          <img class="hero-map" src="assets/scenario-route-map.svg" alt="Scenario route map">
+          <div class="home-signals reveal" aria-label="Use path">
+            <span>Situation</span>
+            <span>Route</span>
+            <span>Evidence</span>
+            <span>Review</span>
+          </div>
         </section>
 
-        <section class="section" id="scenarios">
-          <h2>Scenario map</h2>
-          <p>Pick the situation that matches your current work. Each scenario opens as a standalone tutorial instead of a tool list.</p>
-          <div class="grid">
-            <a class="card" href="scenarios/requirements-to-tasks/">
+        <section class="section scenario-index" id="scenarios">
+          <div class="section-heading reveal">
+            <p class="eyebrow">Scenario Index</p>
+            <h2>Start with what is happening</h2>
+            <p>Pick the situation that matches your current work. Each scenario opens as a standalone tutorial instead of a tool list.</p>
+          </div>
+          <div class="grid scenario-grid">
+            <a class="card scenario-card reveal" href="scenarios/requirements-to-tasks/">
+              <span class="card-topline">
+                <span class="card-number">01</span>
+                <span class="card-label">Clarify</span>
+              </span>
               <h3>Requirements to Tasks</h3>
-              <p>The request is fuzzy and needs to become workable tasks</p>
+              <p class="card-situation">The request is fuzzy and needs to become workable tasks</p>
+              <p class="card-note">Turn a vague request into something an engineer can safely start.</p>
             </a>
-<a class="card" href="scenarios/project-context-memory/">
+<a class="card scenario-card reveal" href="scenarios/project-context-memory/">
+              <span class="card-topline">
+                <span class="card-number">02</span>
+                <span class="card-label">Context</span>
+              </span>
               <h3>Project Context Memory</h3>
-              <p>AI keeps missing project context or local conventions</p>
+              <p class="card-situation">AI keeps missing project context or local conventions</p>
+              <p class="card-note">Stop repeating the same setup, structure, and convention notes.</p>
             </a>
-<a class="card" href="scenarios/coding-and-refactoring/">
+<a class="card scenario-card reveal" href="scenarios/coding-and-refactoring/">
+              <span class="card-topline">
+                <span class="card-number">03</span>
+                <span class="card-label">Build</span>
+              </span>
               <h3>Coding and Refactoring</h3>
-              <p>You want AI help with implementation, migration, or refactoring</p>
+              <p class="card-situation">You want AI help with implementation, migration, or refactoring</p>
+              <p class="card-note">Use AI for implementation and refactoring without losing control.</p>
             </a>
-<a class="card" href="scenarios/debugging/">
+<a class="card scenario-card reveal" href="scenarios/debugging/">
+              <span class="card-topline">
+                <span class="card-number">04</span>
+                <span class="card-label">Debug</span>
+              </span>
               <h3>Debugging</h3>
-              <p>You have a failure, but not a proven cause</p>
+              <p class="card-situation">You have a failure, but not a proven cause</p>
+              <p class="card-note">Move from symptom to evidence before changing code.</p>
             </a>
-<a class="card" href="scenarios/automated-verification/">
+<a class="card scenario-card reveal" href="scenarios/automated-verification/">
+              <span class="card-topline">
+                <span class="card-number">05</span>
+                <span class="card-label">Verify</span>
+              </span>
               <h3>Automated Verification</h3>
-              <p>AI changed the code and you need proof it still works</p>
+              <p class="card-situation">AI changed the code and you need proof it still works</p>
+              <p class="card-note">Turn “seems fine” into repeatable proof.</p>
             </a>
-<a class="card" href="scenarios/code-review-quality-gates/">
+<a class="card scenario-card reveal" href="scenarios/code-review-quality-gates/">
+              <span class="card-topline">
+                <span class="card-number">06</span>
+                <span class="card-label">Review</span>
+              </span>
               <h3>Code Review and Quality Gates</h3>
-              <p>AI-generated work needs review before merge</p>
+              <p class="card-situation">AI-generated work needs review before merge</p>
+              <p class="card-note">Review AI-assisted work before it becomes maintenance debt.</p>
             </a>
-<a class="card" href="scenarios/documentation-knowledge/">
+<a class="card scenario-card reveal" href="scenarios/documentation-knowledge/">
+              <span class="card-topline">
+                <span class="card-number">07</span>
+                <span class="card-label">Document</span>
+              </span>
               <h3>Documentation and Knowledge</h3>
-              <p>Decisions and project knowledge keep disappearing into chat</p>
+              <p class="card-situation">Decisions and project knowledge keep disappearing into chat</p>
+              <p class="card-note">Rescue decisions and lessons from chat before they disappear.</p>
             </a>
-<a class="card" href="scenarios/release-change-management/">
+<a class="card scenario-card reveal" href="scenarios/release-change-management/">
+              <span class="card-topline">
+                <span class="card-number">08</span>
+                <span class="card-label">Release</span>
+              </span>
               <h3>Release and Change Management</h3>
-              <p>A change needs release notes, rollout steps, or rollback thinking</p>
+              <p class="card-situation">A change needs release notes, rollout steps, or rollback thinking</p>
+              <p class="card-note">Ship changes with notes, rollout signals, and rollback thinking.</p>
             </a>
-<a class="card" href="scenarios/incident-response/">
+<a class="card scenario-card reveal" href="scenarios/incident-response/">
+              <span class="card-topline">
+                <span class="card-number">09</span>
+                <span class="card-label">Incident</span>
+              </span>
               <h3>Incident Response</h3>
-              <p>Logs, alerts, and chats need to become a clear incident timeline</p>
+              <p class="card-situation">Logs, alerts, and chats need to become a clear incident timeline</p>
+              <p class="card-note">Turn alerts, logs, dashboards, and chat into one shared picture.</p>
             </a>
-<a class="card" href="scenarios/team-ai-governance/">
+<a class="card scenario-card reveal" href="scenarios/team-ai-governance/">
+              <span class="card-topline">
+                <span class="card-number">10</span>
+                <span class="card-label">Govern</span>
+              </span>
               <h3>Team AI Governance</h3>
-              <p>A team needs shared AI usage boundaries</p>
+              <p class="card-situation">A team needs shared AI usage boundaries</p>
+              <p class="card-note">Set practical boundaries for AI tools, data, review, and ownership.</p>
             </a>
           </div>
         </section>
 
-        <section class="section" id="how">
-          <h2>How to use this repo</h2>
-          <div class="home-copy">
-            <p>Pick the scenario that matches your current work. Read it like a tutorial, not a spec. Each page starts from the messy moment an engineer is likely facing, then gives routes, examples, checks, and traps to watch for.</p>
+        <section class="section home-practice" id="how">
+          <div class="section-heading reveal">
+            <p class="eyebrow">How It Works</p>
+            <h2>How to use this repo</h2>
+          </div>
+          <div class="home-practice-panel">
+            <div class="home-copy reveal">
+              <p>Pick the scenario that matches your current work. Read it like a tutorial, not a spec. Each page starts from the messy moment an engineer is likely facing, then gives routes, examples, checks, and traps to watch for.</p>
 <p>The tool notes are there for comparison after you know the scenario. They are not the starting point.</p>
+            </div>
+            <div class="home-loop">
+              <div class="home-loop-step reveal">
+              <span>01</span>
+              <strong>Read the situation</strong>
+              <p>Decide whether the work is blocked by scope, context, implementation, proof, or coordination.</p>
+            </div>
+<div class="home-loop-step reveal">
+              <span>02</span>
+              <strong>Choose a route</strong>
+              <p>Open the matching scenario and compare routes, tradeoffs, traps, and the smallest useful move.</p>
+            </div>
+<div class="home-loop-step reveal">
+              <span>03</span>
+              <strong>Collect proof</strong>
+              <p>Use checks, tests, review, or rollout signals before trusting the workflow.</p>
+            </div>
+            </div>
           </div>
         </section>
       </main>
@@ -92,5 +174,6 @@
         <p>Ctrl Alt Ship is an open scenario map for practical AI-assisted engineering work.</p>
       </footer>
     </div>
+    <script src="app.js" defer></script>
   </body>
 </html>
