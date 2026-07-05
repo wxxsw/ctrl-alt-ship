@@ -83,6 +83,12 @@ h1 {
   letter-spacing: 0;
 }
 
+html[lang="zh-CN"] h1 {
+  max-width: 760px;
+  font-size: clamp(2.25rem, 4.2vw, 3.8rem);
+  line-height: 1.1;
+}
+
 .lede {
   max-width: 720px;
   margin: 24px 0 0;
