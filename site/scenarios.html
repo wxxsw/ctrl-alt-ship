@@ -3,8 +3,8 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Scenario detailed guides | Ctrl Alt Ship</title>
-    <meta name="description" content="Standalone scenario guides for AI-assisted engineering work.">
+    <title>Scenario tutorials | Ctrl Alt Ship</title>
+    <meta name="description" content="Human-readable tutorials for AI-assisted engineering scenarios.">
     <link rel="stylesheet" href="styles.css">
   </head>
   <body>
@@ -18,738 +18,274 @@
       </header>
 
       <main>
-        <section class="hero">
-          <p class="eyebrow">Scenario tutorials</p>
-          <h1>Each scenario is a standalone working guide.</h1>
-          <p class="lede">Start with the engineering situation, then compare paths, mainstream solutions, tool fit, workflow, and verification. Tools are choices inside the scenario, not the entry point.</p>
-          <div class="intro-list">
-            <a href="#requirements-to-tasks">Requirements to Tasks</a>
-            <a href="#project-context-memory">Project Context Memory</a>
-            <a href="#coding-and-refactoring">Coding and Refactoring</a>
+        <section class="hero tutorial-hero">
+          <div>
+            <p class="eyebrow">Human-first scenario tutorials</p>
+            <h1>Find the stuck point first. Pick the tool later.</h1>
+            <p class="lede">This is not a tool ranking or an AI planning spec. It is a working map for engineers: where you are stuck, what to do first, which route fits, and when to stop.</p>
+          </div>
+          <img class="hero-map" src="assets/scenario-route-map.svg" alt="Scenario route map">
+          <div class="intro-list route-nav">
+            <a href="#requirements-to-tasks">Requirements to tasks</a>
+            <a href="#project-context-memory">Project context memory</a>
+            <a href="#coding-and-refactoring">Coding and refactoring</a>
             <a href="#debugging">Debugging</a>
-            <a href="#automated-verification">Automated Verification</a>
-            <a href="#code-review-quality-gates">Code Review and Quality Gates</a>
-            <a href="#documentation-knowledge">Documentation and Knowledge</a>
-            <a href="#release-change-management">Release and Change Management</a>
-            <a href="#incident-response">Incident Response</a>
-            <a href="#team-ai-governance">Team AI Governance</a>
+            <a href="#automated-verification">Automated verification</a>
+            <a href="#code-review-quality-gates">Code review and quality gates</a>
+            <a href="#documentation-knowledge">Documentation and knowledge</a>
+            <a href="#release-change-management">Release and change management</a>
+            <a href="#incident-response">Incident response</a>
+            <a href="#team-ai-governance">Team AI governance</a>
           </div>
         </section>
 
-        <article class="scenario-block" id="requirements-to-tasks">
-          <div class="scenario-heading">
-            <p class="eyebrow">Detailed scenario guide</p>
-            <h2>Requirements to Tasks</h2>
-            <p>Use this when a request is real, but still too vague for an engineer or AI assistant to start safely.</p>
+        <article class="lesson-block reveal" id="requirements-to-tasks">
+          <div class="lesson-number">01</div>
+          <div class="lesson-copy">
+            <p class="eyebrow">Tutorial</p>
+            <h2>Requirements to tasks</h2>
+            <p class="lesson-short">The request is real, but still slippery.</p>
+            <p>Someone says, &quot;Can we just add...&quot; and everyone nods. Ten minutes later, the edge cases arrive: roles, empty states, billing, rollout, wording. This page helps you slow the work down just enough to make it implementable.</p>
+            <div class="first-move"><strong>Do this first:</strong> Write one sentence that names the user-visible change. Then write what you are not doing.</div>
           </div>
-          <div class="tutorial-grid wide">
-            <div>
-              <h3>When to use it</h3>
-              <ul><li>A request can be interpreted in several ways.</li><li>Several people need to agree on what done means.</li><li>The work may touch product behavior, design, data, permissions, pricing, or rollout.</li><li>You want an AI assistant to implement without guessing missing context.</li></ul>
-              <h3>Workflow</h3>
-              <ol><li>Write the user-facing or system-facing change in one sentence.</li><li>Name the actor, starting state, action, and expected result.</li><li>List non-goals before implementation starts. This is where scope control happens.</li><li>Add acceptance checks in observable language. Prefer examples over abstract requirements.</li><li>Add implementation clues: likely files, APIs, commands, data models, feature flags, and risk areas.</li><li>Choose verification: unit test, integration test, E2E smoke test, manual check, or CI gate.</li></ol>
-            </div>
-            <div>
-              <h3>Mainstream paths</h3>
-              <div class="solution-list">
-              <section class="solution-item">
-                <h4>Lightweight issue brief</h4>
-                <p><strong>Recommended when:</strong> small product changes, UI fixes, one endpoint, or a bug with known expected behavior.</p>
-                <p><strong>Avoid when:</strong> cross-team work, unclear product decisions, or changes with compliance, billing, or migration risk.</p>
-                <p><strong>Common tools:</strong> GitHub Issues, Linear, Jira, plain Markdown, issue templates.</p>
-              </section>
-              <section class="solution-item">
-                <h4>PRD or RFC to task split</h4>
-                <p><strong>Recommended when:</strong> the product direction exists, but engineers need scoped slices and sequencing.</p>
-                <p><strong>Avoid when:</strong> using a PRD as a substitute for unresolved product decisions.</p>
-                <p><strong>Common tools:</strong> Notion, Confluence, Google Docs, Linear projects, Jira epics, GitHub milestones.</p>
-              </section>
-              <section class="solution-item">
-                <h4>Acceptance example or BDD style</h4>
-                <p><strong>Recommended when:</strong> behavior depends on roles, states, edge cases, or user-visible messages.</p>
-                <p><strong>Avoid when:</strong> turning every tiny task into ceremony. A few examples are often enough.</p>
-                <p><strong>Common tools:</strong> Gherkin-style examples, Given/When/Then notes, test case tables, Storybook stories for UI states.</p>
-              </section>
-              <section class="solution-item">
-                <h4>AI-assisted task shaping</h4>
-                <p><strong>Recommended when:</strong> you already know the intent and want help finding gaps, splitting work, or drafting checks.</p>
-                <p><strong>Avoid when:</strong> letting the assistant decide scope, pricing, permissions, or rollout policy without a human decision.</p>
-                <p><strong>Common tools:</strong> chat assistants, IDE assistants, coding agents, internal planning templates.</p>
-              </section>
-            </div>
-            </div>
+          <div class="lesson-visual" aria-label="Flow">
+            <div class="flowline"><span class="flow-step" style="--i:0">Name the change</span><span class="flow-step" style="--i:1">Draw the boundary</span><span class="flow-step" style="--i:2">Write checks</span><span class="flow-step" style="--i:3">Point to likely files</span><span class="flow-step" style="--i:4">Pick verification</span></div>
           </div>
-          <div class="example-box">
-            <pre>Intent:
-Workspace admins can invite one teammate by email from workspace settings.
-
-Non-goals:
-- No bulk invites.
-- No role management changes.
-- No billing changes.
-
-Acceptance:
-- Admin can submit one valid email.
-- A pending invite appears in the members list.
-- Duplicate invite shows a clear error.
-- Non-admin users cannot access the invite action.
-
-Implementation clues:
-- Settings members page.
-- Invite API route.
-- Workspace membership permissions.
-
-Verification:
-- Run member permission tests.
-- Smoke test the browser flow for success and duplicate invite.</pre>
+          <div class="route-grid">
+            <article class="route-card reveal"><h4>Tiny issue brief</h4><p>Use it for small fixes and clear product changes. Keep it in the issue or PR.</p></article>
+<article class="route-card reveal"><h4>PRD to task split</h4><p>Use it when the direction is settled but engineering still needs slices.</p></article>
+<article class="route-card reveal"><h4>Acceptance examples</h4><p>Use it when roles, states, or edge cases can change the answer.</p></article>
+<article class="route-card reveal"><h4>AI task shaping</h4><p>Use it to find gaps, not to invent product decisions.</p></article>
           </div>
-          <div class="scenario-footer">
-            <div>
-              <h3>Common failure modes</h3>
-              <ul><li>The task says improve or support without naming the behavior that changes.</li><li>Acceptance criteria describe implementation details but not user-visible outcomes.</li><li>The assistant receives a vague task and fills gaps with plausible but wrong product choices.</li><li>The task hides risky work such as permissions, billing, migration, or notification behavior.</li></ul>
-            </div>
-            <a class="button secondary" href="https://github.com/wxxsw/ctrl-alt-ship/blob/main/scenarios/requirements-to-tasks/README.md">Read the full guide on GitHub</a>
+          <div class="lesson-bottom">
+            <div class="example-box compact"><pre>Admin can invite one teammate by email. No bulk invites, no role changes, no billing changes. Success means the pending invite appears and duplicate invite shows a clear error.</pre></div>
+            <div class="warning-note"><strong>Watch the trap:</strong> The trap is writing a beautiful task that still hides the real decision. If pricing, permission, or rollout is undecided, say that before anyone writes code.</div>
+            <a class="button secondary" href="https://github.com/wxxsw/ctrl-alt-ship/blob/main/scenarios/requirements-to-tasks/README.md">Read the full README</a>
           </div>
         </article>
 
-        <article class="scenario-block" id="project-context-memory">
-          <div class="scenario-heading">
-            <p class="eyebrow">Detailed scenario guide</p>
-            <h2>Project Context Memory</h2>
-            <p>Use this when AI keeps missing how your project works.</p>
+        <article class="lesson-block reveal" id="project-context-memory">
+          <div class="lesson-number">02</div>
+          <div class="lesson-copy">
+            <p class="eyebrow">Tutorial</p>
+            <h2>Project context memory</h2>
+            <p class="lesson-short">The assistant can read files, but it still misses the project.</p>
+            <p>If every new session starts with the same lecture about commands, folders, conventions, and dangerous areas, the problem is not the assistant. The project needs a small memory surface.</p>
+            <div class="first-move"><strong>Do this first:</strong> List the last five things you had to explain twice. Keep the stable ones.</div>
           </div>
-          <div class="tutorial-grid wide">
-            <div>
-              <h3>When to use it</h3>
-              <ul><li>Every new session needs the same setup explanation.</li><li>AI misses local style, architecture, or review expectations.</li><li>Project knowledge is scattered across chats, tickets, docs, and people.</li><li>New contributors need a quicker way to understand the repo.</li></ul>
-              <h3>Workflow</h3>
-              <ol><li>List the last five things you had to explain to an assistant or new teammate.</li><li>Separate stable context from task-specific context.</li><li>Write the stable context in the shortest public place future readers will check.</li><li>Add a repo map with important directories and where not to make casual changes.</li><li>Link deeper docs instead of copying them.</li><li>Add a small review rule: if the same mistake happens twice, update the context.</li></ol>
-            </div>
-            <div>
-              <h3>Mainstream paths</h3>
-              <div class="solution-list">
-              <section class="solution-item">
-                <h4>Repo guide</h4>
-                <p><strong>Recommended when:</strong> setup commands, test commands, project layout, coding conventions, and review expectations.</p>
-                <p><strong>Avoid when:</strong> turning it into a full architecture book that nobody reads.</p>
-                <p><strong>Common tools:</strong> README, CONTRIBUTING, docs folder, team-approved assistant instructions.</p>
-              </section>
-              <section class="solution-item">
-                <h4>Codebase map</h4>
-                <p><strong>Recommended when:</strong> large repos, monorepos, unfamiliar legacy systems, or onboarding.</p>
-                <p><strong>Avoid when:</strong> listing every file. A map should show where decisions happen.</p>
-                <p><strong>Common tools:</strong> directory notes, Mermaid diagrams, architecture overview pages, dependency graphs.</p>
-              </section>
-              <section class="solution-item">
-                <h4>Decision memory</h4>
-                <p><strong>Recommended when:</strong> architecture, security, data, and product tradeoffs that people will ask about again.</p>
-                <p><strong>Avoid when:</strong> rewriting history to make decisions look cleaner than they were.</p>
-                <p><strong>Common tools:</strong> ADR, RFC archive, decision log, docs-as-code.</p>
-              </section>
-              <section class="solution-item">
-                <h4>Assistant context layer</h4>
-                <p><strong>Recommended when:</strong> teams using coding agents or IDE assistants repeatedly in the same repo.</p>
-                <p><strong>Avoid when:</strong> committing personal prompts, private credentials, or sensitive local agent configuration.</p>
-                <p><strong>Common tools:</strong> project instructions, IDE rule files, workspace memory, ignored local notes.</p>
-              </section>
-            </div>
-            </div>
+          <div class="lesson-visual" aria-label="Flow">
+            <div class="flowline"><span class="flow-step" style="--i:0">Collect repeated explanations</span><span class="flow-step" style="--i:1">Keep stable facts</span><span class="flow-step" style="--i:2">Place near the repo</span><span class="flow-step" style="--i:3">Link deeper docs</span><span class="flow-step" style="--i:4">Update after repeat mistakes</span></div>
           </div>
-          <div class="example-box">
-            <pre>Local commands:
-- Install: pnpm install
-- Test: pnpm test
-- Typecheck: pnpm typecheck
-
-Project map:
-- app/: product screens and route-level state
-- api/: server routes and request validation
-- db/: schema and migrations
-
-Conventions:
-- Keep UI state in page-level hooks.
-- Add tests for permission changes.
-- Prefer existing service helpers over new fetch wrappers.
-
-Careful:
-- Billing and workspace membership need extra review.
-- Do not commit personal agent notes or local credentials.</pre>
+          <div class="route-grid">
+            <article class="route-card reveal"><h4>Repo guide</h4><p>Use it for setup, tests, layout, conventions, and review expectations.</p></article>
+<article class="route-card reveal"><h4>Codebase map</h4><p>Use it when people get lost before they even know where to search.</p></article>
+<article class="route-card reveal"><h4>Decision memory</h4><p>Use it for architecture and product tradeoffs that will be questioned again.</p></article>
+<article class="route-card reveal"><h4>Assistant context</h4><p>Use it for team-approved rules, not personal prompts or secrets.</p></article>
           </div>
-          <div class="scenario-footer">
-            <div>
-              <h3>Common failure modes</h3>
-              <ul><li>The guide becomes a dumping ground for every opinion.</li><li>The doc explains commands but not the project shape.</li><li>Sensitive local instructions are committed to the public repo.</li><li>The team writes context once and never updates it after repeated mistakes.</li></ul>
-            </div>
-            <a class="button secondary" href="https://github.com/wxxsw/ctrl-alt-ship/blob/main/scenarios/project-context-memory/README.md">Read the full guide on GitHub</a>
+          <div class="lesson-bottom">
+            <div class="example-box compact"><pre>Install with pnpm install. Test with pnpm test. app/ holds product screens, api/ holds server routes, db/ holds schema and migrations. Billing and membership need extra review.</pre></div>
+            <div class="warning-note"><strong>Watch the trap:</strong> Do not turn this into a dump of every private note. Shared guidance goes in the repo. Personal agent notes and credentials stay ignored.</div>
+            <a class="button secondary" href="https://github.com/wxxsw/ctrl-alt-ship/blob/main/scenarios/project-context-memory/README.md">Read the full README</a>
           </div>
         </article>
 
-        <article class="scenario-block" id="coding-and-refactoring">
-          <div class="scenario-heading">
-            <p class="eyebrow">Detailed scenario guide</p>
-            <h2>Coding and Refactoring</h2>
-            <p>Use this when AI can help write or move code, but the change still needs human control.</p>
+        <article class="lesson-block reveal" id="coding-and-refactoring">
+          <div class="lesson-number">03</div>
+          <div class="lesson-copy">
+            <p class="eyebrow">Tutorial</p>
+            <h2>Coding and refactoring</h2>
+            <p class="lesson-short">AI can move fast. Your job is to keep the change reviewable.</p>
+            <p>This is the page for implementation, cleanup, migrations, and refactors. The question is not &quot;can AI write the code?&quot; It usually can. The question is whether the resulting diff still has a shape a person can trust.</p>
+            <div class="first-move"><strong>Do this first:</strong> Ask for a plan before edits. The plan should name files, risks, and checks.</div>
           </div>
-          <div class="tutorial-grid wide">
-            <div>
-              <h3>When to use it</h3>
-              <ul><li>You need AI help implementing a clear task.</li><li>A refactor has a defined behavioral boundary.</li><li>A migration can be split into repeatable mechanical steps.</li><li>You want faster code search, edit planning, or test generation.</li></ul>
-              <h3>Workflow</h3>
-              <ol><li>Start with a task brief and name the intended behavior boundary.</li><li>Ask AI for a plan that names files, risk areas, and verification.</li><li>Approve the plan or narrow it before edits start.</li><li>Edit in checkpoints. Each checkpoint should be understandable on its own.</li><li>Run the cheapest relevant check after each meaningful step.</li><li>Review the diff against the original task, not against what the assistant decided to do.</li></ol>
-            </div>
-            <div>
-              <h3>Mainstream paths</h3>
-              <div class="solution-list">
-              <section class="solution-item">
-                <h4>Pair-programming assistant</h4>
-                <p><strong>Recommended when:</strong> bounded edits, code search, small bug fixes, and test drafting.</p>
-                <p><strong>Avoid when:</strong> large autonomous rewrites without checkpoints.</p>
-                <p><strong>Common tools:</strong> IDE assistants, chat assistants with repo context, terminal coding agents.</p>
-              </section>
-              <section class="solution-item">
-                <h4>Agentic implementation loop</h4>
-                <p><strong>Recommended when:</strong> tasks that need multi-file edits plus command-line verification.</p>
-                <p><strong>Avoid when:</strong> production-affecting commands, secret handling, or external writes without approval.</p>
-                <p><strong>Common tools:</strong> coding agents, local sandboxes, branch-based workflows, CI feedback.</p>
-              </section>
-              <section class="solution-item">
-                <h4>Codemod or compiler-backed migration</h4>
-                <p><strong>Recommended when:</strong> renames, API migrations, framework upgrades, and repeated patterns.</p>
-                <p><strong>Avoid when:</strong> semantic changes where a syntactic transform cannot capture intent.</p>
-                <p><strong>Common tools:</strong> jscodeshift, ts-morph, OpenRewrite, Rector, gofmt/go vet, language server refactors.</p>
-              </section>
-              <section class="solution-item">
-                <h4>Test-first or characterization-first refactor</h4>
-                <p><strong>Recommended when:</strong> legacy areas where behavior must not change.</p>
-                <p><strong>Avoid when:</strong> writing brittle snapshot tests that freeze accidental behavior.</p>
-                <p><strong>Common tools:</strong> unit tests, integration tests, golden tests, approval tests, Playwright/Cypress for UI smoke.</p>
-              </section>
-            </div>
-            </div>
+          <div class="lesson-visual" aria-label="Flow">
+            <div class="flowline"><span class="flow-step" style="--i:0">Start from a task</span><span class="flow-step" style="--i:1">Approve the plan</span><span class="flow-step" style="--i:2">Edit in checkpoints</span><span class="flow-step" style="--i:3">Run cheap checks</span><span class="flow-step" style="--i:4">Review against the task</span></div>
           </div>
-          <div class="example-box">
-            <pre>Task:
-Move notification preference logic from SettingsPage into a reusable hook.
-
-Behavior boundary:
-No UI behavior, API shape, or persistence behavior should change.
-
-Plan:
-1. Find current state and API calls.
-2. Extract useNotificationPreferences.
-3. Update SettingsPage to call the hook.
-4. Run notification tests and typecheck.
-5. Smoke test the settings page.
-
-Stop if:
-The refactor requires API changes or changes loading/error behavior.</pre>
+          <div class="route-grid">
+            <article class="route-card reveal"><h4>Pair assistant</h4><p>Good for local edits, code search, small fixes, and test drafts.</p></article>
+<article class="route-card reveal"><h4>Agentic loop</h4><p>Good when a task needs multi-file edits plus command-line verification.</p></article>
+<article class="route-card reveal"><h4>Codemod migration</h4><p>Good when a repeated pattern is better changed mechanically.</p></article>
+<article class="route-card reveal"><h4>Characterization first</h4><p>Good when old behavior must not change.</p></article>
           </div>
-          <div class="scenario-footer">
-            <div>
-              <h3>Common failure modes</h3>
-              <ul><li>The assistant does broad cleanup because the task lacked non-goals.</li><li>A refactor quietly changes behavior and tests only cover happy paths.</li><li>The diff is too large for meaningful review.</li><li>The agent adds new dependencies instead of using local helpers.</li></ul>
-            </div>
-            <a class="button secondary" href="https://github.com/wxxsw/ctrl-alt-ship/blob/main/scenarios/coding-and-refactoring/README.md">Read the full guide on GitHub</a>
+          <div class="lesson-bottom">
+            <div class="example-box compact"><pre>Move notification preference logic into a hook. Do not change UI behavior, API shape, or persistence. Stop if the refactor needs API changes.</pre></div>
+            <div class="warning-note"><strong>Watch the trap:</strong> The trap is letting a small refactor become a wandering cleanup tour. If the diff stops matching the task, stop and split it.</div>
+            <a class="button secondary" href="https://github.com/wxxsw/ctrl-alt-ship/blob/main/scenarios/coding-and-refactoring/README.md">Read the full README</a>
           </div>
         </article>
 
-        <article class="scenario-block" id="debugging">
-          <div class="scenario-heading">
-            <p class="eyebrow">Detailed scenario guide</p>
+        <article class="lesson-block reveal" id="debugging">
+          <div class="lesson-number">04</div>
+          <div class="lesson-copy">
+            <p class="eyebrow">Tutorial</p>
             <h2>Debugging</h2>
-            <p>Use this when you have symptoms, but not a proven cause.</p>
+            <p class="lesson-short">Do not let a plausible story become a fix.</p>
+            <p>You have a symptom, maybe a stack trace, maybe a graph spike, maybe a user complaint. AI is useful here, but only if it helps you form testable hypotheses instead of decorating guesses.</p>
+            <div class="first-move"><strong>Do this first:</strong> Write the symptom, the evidence, and one hypothesis that predicts the next observation.</div>
           </div>
-          <div class="tutorial-grid wide">
-            <div>
-              <h3>When to use it</h3>
-              <ul><li>You see an error, alert, flaky test, or user report but do not know the cause.</li><li>Logs, traces, stack traces, or metrics need to be connected.</li><li>A bug appears only in some environments or data states.</li><li>You need help reading an unfamiliar code path.</li></ul>
-              <h3>Workflow</h3>
-              <ol><li>State the symptom in one sentence with time, environment, and affected user path.</li><li>Collect the strongest evidence: error message, stack trace, request, release, logs, trace, screenshot.</li><li>Separate observation from interpretation. Do not let AI blend them.</li><li>Write two or three hypotheses and what each would predict.</li><li>Run the smallest experiment that can disprove one hypothesis.</li><li>Fix only after the cause is tied to evidence.</li></ol>
-            </div>
-            <div>
-              <h3>Mainstream paths</h3>
-              <div class="solution-list">
-              <section class="solution-item">
-                <h4>Reproduction-first debugging</h4>
-                <p><strong>Recommended when:</strong> local bugs, deterministic failures, failing tests, and UI regressions.</p>
-                <p><strong>Avoid when:</strong> spending hours on a perfect reproduction when production impact needs immediate mitigation.</p>
-                <p><strong>Common tools:</strong> unit tests, integration tests, Playwright traces, browser devtools, debugger, minimal repro repos.</p>
-              </section>
-              <section class="solution-item">
-                <h4>Observability-first debugging</h4>
-                <p><strong>Recommended when:</strong> production-only failures, distributed systems, performance issues, and partial outages.</p>
-                <p><strong>Avoid when:</strong> treating dashboard correlation as proof without checking timing and causality.</p>
-                <p><strong>Common tools:</strong> Sentry, Datadog, New Relic, Grafana, OpenTelemetry traces, structured logs.</p>
-              </section>
-              <section class="solution-item">
-                <h4>Change-history debugging</h4>
-                <p><strong>Recommended when:</strong> regressions after deploys, dependency upgrades, or configuration changes.</p>
-                <p><strong>Avoid when:</strong> assuming the newest change caused the bug without evidence.</p>
-                <p><strong>Common tools:</strong> git bisect, release notes, deploy logs, feature flag history, dependency lockfile diff.</p>
-              </section>
-              <section class="solution-item">
-                <h4>AI-assisted hypothesis generation</h4>
-                <p><strong>Recommended when:</strong> large logs, unfamiliar code, many possible causes, or messy incident threads.</p>
-                <p><strong>Avoid when:</strong> accepting the first plausible explanation. Ask for competing hypotheses and evidence needed.</p>
-                <p><strong>Common tools:</strong> chat assistants, log summarizers, codebase-aware assistants, notebook-style debugging notes.</p>
-              </section>
-            </div>
-            </div>
+          <div class="lesson-visual" aria-label="Flow">
+            <div class="flowline"><span class="flow-step" style="--i:0">State symptom</span><span class="flow-step" style="--i:1">Collect evidence</span><span class="flow-step" style="--i:2">Separate guesses</span><span class="flow-step" style="--i:3">Test a hypothesis</span><span class="flow-step" style="--i:4">Add a regression check</span></div>
           </div>
-          <div class="example-box">
-            <pre>Symptom:
-Checkout returns 500 after a coupon is applied. Started after release 2026.07.05. Only EUR checkouts reported so far.
-
-Evidence:
-- Server log: currency_code is null when updating payment intent.
-- Request includes coupon_id and currency=EUR.
-- No failures for USD in the last hour.
-
-Hypotheses:
-1. Coupon recalculation drops currency_code for non-default currencies.
-2. Payment provider rejects one coupon configuration.
-3. A feature flag enabled the new checkout path for EU users.
-
-Next experiment:
-Trace applyCoupon to updatePaymentIntent with EUR and USD fixtures.
-
-Regression check:
-Add test for coupon plus non-default currency.</pre>
+          <div class="route-grid">
+            <article class="route-card reveal"><h4>Reproduce first</h4><p>Use it when the failure can be made local or deterministic.</p></article>
+<article class="route-card reveal"><h4>Observe first</h4><p>Use it for production-only failures and distributed systems.</p></article>
+<article class="route-card reveal"><h4>Change history</h4><p>Use it when the failure follows a release, flag, config, or dependency change.</p></article>
+<article class="route-card reveal"><h4>AI hypothesis pass</h4><p>Use it to compare theories, not to accept the first one.</p></article>
           </div>
-          <div class="scenario-footer">
-            <div>
-              <h3>Common failure modes</h3>
-              <ul><li>AI writes a confident fix based on one stack trace.</li><li>The team changes several things at once and cannot tell what mattered.</li><li>The bug is fixed locally but not in the environment where it failed.</li><li>Logs with sensitive data are pasted into external tools.</li></ul>
-            </div>
-            <a class="button secondary" href="https://github.com/wxxsw/ctrl-alt-ship/blob/main/scenarios/debugging/README.md">Read the full guide on GitHub</a>
+          <div class="lesson-bottom">
+            <div class="example-box compact"><pre>Checkout returns 500 after coupon apply. Logs show currency_code is null. Hypothesis: coupon recalculation drops currency for non-default currencies. Next check: trace EUR and USD fixtures.</pre></div>
+            <div class="warning-note"><strong>Watch the trap:</strong> Changing three things at once feels productive. It also destroys the evidence trail.</div>
+            <a class="button secondary" href="https://github.com/wxxsw/ctrl-alt-ship/blob/main/scenarios/debugging/README.md">Read the full README</a>
           </div>
         </article>
 
-        <article class="scenario-block" id="automated-verification">
-          <div class="scenario-heading">
-            <p class="eyebrow">Detailed scenario guide</p>
-            <h2>Automated Verification</h2>
-            <p>Use this when AI changed code and you need repeatable evidence that it still works.</p>
+        <article class="lesson-block reveal" id="automated-verification">
+          <div class="lesson-number">05</div>
+          <div class="lesson-copy">
+            <p class="eyebrow">Tutorial</p>
+            <h2>Automated verification</h2>
+            <p class="lesson-short">Turn &quot;seems fine&quot; into evidence.</p>
+            <p>AI-assisted coding makes changes cheaper. That is good, until changes outpace proof. Verification is how you protect the few behaviors that would hurt if they quietly broke.</p>
+            <div class="first-move"><strong>Do this first:</strong> Name one behavior you care about. Then choose the cheapest reliable check.</div>
           </div>
-          <div class="tutorial-grid wide">
-            <div>
-              <h3>When to use it</h3>
-              <ul><li>AI-generated changes need proof before merge.</li><li>A critical path is repeatedly changed by humans or agents.</li><li>Manual QA is slow, inconsistent, or easy to forget.</li><li>A bug should become a regression test.</li></ul>
-              <h3>Workflow</h3>
-              <ol><li>Name the behavior and why it matters.</li><li>Choose the cheapest layer that can detect the failure with enough confidence.</li><li>Make the check fail once, or at least confirm it would have caught the bug.</li><li>Keep setup deterministic: data, auth, environment, and secrets.</li><li>Run the check locally or in CI before asking for review.</li><li>Attach evidence: logs, traces, screenshots, video, test output, or eval summary.</li></ol>
-            </div>
-            <div>
-              <h3>Mainstream paths</h3>
-              <div class="solution-list">
-              <section class="solution-item">
-                <h4>Unit and component tests</h4>
-                <p><strong>Recommended when:</strong> business rules, parsing, permission checks, UI components, and bug regression cases.</p>
-                <p><strong>Avoid when:</strong> mocking so much that the test no longer resembles real behavior.</p>
-                <p><strong>Common tools:</strong> Jest, Vitest, pytest, JUnit, XCTest, React Testing Library, Flutter widget tests.</p>
-              </section>
-              <section class="solution-item">
-                <h4>Web UI E2E</h4>
-                <p><strong>Recommended when:</strong> critical browser flows such as signup, checkout, invite, settings, and admin actions.</p>
-                <p><strong>Avoid when:</strong> testing every visual detail through E2E. Keep E2E for flows, not every component state.</p>
-                <p><strong>Common tools:</strong> Playwright, Cypress, Selenium, Storybook interaction tests.</p>
-              </section>
-              <section class="solution-item">
-                <h4>Mobile E2E</h4>
-                <p><strong>Recommended when:</strong> native app flows, onboarding, payments, permissions, and device-specific behavior.</p>
-                <p><strong>Avoid when:</strong> starting with full-device tests when a widget or integration test would catch the risk.</p>
-                <p><strong>Common tools:</strong> Maestro, Detox, Appium, XCUITest, Espresso.</p>
-              </section>
-              <section class="solution-item">
-                <h4>API and contract regression</h4>
-                <p><strong>Recommended when:</strong> backend services, public APIs, webhooks, auth behavior, and integrations.</p>
-                <p><strong>Avoid when:</strong> collections that require fragile shared state or manual secrets.</p>
-                <p><strong>Common tools:</strong> Bruno, Postman, Pact, Schemathesis, OpenAPI validators, supertest.</p>
-              </section>
-            </div>
-            </div>
+          <div class="lesson-visual" aria-label="Flow">
+            <div class="flowline"><span class="flow-step" style="--i:0">Name behavior</span><span class="flow-step" style="--i:1">Pick layer</span><span class="flow-step" style="--i:2">Make it fail once</span><span class="flow-step" style="--i:3">Run in CI or locally</span><span class="flow-step" style="--i:4">Attach evidence</span></div>
           </div>
-          <div class="example-box">
-            <pre>Behavior:
-Workspace admins can invite one teammate and duplicate invites show an error.
-
-Layer:
-Playwright browser smoke test because the risk crosses UI, API, auth, and persistence.
-
-Test outline:
-1. Login as workspace admin.
-2. Open members settings.
-3. Submit a valid email.
-4. Assert pending invite appears.
-5. Submit the same email again.
-6. Assert duplicate invite error appears.
-
-Evidence:
-CI test output plus Playwright trace on failure.</pre>
+          <div class="route-grid">
+            <article class="route-card reveal"><h4>Unit or component test</h4><p>Best for rules, parsing, permissions, and UI states.</p></article>
+<article class="route-card reveal"><h4>Browser or mobile E2E</h4><p>Best for critical user flows that cross layers.</p></article>
+<article class="route-card reveal"><h4>API or contract test</h4><p>Best when the API is the product boundary.</p></article>
+<article class="route-card reveal"><h4>AI eval</h4><p>Best for RAG, agents, extraction, and variable outputs.</p></article>
           </div>
-          <div class="scenario-footer">
-            <div>
-              <h3>Common failure modes</h3>
-              <ul><li>Writing broad E2E tests because they feel realistic, then drowning in flake.</li><li>Adding snapshots that approve accidental output.</li><li>Testing implementation details while the user-visible behavior remains unprotected.</li><li>Keeping tests local and never wiring them into CI or PR evidence.</li></ul>
-            </div>
-            <a class="button secondary" href="https://github.com/wxxsw/ctrl-alt-ship/blob/main/scenarios/automated-verification/README.md">Read the full guide on GitHub</a>
+          <div class="lesson-bottom">
+            <div class="example-box compact"><pre>Admin invite flow: login as admin, open settings, submit email, confirm pending invite, repeat email, confirm duplicate error. Save the trace when it fails.</pre></div>
+            <div class="warning-note"><strong>Watch the trap:</strong> E2E feels realistic, so teams overuse it. If a smaller test catches the same risk, start smaller.</div>
+            <a class="button secondary" href="https://github.com/wxxsw/ctrl-alt-ship/blob/main/scenarios/automated-verification/README.md">Read the full README</a>
           </div>
         </article>
 
-        <article class="scenario-block" id="code-review-quality-gates">
-          <div class="scenario-heading">
-            <p class="eyebrow">Detailed scenario guide</p>
-            <h2>Code Review and Quality Gates</h2>
-            <p>Use this when AI-assisted work needs review before it becomes maintenance debt.</p>
+        <article class="lesson-block reveal" id="code-review-quality-gates">
+          <div class="lesson-number">06</div>
+          <div class="lesson-copy">
+            <p class="eyebrow">Tutorial</p>
+            <h2>Code review and quality gates</h2>
+            <p class="lesson-short">Review the intent before admiring the diff.</p>
+            <p>AI can produce a large, polished diff. That makes review harder, not easier. A good review starts with the task, then checks risk and evidence before style.</p>
+            <div class="first-move"><strong>Do this first:</strong> Read the task brief first. Ask whether the diff still matches it.</div>
           </div>
-          <div class="tutorial-grid wide">
-            <div>
-              <h3>When to use it</h3>
-              <ul><li>AI-generated or AI-assisted work is ready for review.</li><li>The diff is larger than a human can trust at a glance.</li><li>The team keeps catching the same issue late.</li><li>You need branch protection, required checks, or security scanning.</li></ul>
-              <h3>Workflow</h3>
-              <ol><li>Read the task brief before the diff.</li><li>Check whether the diff matches the task and respects non-goals.</li><li>Scan for risky areas: auth, permissions, billing, data, migrations, external writes, secrets.</li><li>Check automated evidence: tests, typecheck, lint, CI, security scan, manual smoke notes.</li><li>Review the code for maintainability and local conventions.</li><li>Ask for smaller PRs when the diff mixes unrelated goals.</li></ol>
-            </div>
-            <div>
-              <h3>Mainstream paths</h3>
-              <div class="solution-list">
-              <section class="solution-item">
-                <h4>Human review checklist</h4>
-                <p><strong>Recommended when:</strong> behavior, scope, architecture, readability, product fit, and risk judgment.</p>
-                <p><strong>Avoid when:</strong> reviewing style first while missing task drift or missing evidence.</p>
-                <p><strong>Common tools:</strong> GitHub/GitLab PR reviews, review templates, CODEOWNERS, pair review.</p>
-              </section>
-              <section class="solution-item">
-                <h4>Static and semantic checks</h4>
-                <p><strong>Recommended when:</strong> repeatable code quality, type, formatting, security, and dependency issues.</p>
-                <p><strong>Avoid when:</strong> adding tools without deciding which failures block merge.</p>
-                <p><strong>Common tools:</strong> ESLint, TypeScript, Ruff, go vet, CodeQL, Semgrep, SonarQube, Dependabot, Renovate.</p>
-              </section>
-              <section class="solution-item">
-                <h4>Test and build gates</h4>
-                <p><strong>Recommended when:</strong> behavior that can be checked automatically before merge.</p>
-                <p><strong>Avoid when:</strong> slow flaky pipelines that hide real signal.</p>
-                <p><strong>Common tools:</strong> GitHub Actions, GitLab CI, Buildkite, CircleCI, required status checks.</p>
-              </section>
-              <section class="solution-item">
-                <h4>AI-assisted review</h4>
-                <p><strong>Recommended when:</strong> summarizing large diffs, pointing out risk areas, and checking PR against the task brief.</p>
-                <p><strong>Avoid when:</strong> treating AI review as approval. It is another reviewer signal, not ownership.</p>
-                <p><strong>Common tools:</strong> code review assistants, repo-aware chat, custom review prompts, CI comments.</p>
-              </section>
-            </div>
-            </div>
+          <div class="lesson-visual" aria-label="Flow">
+            <div class="flowline"><span class="flow-step" style="--i:0">Read task</span><span class="flow-step" style="--i:1">Check scope</span><span class="flow-step" style="--i:2">Scan risk</span><span class="flow-step" style="--i:3">Check evidence</span><span class="flow-step" style="--i:4">Review maintainability</span></div>
           </div>
-          <div class="example-box">
-            <pre>AI-assisted PR review order:
-
-1. Task match
-- Does the diff implement the accepted task?
-- Are non-goals respected?
-
-2. Risk
-- Auth, permissions, billing, data, migrations, or external writes touched?
-- New dependency or generated code added?
-
-3. Evidence
-- Tests run?
-- Manual path checked?
-- CI linked?
-
-4. Maintainability
-- Follows local patterns?
-- Names and boundaries make sense?
-- No unrelated cleanup?</pre>
+          <div class="route-grid">
+            <article class="route-card reveal"><h4>Human review checklist</h4><p>For behavior, scope, architecture, and judgment.</p></article>
+<article class="route-card reveal"><h4>Static checks</h4><p>For type, lint, security, dependency, and repeatable issues.</p></article>
+<article class="route-card reveal"><h4>Build and test gates</h4><p>For checks that should block merge.</p></article>
+<article class="route-card reveal"><h4>AI-assisted review</h4><p>For summaries and risk spotting, never final ownership.</p></article>
           </div>
-          <div class="scenario-footer">
-            <div>
-              <h3>Common failure modes</h3>
-              <ul><li>Reviewers skim generated code and trust the assistant summary.</li><li>PRs include unrelated cleanup that hides the actual behavior change.</li><li>Gates check formatting but miss permissions, migrations, or data loss risk.</li><li>Security tools are added but nobody owns triage.</li></ul>
-            </div>
-            <a class="button secondary" href="https://github.com/wxxsw/ctrl-alt-ship/blob/main/scenarios/code-review-quality-gates/README.md">Read the full guide on GitHub</a>
+          <div class="lesson-bottom">
+            <div class="example-box compact"><pre>Ask: did the diff implement the accepted task, respect non-goals, touch auth or data, run tests, and avoid unrelated cleanup?</pre></div>
+            <div class="warning-note"><strong>Watch the trap:</strong> A gate that fails for bad reasons becomes background noise. Keep gates boring and trusted.</div>
+            <a class="button secondary" href="https://github.com/wxxsw/ctrl-alt-ship/blob/main/scenarios/code-review-quality-gates/README.md">Read the full README</a>
           </div>
         </article>
 
-        <article class="scenario-block" id="documentation-knowledge">
-          <div class="scenario-heading">
-            <p class="eyebrow">Detailed scenario guide</p>
-            <h2>Documentation and Knowledge</h2>
-            <p>Use this when decisions and project knowledge keep disappearing into chat.</p>
+        <article class="lesson-block reveal" id="documentation-knowledge">
+          <div class="lesson-number">07</div>
+          <div class="lesson-copy">
+            <p class="eyebrow">Tutorial</p>
+            <h2>Documentation and knowledge</h2>
+            <p class="lesson-short">If a decision will be asked about again, rescue it from chat.</p>
+            <p>Teams make good decisions in PR threads, meetings, incidents, and chat. Three months later, nobody remembers why. Documentation is the act of saving the part future people will need.</p>
+            <div class="first-move"><strong>Do this first:</strong> Write the decision, the tradeoff, and when to revisit it. Keep it short.</div>
           </div>
-          <div class="tutorial-grid wide">
-            <div>
-              <h3>When to use it</h3>
-              <ul><li>Architecture or product decisions will matter again.</li><li>New teammates lack project background.</li><li>Docs are stale, scattered, or too expensive to update.</li><li>A recent incident, migration, or launch produced reusable lessons.</li></ul>
-              <h3>Workflow</h3>
-              <ol><li>Capture the decision or lesson close to the work.</li><li>Decide the document type: decision, runbook, guide, reference, or changelog.</li><li>Write the tradeoff behind the conclusion.</li><li>Put the document where future readers will look first.</li><li>Link related code, PRs, incidents, dashboards, or tickets.</li><li>Add a maintenance hint: owner, review date, or revisit condition.</li></ol>
-            </div>
-            <div>
-              <h3>Mainstream paths</h3>
-              <div class="solution-list">
-              <section class="solution-item">
-                <h4>Docs-as-code</h4>
-                <p><strong>Recommended when:</strong> engineering docs that should be reviewed with code and versioned.</p>
-                <p><strong>Avoid when:</strong> cross-functional docs where non-engineers cannot comfortably contribute.</p>
-                <p><strong>Common tools:</strong> Markdown, MkDocs, Docusaurus, VitePress, GitHub Pages, pull request review.</p>
-              </section>
-              <section class="solution-item">
-                <h4>Team knowledge base</h4>
-                <p><strong>Recommended when:</strong> cross-functional context, onboarding, support playbooks, and product decisions.</p>
-                <p><strong>Avoid when:</strong> critical operational steps that need code review or strict change history.</p>
-                <p><strong>Common tools:</strong> Notion, Confluence, Google Docs, Slab, Linear docs.</p>
-              </section>
-              <section class="solution-item">
-                <h4>Architecture and decision records</h4>
-                <p><strong>Recommended when:</strong> tradeoffs that people will question again.</p>
-                <p><strong>Avoid when:</strong> writing ADRs for every small implementation choice.</p>
-                <p><strong>Common tools:</strong> ADR templates, RFCs, decision logs, Mermaid diagrams.</p>
-              </section>
-              <section class="solution-item">
-                <h4>AI-assisted summarization</h4>
-                <p><strong>Recommended when:</strong> turning long PR threads, incident notes, and meetings into a first draft.</p>
-                <p><strong>Avoid when:</strong> publishing summaries without checking facts, dates, owners, and open questions.</p>
-                <p><strong>Common tools:</strong> chat assistants, transcript summarizers, document assistants, internal search.</p>
-              </section>
-            </div>
-            </div>
+          <div class="lesson-visual" aria-label="Flow">
+            <div class="flowline"><span class="flow-step" style="--i:0">Capture close to work</span><span class="flow-step" style="--i:1">Choose doc type</span><span class="flow-step" style="--i:2">Write tradeoff</span><span class="flow-step" style="--i:3">Link source material</span><span class="flow-step" style="--i:4">Add revisit trigger</span></div>
           </div>
-          <div class="example-box">
-            <pre>Decision:
-Workspace invite actions use server-side permission checks.
-
-Context:
-The UI already hides unavailable actions, but users can still call APIs directly.
-
-Why:
-Client-side checks improve UX but cannot be the authorization boundary.
-
-Tradeoff:
-The UI may duplicate some permission logic for disabled states, but the server remains the source of authorization.
-
-Revisit when:
-Workspace permission model changes or invite ownership moves to another service.</pre>
+          <div class="route-grid">
+            <article class="route-card reveal"><h4>Docs-as-code</h4><p>Good for engineering docs that need review and history.</p></article>
+<article class="route-card reveal"><h4>Team knowledge base</h4><p>Good for cross-functional context and onboarding.</p></article>
+<article class="route-card reveal"><h4>Decision record</h4><p>Good for tradeoffs people will question again.</p></article>
+<article class="route-card reveal"><h4>AI summary draft</h4><p>Good for first drafts, but facts still need a human.</p></article>
           </div>
-          <div class="scenario-footer">
-            <div>
-              <h3>Common failure modes</h3>
-              <ul><li>Publishing AI summaries that blur facts and assumptions.</li><li>Creating a wiki page nobody owns.</li><li>Writing long context docs that bury the actual decision.</li><li>Duplicating content from a source that changes often.</li></ul>
-            </div>
-            <a class="button secondary" href="https://github.com/wxxsw/ctrl-alt-ship/blob/main/scenarios/documentation-knowledge/README.md">Read the full guide on GitHub</a>
+          <div class="lesson-bottom">
+            <div class="example-box compact"><pre>Decision: invite actions use server-side permission checks. Why: UI checks help UX but cannot be the authorization boundary. Revisit when permissions change.</pre></div>
+            <div class="warning-note"><strong>Watch the trap:</strong> Do not publish a chat summary as truth. Summaries blur facts unless someone checks names, dates, owners, and open questions.</div>
+            <a class="button secondary" href="https://github.com/wxxsw/ctrl-alt-ship/blob/main/scenarios/documentation-knowledge/README.md">Read the full README</a>
           </div>
         </article>
 
-        <article class="scenario-block" id="release-change-management">
-          <div class="scenario-heading">
-            <p class="eyebrow">Detailed scenario guide</p>
-            <h2>Release and Change Management</h2>
-            <p>Use this when a change needs release notes, rollout steps, migration notes, or rollback thinking.</p>
+        <article class="lesson-block reveal" id="release-change-management">
+          <div class="lesson-number">08</div>
+          <div class="lesson-copy">
+            <p class="eyebrow">Tutorial</p>
+            <h2>Release and change management</h2>
+            <p class="lesson-short">A merged change is not the same as a safe change.</p>
+            <p>This page starts after the code is ready. Now you need to decide who is affected, how the change reaches them, what you will watch, and how you will back out if it goes sideways.</p>
+            <div class="first-move"><strong>Do this first:</strong> Write the release note in the language of the affected person, not the commit.</div>
           </div>
-          <div class="tutorial-grid wide">
-            <div>
-              <h3>When to use it</h3>
-              <ul><li>A change affects users, operators, support, customers, or downstream teams.</li><li>There is a migration, feature flag, config change, or dependency upgrade.</li><li>A release needs monitoring, staged rollout, or rollback planning.</li><li>AI-generated code is shipping and you need a sharper release review.</li></ul>
-              <h3>Workflow</h3>
-              <ol><li>Summarize what changed in audience language: user, operator, developer, or customer.</li><li>Identify affected surfaces: UI, API, data, permissions, billing, integrations, docs, support.</li><li>Choose rollout shape: all at once, staged, feature flag, canary, beta, migration window.</li><li>Define health checks and rollback conditions before release.</li><li>Write migration or support notes if anyone outside engineering must act.</li><li>Attach verification evidence from tests, CI, manual checks, or evals.</li></ol>
-            </div>
-            <div>
-              <h3>Mainstream paths</h3>
-              <div class="solution-list">
-              <section class="solution-item">
-                <h4>Release notes and changelog</h4>
-                <p><strong>Recommended when:</strong> user-visible features, fixes, breaking changes, and customer communication.</p>
-                <p><strong>Avoid when:</strong> copying commit messages that explain implementation instead of user impact.</p>
-                <p><strong>Common tools:</strong> Keep a Changelog format, Changesets, Release Please, semantic-release, GitHub Releases.</p>
-              </section>
-              <section class="solution-item">
-                <h4>Feature flag and progressive rollout</h4>
-                <p><strong>Recommended when:</strong> risky behavior changes, partial rollout, experiments, and fast rollback.</p>
-                <p><strong>Avoid when:</strong> keeping flags forever without cleanup ownership.</p>
-                <p><strong>Common tools:</strong> LaunchDarkly, Statsig, Unleash, Flipt, homegrown flag systems.</p>
-              </section>
-              <section class="solution-item">
-                <h4>Migration planning</h4>
-                <p><strong>Recommended when:</strong> database changes, API versioning, dependency upgrades, data backfills, and customer action.</p>
-                <p><strong>Avoid when:</strong> one-way migrations without backups, dry runs, or rollback thinking.</p>
-                <p><strong>Common tools:</strong> migration frameworks, backfill jobs, OpenAPI versioning, runbooks, maintenance windows.</p>
-              </section>
-              <section class="solution-item">
-                <h4>Release observability</h4>
-                <p><strong>Recommended when:</strong> changes that could affect latency, errors, revenue, support volume, or AI output quality.</p>
-                <p><strong>Avoid when:</strong> shipping first and deciding metrics later.</p>
-                <p><strong>Common tools:</strong> Sentry, Datadog, New Relic, Grafana, OpenTelemetry, product analytics, eval dashboards.</p>
-              </section>
-            </div>
-            </div>
+          <div class="lesson-visual" aria-label="Flow">
+            <div class="flowline"><span class="flow-step" style="--i:0">Name audience</span><span class="flow-step" style="--i:1">List affected surfaces</span><span class="flow-step" style="--i:2">Choose rollout</span><span class="flow-step" style="--i:3">Define health checks</span><span class="flow-step" style="--i:4">Write rollback condition</span></div>
           </div>
-          <div class="example-box">
-            <pre>Release:
-Workspace member invite flow now supports duplicate-invite handling.
-
-Audience note:
-Admins see a clear error when trying to invite someone who already has a pending invite.
-
-Rollout:
-Enable for 10 percent of workspaces for 24 hours, then 100 percent if healthy.
-
-Health checks:
-- Invite API 4xx/5xx rate.
-- Support tickets mentioning invite errors.
-- Pending invite creation count.
-
-Rollback:
-Disable invite_duplicate_error_v2 flag if 5xx rate doubles or support tickets spike.
-
-Support note:
-Ask admins to cancel the pending invite before sending a new one.</pre>
+          <div class="route-grid">
+            <article class="route-card reveal"><h4>Release notes</h4><p>For user-visible change, fixes, and breaking behavior.</p></article>
+<article class="route-card reveal"><h4>Progressive rollout</h4><p>For risky changes that need a flag, canary, or staged release.</p></article>
+<article class="route-card reveal"><h4>Migration plan</h4><p>For database, API, dependency, or customer action.</p></article>
+<article class="route-card reveal"><h4>Release observability</h4><p>For errors, latency, revenue, support volume, or AI quality.</p></article>
           </div>
-          <div class="scenario-footer">
-            <div>
-              <h3>Common failure modes</h3>
-              <ul><li>AI drafts release notes from commit messages and misses user impact.</li><li>A risky change ships without a flag, canary, or rollback path.</li><li>Migration notes omit who must run what and when.</li><li>Monitoring is added after the release goes wrong.</li></ul>
-            </div>
-            <a class="button secondary" href="https://github.com/wxxsw/ctrl-alt-ship/blob/main/scenarios/release-change-management/README.md">Read the full guide on GitHub</a>
+          <div class="lesson-bottom">
+            <div class="example-box compact"><pre>Enable duplicate invite handling for 10 percent of workspaces. Watch invite API errors and support tickets. Disable the flag if 5xx rate doubles.</pre></div>
+            <div class="warning-note"><strong>Watch the trap:</strong> Feature flags are not free. Every flag needs an owner and a cleanup moment.</div>
+            <a class="button secondary" href="https://github.com/wxxsw/ctrl-alt-ship/blob/main/scenarios/release-change-management/README.md">Read the full README</a>
           </div>
         </article>
 
-        <article class="scenario-block" id="incident-response">
-          <div class="scenario-heading">
-            <p class="eyebrow">Detailed scenario guide</p>
-            <h2>Incident Response</h2>
-            <p>Use this when logs, alerts, dashboards, and chats need to become a shared incident picture.</p>
+        <article class="lesson-block reveal" id="incident-response">
+          <div class="lesson-number">09</div>
+          <div class="lesson-copy">
+            <p class="eyebrow">Tutorial</p>
+            <h2>Incident response</h2>
+            <p class="lesson-short">During an incident, clarity beats cleverness.</p>
+            <p>Alerts, chats, dashboards, customer reports, and half-formed theories arrive at once. AI can help summarize, but the team still needs one shared picture and one clear owner.</p>
+            <div class="first-move"><strong>Do this first:</strong> Create a timeline with timestamps, facts, actions, owners, and open questions.</div>
           </div>
-          <div class="tutorial-grid wide">
-            <div>
-              <h3>When to use it</h3>
-              <ul><li>Alerts, logs, customer reports, and chats are arriving at the same time.</li><li>Several people are investigating and context is fragmenting.</li><li>You need status updates, timelines, or handoff notes.</li><li>A mitigation is needed before full root cause is known.</li></ul>
-              <h3>Workflow</h3>
-              <ol><li>Name incident commander, technical lead, scribe, and communication owner if needed.</li><li>Create a timeline with timestamps, facts, actions, and links to evidence.</li><li>State current impact and confidence level.</li><li>Separate mitigation options from root-cause hypotheses.</li><li>Update stakeholders from confirmed facts, not speculation.</li><li>After mitigation, write root cause and contributing factors with evidence.</li></ol>
-            </div>
-            <div>
-              <h3>Mainstream paths</h3>
-              <div class="solution-list">
-              <section class="solution-item">
-                <h4>Incident command and coordination</h4>
-                <p><strong>Recommended when:</strong> active incidents with multiple responders or customer impact.</p>
-                <p><strong>Avoid when:</strong> letting every responder chase their own theory without ownership.</p>
-                <p><strong>Common tools:</strong> PagerDuty, Opsgenie, Slack/Teams incident channels, Zoom/Meet bridges, incident roles.</p>
-              </section>
-              <section class="solution-item">
-                <h4>Observability triage</h4>
-                <p><strong>Recommended when:</strong> alerts, errors, latency, traffic drops, queue growth, and partial outages.</p>
-                <p><strong>Avoid when:</strong> jumping from a graph spike to root cause without checking deployments and logs.</p>
-                <p><strong>Common tools:</strong> Datadog, Grafana, New Relic, Sentry, OpenTelemetry, cloud provider logs.</p>
-              </section>
-              <section class="solution-item">
-                <h4>Customer and stakeholder communication</h4>
-                <p><strong>Recommended when:</strong> user-facing outages, degraded performance, data concerns, or support volume spikes.</p>
-                <p><strong>Avoid when:</strong> overexplaining unconfirmed causes in public updates.</p>
-                <p><strong>Common tools:</strong> Statuspage, incident comms templates, support macros, customer success notes.</p>
-              </section>
-              <section class="solution-item">
-                <h4>Post-incident learning</h4>
-                <p><strong>Recommended when:</strong> after mitigation, when the team needs follow-up tasks and prevention work.</p>
-                <p><strong>Avoid when:</strong> turning the postmortem into blame or a long essay nobody acts on.</p>
-                <p><strong>Common tools:</strong> postmortem templates, action item trackers, runbooks, test and alert backlogs.</p>
-              </section>
-            </div>
-            </div>
+          <div class="lesson-visual" aria-label="Flow">
+            <div class="flowline"><span class="flow-step" style="--i:0">Assign owner</span><span class="flow-step" style="--i:1">Build timeline</span><span class="flow-step" style="--i:2">State impact</span><span class="flow-step" style="--i:3">Separate mitigation</span><span class="flow-step" style="--i:4">Track follow-up</span></div>
           </div>
-          <div class="example-box">
-            <pre>Incident timeline:
-
-09:12 Alert: checkout 500 rate above 5 percent.
-09:14 Support reports EU checkout failures.
-09:18 Release 2026.07.05 identified as recent change.
-09:22 Mitigation: disable checkout_coupon_v2 for EU traffic.
-09:27 500 rate returns to baseline.
-
-Current impact:
-EU checkout with coupon only. No evidence of payment capture errors.
-
-Open questions:
-- Why did coupon recalculation drop currency_code?
-- Did any users retry successfully?
-
-Follow-up:
-- Add regression test for coupon plus non-default currency.
-- Add dashboard panel for checkout errors by currency.</pre>
+          <div class="route-grid">
+            <article class="route-card reveal"><h4>Incident command</h4><p>Use it when multiple people are responding or customers are affected.</p></article>
+<article class="route-card reveal"><h4>Observability triage</h4><p>Use it to connect alerts, logs, traces, and recent deploys.</p></article>
+<article class="route-card reveal"><h4>Stakeholder comms</h4><p>Use it when support, customers, or leadership need updates.</p></article>
+<article class="route-card reveal"><h4>Post-incident learning</h4><p>Use it after mitigation to create tracked prevention work.</p></article>
           </div>
-          <div class="scenario-footer">
-            <div>
-              <h3>Common failure modes</h3>
-              <ul><li>AI summarizes a thread and accidentally treats guesses as facts.</li><li>Everyone debugs while nobody owns coordination or communication.</li><li>The team debates root cause while mitigation is available.</li><li>Status updates include unconfirmed technical theories.</li></ul>
-            </div>
-            <a class="button secondary" href="https://github.com/wxxsw/ctrl-alt-ship/blob/main/scenarios/incident-response/README.md">Read the full guide on GitHub</a>
+          <div class="lesson-bottom">
+            <div class="example-box compact"><pre>09:12 checkout 500 alert. 09:18 recent release found. 09:22 disable checkout_coupon_v2 for EU. 09:27 errors return to baseline. Follow up with regression test and dashboard panel.</pre></div>
+            <div class="warning-note"><strong>Watch the trap:</strong> Do not let AI turn guesses into facts. Every timeline line should link to evidence or be marked as a hypothesis.</div>
+            <a class="button secondary" href="https://github.com/wxxsw/ctrl-alt-ship/blob/main/scenarios/incident-response/README.md">Read the full README</a>
           </div>
         </article>
 
-        <article class="scenario-block" id="team-ai-governance">
-          <div class="scenario-heading">
-            <p class="eyebrow">Detailed scenario guide</p>
-            <h2>Team AI Governance</h2>
-            <p>Use this when a team is already using AI tools and needs shared boundaries.</p>
+        <article class="lesson-block reveal" id="team-ai-governance">
+          <div class="lesson-number">10</div>
+          <div class="lesson-copy">
+            <p class="eyebrow">Tutorial</p>
+            <h2>Team AI governance</h2>
+            <p class="lesson-short">Governance should make good work easier, not louder.</p>
+            <p>The team is already using AI: in editors, terminals, browsers, tickets, docs, and PRs. The risk is not AI in the abstract. The risk is unclear access, unclear ownership, and unclear evidence.</p>
+            <div class="first-move"><strong>Do this first:</strong> Inventory tools, data access, write access, and where human approval is required.</div>
           </div>
-          <div class="tutorial-grid wide">
-            <div>
-              <h3>When to use it</h3>
-              <ul><li>People use different AI tools in inconsistent ways.</li><li>AI tools can access repos, tickets, terminals, browsers, logs, or sensitive data.</li><li>Reviewers are unsure what evidence AI-assisted work should include.</li><li>The team wants more speed but less accidental risk.</li></ul>
-              <h3>Workflow</h3>
-              <ol><li>Inventory current AI tools, users, data access, write access, and external integrations.</li><li>Classify data: public, internal, confidential, customer, regulated, secrets.</li><li>Define read boundaries and write boundaries separately.</li><li>Set human approval rules for code changes, external writes, production settings, and customer data.</li><li>Define PR evidence for AI-assisted work: task intent, verification, known limits, and reviewer ownership.</li><li>Keep local personal agent notes and secrets out of committed public files.</li></ol>
-            </div>
-            <div>
-              <h3>Mainstream paths</h3>
-              <div class="solution-list">
-              <section class="solution-item">
-                <h4>Usage policy and data classification</h4>
-                <p><strong>Recommended when:</strong> teams handling private code, customer data, regulated data, or vendor tools.</p>
-                <p><strong>Avoid when:</strong> writing a policy nobody can remember or apply during real work.</p>
-                <p><strong>Common tools:</strong> team policy docs, data classification tables, vendor review checklists, security questionnaires.</p>
-              </section>
-              <section class="solution-item">
-                <h4>Tool access and permissions</h4>
-                <p><strong>Recommended when:</strong> coding agents, browser agents, repo integrations, ticket integrations, and terminal access.</p>
-                <p><strong>Avoid when:</strong> granting broad write access because setup is easier.</p>
-                <p><strong>Common tools:</strong> SSO, role-based access, GitHub permissions, sandboxing, audit logs, branch protection.</p>
-              </section>
-              <section class="solution-item">
-                <h4>AI-assisted work standard</h4>
-                <p><strong>Recommended when:</strong> PRs, incident notes, docs, tests, and generated code that AI helped produce.</p>
-                <p><strong>Avoid when:</strong> requiring people to disclose every autocomplete while ignoring high-risk agentic edits.</p>
-                <p><strong>Common tools:</strong> PR templates, review checklists, evidence requirements, CODEOWNERS.</p>
-              </section>
-              <section class="solution-item">
-                <h4>Learning loop</h4>
-                <p><strong>Recommended when:</strong> teams that want governance to improve from real usage rather than static policy.</p>
-                <p><strong>Avoid when:</strong> treating governance as a one-time document.</p>
-                <p><strong>Common tools:</strong> retros, incident reviews, tool audits, prompt and workflow libraries, enablement sessions.</p>
-              </section>
-            </div>
-            </div>
+          <div class="lesson-visual" aria-label="Flow">
+            <div class="flowline"><span class="flow-step" style="--i:0">Inventory use</span><span class="flow-step" style="--i:1">Classify data</span><span class="flow-step" style="--i:2">Split read/write</span><span class="flow-step" style="--i:3">Set approvals</span><span class="flow-step" style="--i:4">Review after incidents</span></div>
           </div>
-          <div class="example-box">
-            <pre>Team AI usage guide:
-
-AI may:
-- Read public docs and approved repository code.
-- Draft task briefs, tests, documentation, and PR summaries.
-- Suggest code changes on a branch.
-
-AI needs human approval before:
-- Pushing code.
-- Running commands that affect external systems.
-- Changing production settings.
-- Using customer data or private logs.
-
-Every AI-assisted PR should include:
-- Task intent.
-- Verification evidence.
-- Known limitations.
-- Human owner for the final diff.</pre>
+          <div class="route-grid">
+            <article class="route-card reveal"><h4>Usage policy</h4><p>For data classes, allowed tools, and vendor boundaries.</p></article>
+<article class="route-card reveal"><h4>Access controls</h4><p>For repo, ticket, terminal, browser, and production access.</p></article>
+<article class="route-card reveal"><h4>AI-assisted PR standard</h4><p>For evidence, ownership, and review expectations.</p></article>
+<article class="route-card reveal"><h4>Learning loop</h4><p>For updating rules after real incidents and near misses.</p></article>
           </div>
-          <div class="scenario-footer">
-            <div>
-              <h3>Common failure modes</h3>
-              <ul><li>A policy bans or allows AI in the abstract but does not match real workflows.</li><li>Personal agent instructions or secrets are committed to public repos.</li><li>AI tools get broad repo or production access without auditability.</li><li>Reviewers cannot tell which parts of a PR were generated or verified.</li></ul>
-            </div>
-            <a class="button secondary" href="https://github.com/wxxsw/ctrl-alt-ship/blob/main/scenarios/team-ai-governance/README.md">Read the full guide on GitHub</a>
+          <div class="lesson-bottom">
+            <div class="example-box compact"><pre>AI may read approved repo code and draft tests. It needs human approval before pushing code, changing production settings, or using customer data. Every AI-assisted PR needs evidence and a human owner.</pre></div>
+            <div class="warning-note"><strong>Watch the trap:</strong> Do not start with a huge policy nobody uses. Start from actual workflows, then set boundaries around data and write access.</div>
+            <a class="button secondary" href="https://github.com/wxxsw/ctrl-alt-ship/blob/main/scenarios/team-ai-governance/README.md">Read the full README</a>
           </div>
         </article>
       </main>
@@ -758,5 +294,6 @@ Every AI-assisted PR should include:
         <p><a href="index.html">Back to home</a></p>
       </footer>
     </div>
+    <script src="app.js"></script>
   </body>
 </html>

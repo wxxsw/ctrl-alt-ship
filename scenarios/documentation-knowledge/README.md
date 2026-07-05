@@ -4,19 +4,19 @@
 
 Use this when decisions and project knowledge keep disappearing into chat.
 
-## What this scenario is
+## The situation
 
 This scenario turns useful work context into durable knowledge. AI can summarize, draft, and reorganize, but the important human act is deciding what deserves to live beyond the conversation.
 
 Good documentation is not a transcript. It is a maintained answer to a future question: why did we choose this, how does this work, what should someone do next, and when should they revisit the decision?
 
-## What you should end with
+## What you should have afterward
 
 - A decision note, runbook, guide, or reference page that future readers can find.
 - A lightweight rule for when chat or PR discussion becomes documentation.
 - A knowledge structure that separates stable guidance from volatile updates.
 
-## Use it when
+## Start here when
 
 - Architecture or product decisions will matter again.
 - New teammates lack project background.
@@ -24,14 +24,25 @@ Good documentation is not a transcript. It is a maintained answer to a future qu
 - A recent incident, migration, or launch produced reusable lessons.
 - AI summaries are useful but currently vanish after the conversation.
 
-## Avoid starting here
+## Start somewhere else when
 
 - The content is still private research or unreviewed speculation.
 - The document would duplicate a better-maintained source.
 - The team wants a knowledge base but has no owner for maintenance.
 - The issue is missing project setup context. Start with Project Context Memory.
 
-## Decision map
+## How to choose a route
+
+A quick way to read this page:
+
+```mermaid
+flowchart LR
+  A["What is stuck?"] --> B["Pick a route"]
+  B --> C["Take one small step"]
+  C --> D["Collect evidence"]
+  D --> E["Review or share"]
+```
+
 
 - If it explains a choice, write a decision note or ADR.
 - If it explains how to operate something, write a runbook.
@@ -39,41 +50,41 @@ Good documentation is not a transcript. It is a maintained answer to a future qu
 - If it explains a product or API surface, publish reference docs or examples.
 - If it changes often, link to the maintained source and keep the page small.
 
-## Mainstream solution paths
+## Common routes
 
 ### Docs-as-code
 
-Recommended when: engineering docs that should be reviewed with code and versioned.
+Use this when: engineering docs that should be reviewed with code and versioned.
 
-Avoid when: cross-functional docs where non-engineers cannot comfortably contribute.
+Skip it when: cross-functional docs where non-engineers cannot comfortably contribute.
 
-Common tools and practices: Markdown, MkDocs, Docusaurus, VitePress, GitHub Pages, pull request review.
+Tools that often show up: Markdown, MkDocs, Docusaurus, VitePress, GitHub Pages, pull request review.
 
 ### Team knowledge base
 
-Recommended when: cross-functional context, onboarding, support playbooks, and product decisions.
+Use this when: cross-functional context, onboarding, support playbooks, and product decisions.
 
-Avoid when: critical operational steps that need code review or strict change history.
+Skip it when: critical operational steps that need code review or strict change history.
 
-Common tools and practices: Notion, Confluence, Google Docs, Slab, Linear docs.
+Tools that often show up: Notion, Confluence, Google Docs, Slab, Linear docs.
 
 ### Architecture and decision records
 
-Recommended when: tradeoffs that people will question again.
+Use this when: tradeoffs that people will question again.
 
-Avoid when: writing ADRs for every small implementation choice.
+Skip it when: writing ADRs for every small implementation choice.
 
-Common tools and practices: ADR templates, RFCs, decision logs, Mermaid diagrams.
+Tools that often show up: ADR templates, RFCs, decision logs, Mermaid diagrams.
 
 ### AI-assisted summarization
 
-Recommended when: turning long PR threads, incident notes, and meetings into a first draft.
+Use this when: turning long PR threads, incident notes, and meetings into a first draft.
 
-Avoid when: publishing summaries without checking facts, dates, owners, and open questions.
+Skip it when: publishing summaries without checking facts, dates, owners, and open questions.
 
-Common tools and practices: chat assistants, transcript summarizers, document assistants, internal search.
+Tools that often show up: chat assistants, transcript summarizers, document assistants, internal search.
 
-## Practical workflow
+## Walk through it
 
 1. Capture the decision or lesson close to the work.
 2. Decide the document type: decision, runbook, guide, reference, or changelog.
@@ -102,7 +113,7 @@ Revisit when:
 Workspace permission model changes or invite ownership moves to another service.
 ```
 
-## Verification checklist
+## Check yourself
 
 - Does the document answer a future question someone will actually ask?
 - Is it short enough to maintain?
@@ -110,7 +121,7 @@ Workspace permission model changes or invite ownership moves to another service.
 - Is there an owner or revisit trigger?
 - Does it link to source material instead of copying everything?
 
-## Common failure modes
+## Where people get burned
 
 - Publishing AI summaries that blur facts and assumptions.
 - Creating a wiki page nobody owns.
@@ -118,7 +129,7 @@ Workspace permission model changes or invite ownership moves to another service.
 - Duplicating content from a source that changes often.
 - Letting chat become the only place a decision exists.
 
-## When this becomes team practice
+## When a team adopts it
 
 Team practice needs a capture rule. For example: any decision that affects future code review, on-call, onboarding, or customer behavior gets a short durable note.
 

@@ -4,19 +4,19 @@
 
 Use this when a team is already using AI tools and needs shared boundaries.
 
-## What this scenario is
+## The situation
 
 This scenario helps teams define practical AI usage boundaries without turning governance into theater. The risk is not simply that AI is used. The risk is that tools gain access to repos, tickets, terminals, browsers, logs, and customer data without shared expectations.
 
 Good governance gives teams speed with clearer ownership. It says what tools can access, what humans must approve, what evidence belongs in AI-assisted work, and how the team learns from mistakes.
 
-## What you should end with
+## What you should have afterward
 
 - A short team AI usage guide with data, tool, write-access, and review rules.
 - A lightweight approval path for higher-risk tools and workflows.
 - A shared PR and incident standard for AI-assisted work.
 
-## Use it when
+## Start here when
 
 - People use different AI tools in inconsistent ways.
 - AI tools can access repos, tickets, terminals, browsers, logs, or sensitive data.
@@ -24,14 +24,25 @@ Good governance gives teams speed with clearer ownership. It says what tools can
 - The team wants more speed but less accidental risk.
 - A customer, security, legal, or compliance question has surfaced.
 
-## Avoid starting here
+## Start somewhere else when
 
 - Nobody is using AI in real workflows yet. Start with small pilots instead of policy.
 - The team wants a huge policy before understanding actual usage.
 - The issue is one unclear task or PR. Use the relevant scenario instead.
 - The policy would be impossible to enforce or audit.
 
-## Decision map
+## How to choose a route
+
+A quick way to read this page:
+
+```mermaid
+flowchart LR
+  A["What is stuck?"] --> B["Pick a route"]
+  B --> C["Take one small step"]
+  C --> D["Collect evidence"]
+  D --> E["Review or share"]
+```
+
 
 - If the tool is read-only and uses public data, keep rules light.
 - If the tool reads private code or tickets, define data boundaries and account ownership.
@@ -39,41 +50,41 @@ Good governance gives teams speed with clearer ownership. It says what tools can
 - If the tool sees customer data, apply data classification, redaction, vendor review, and audit expectations.
 - If AI output affects production or customers, require evidence and human ownership.
 
-## Mainstream solution paths
+## Common routes
 
 ### Usage policy and data classification
 
-Recommended when: teams handling private code, customer data, regulated data, or vendor tools.
+Use this when: teams handling private code, customer data, regulated data, or vendor tools.
 
-Avoid when: writing a policy nobody can remember or apply during real work.
+Skip it when: writing a policy nobody can remember or apply during real work.
 
-Common tools and practices: team policy docs, data classification tables, vendor review checklists, security questionnaires.
+Tools that often show up: team policy docs, data classification tables, vendor review checklists, security questionnaires.
 
 ### Tool access and permissions
 
-Recommended when: coding agents, browser agents, repo integrations, ticket integrations, and terminal access.
+Use this when: coding agents, browser agents, repo integrations, ticket integrations, and terminal access.
 
-Avoid when: granting broad write access because setup is easier.
+Skip it when: granting broad write access because setup is easier.
 
-Common tools and practices: SSO, role-based access, GitHub permissions, sandboxing, audit logs, branch protection.
+Tools that often show up: SSO, role-based access, GitHub permissions, sandboxing, audit logs, branch protection.
 
 ### AI-assisted work standard
 
-Recommended when: PRs, incident notes, docs, tests, and generated code that AI helped produce.
+Use this when: PRs, incident notes, docs, tests, and generated code that AI helped produce.
 
-Avoid when: requiring people to disclose every autocomplete while ignoring high-risk agentic edits.
+Skip it when: requiring people to disclose every autocomplete while ignoring high-risk agentic edits.
 
-Common tools and practices: PR templates, review checklists, evidence requirements, CODEOWNERS.
+Tools that often show up: PR templates, review checklists, evidence requirements, CODEOWNERS.
 
 ### Learning loop
 
-Recommended when: teams that want governance to improve from real usage rather than static policy.
+Use this when: teams that want governance to improve from real usage rather than static policy.
 
-Avoid when: treating governance as a one-time document.
+Skip it when: treating governance as a one-time document.
 
-Common tools and practices: retros, incident reviews, tool audits, prompt and workflow libraries, enablement sessions.
+Tools that often show up: retros, incident reviews, tool audits, prompt and workflow libraries, enablement sessions.
 
-## Practical workflow
+## Walk through it
 
 1. Inventory current AI tools, users, data access, write access, and external integrations.
 2. Classify data: public, internal, confidential, customer, regulated, secrets.
@@ -106,7 +117,7 @@ Every AI-assisted PR should include:
 - Human owner for the final diff.
 ```
 
-## Verification checklist
+## Check yourself
 
 - Do people know which data can and cannot go into AI tools?
 - Are read access and write access treated differently?
@@ -114,7 +125,7 @@ Every AI-assisted PR should include:
 - Do AI-assisted PRs include evidence and ownership?
 - Can the team update rules based on incidents or near misses?
 
-## Common failure modes
+## Where people get burned
 
 - A policy bans or allows AI in the abstract but does not match real workflows.
 - Personal agent instructions or secrets are committed to public repos.
@@ -122,7 +133,7 @@ Every AI-assisted PR should include:
 - Reviewers cannot tell which parts of a PR were generated or verified.
 - Governance blocks low-risk work but misses high-risk data exposure.
 
-## When this becomes team practice
+## When a team adopts it
 
 Team practice should start small: document actual tools and workflows, then set boundaries around data and write access. Expand only when real usage demands it.
 

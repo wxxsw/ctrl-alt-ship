@@ -4,19 +4,19 @@
 
 Use this when AI changed code and you need repeatable evidence that it still works.
 
-## What this scenario is
+## The situation
 
 This scenario turns confidence into evidence. AI-assisted coding increases the amount of change a team can produce, so verification has to become cheaper and more repeatable. The point is not to automate everything. The point is to protect the behaviors that would hurt if they silently broke.
 
 Verification should be chosen by behavior and risk, not by tool popularity. A unit test, API regression test, browser E2E flow, mobile scenario, CI gate, or AI application eval can all be correct in different branches of this scenario.
 
-## What you should end with
+## What you should have afterward
 
 - A clear behavior under protection.
 - A test or check at the cheapest reliable layer.
 - Evidence that can be attached to a PR or release decision.
 
-## Use it when
+## Start here when
 
 - AI-generated changes need proof before merge.
 - A critical path is repeatedly changed by humans or agents.
@@ -24,14 +24,25 @@ Verification should be chosen by behavior and risk, not by tool popularity. A un
 - A bug should become a regression test.
 - An AI product feature needs evaluation beyond a single demo prompt.
 
-## Avoid starting here
+## Start somewhere else when
 
 - Nobody agrees on expected behavior. Start with Requirements to Tasks.
 - The system cannot be run or observed. Start by making it observable or scriptable.
 - A one-off prototype is cheaper to throw away than to automate.
 - The check would be more brittle than the behavior it protects.
 
-## Decision map
+## How to choose a route
+
+A quick way to read this page:
+
+```mermaid
+flowchart LR
+  A["What is stuck?"] --> B["Pick a route"]
+  B --> C["Take one small step"]
+  C --> D["Collect evidence"]
+  D --> E["Review or share"]
+```
+
 
 - If logic is pure or close to pure, prefer unit tests.
 - If behavior crosses service boundaries, use integration or contract tests.
@@ -40,57 +51,57 @@ Verification should be chosen by behavior and risk, not by tool popularity. A un
 - If an AI system produces variable outputs, use evals, golden datasets, traces, and review samples.
 - If the check must block unsafe changes, run it in CI with clear failure output.
 
-## Mainstream solution paths
+## Common routes
 
 ### Unit and component tests
 
-Recommended when: business rules, parsing, permission checks, UI components, and bug regression cases.
+Use this when: business rules, parsing, permission checks, UI components, and bug regression cases.
 
-Avoid when: mocking so much that the test no longer resembles real behavior.
+Skip it when: mocking so much that the test no longer resembles real behavior.
 
-Common tools and practices: Jest, Vitest, pytest, JUnit, XCTest, React Testing Library, Flutter widget tests.
+Tools that often show up: Jest, Vitest, pytest, JUnit, XCTest, React Testing Library, Flutter widget tests.
 
 ### Web UI E2E
 
-Recommended when: critical browser flows such as signup, checkout, invite, settings, and admin actions.
+Use this when: critical browser flows such as signup, checkout, invite, settings, and admin actions.
 
-Avoid when: testing every visual detail through E2E. Keep E2E for flows, not every component state.
+Skip it when: testing every visual detail through E2E. Keep E2E for flows, not every component state.
 
-Common tools and practices: Playwright, Cypress, Selenium, Storybook interaction tests.
+Tools that often show up: Playwright, Cypress, Selenium, Storybook interaction tests.
 
 ### Mobile E2E
 
-Recommended when: native app flows, onboarding, payments, permissions, and device-specific behavior.
+Use this when: native app flows, onboarding, payments, permissions, and device-specific behavior.
 
-Avoid when: starting with full-device tests when a widget or integration test would catch the risk.
+Skip it when: starting with full-device tests when a widget or integration test would catch the risk.
 
-Common tools and practices: Maestro, Detox, Appium, XCUITest, Espresso.
+Tools that often show up: Maestro, Detox, Appium, XCUITest, Espresso.
 
 ### API and contract regression
 
-Recommended when: backend services, public APIs, webhooks, auth behavior, and integrations.
+Use this when: backend services, public APIs, webhooks, auth behavior, and integrations.
 
-Avoid when: collections that require fragile shared state or manual secrets.
+Skip it when: collections that require fragile shared state or manual secrets.
 
-Common tools and practices: Bruno, Postman, Pact, Schemathesis, OpenAPI validators, supertest.
+Tools that often show up: Bruno, Postman, Pact, Schemathesis, OpenAPI validators, supertest.
 
 ### AI application evals
 
-Recommended when: RAG, agents, classifiers, extraction, moderation, and generated responses.
+Use this when: RAG, agents, classifiers, extraction, moderation, and generated responses.
 
-Avoid when: judging an AI feature with one golden prompt. Use datasets and failure review.
+Skip it when: judging an AI feature with one golden prompt. Use datasets and failure review.
 
-Common tools and practices: Braintrust, Langfuse, OpenAI Evals patterns, promptfoo, custom evaluation harnesses.
+Tools that often show up: Braintrust, Langfuse, OpenAI Evals patterns, promptfoo, custom evaluation harnesses.
 
 ### CI quality gate
 
-Recommended when: checks that should block merge or release.
+Use this when: checks that should block merge or release.
 
-Avoid when: slow, flaky gates that train people to ignore failures.
+Skip it when: slow, flaky gates that train people to ignore failures.
 
-Common tools and practices: GitHub Actions, GitLab CI, CircleCI, Buildkite, required status checks.
+Tools that often show up: GitHub Actions, GitLab CI, CircleCI, Buildkite, required status checks.
 
-## Practical workflow
+## Walk through it
 
 1. Name the behavior and why it matters.
 2. Choose the cheapest layer that can detect the failure with enough confidence.
@@ -121,7 +132,7 @@ Evidence:
 CI test output plus Playwright trace on failure.
 ```
 
-## Verification checklist
+## Check yourself
 
 - Does the check protect a named behavior?
 - Is this the cheapest reliable layer?
@@ -129,7 +140,7 @@ CI test output plus Playwright trace on failure.
 - Can someone run it without tribal knowledge?
 - Is the failure output useful enough for a reviewer or on-call engineer?
 
-## Common failure modes
+## Where people get burned
 
 - Writing broad E2E tests because they feel realistic, then drowning in flake.
 - Adding snapshots that approve accidental output.
@@ -137,7 +148,7 @@ CI test output plus Playwright trace on failure.
 - Keeping tests local and never wiring them into CI or PR evidence.
 - Using AI eval scores without reviewing failure examples.
 
-## When this becomes team practice
+## When a team adopts it
 
 Teams should maintain a verification ladder: unit, integration, API, UI, mobile, eval, and CI gate. The ladder helps reviewers ask why a check lives at a certain layer.
 

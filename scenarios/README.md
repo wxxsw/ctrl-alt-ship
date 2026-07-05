@@ -4,7 +4,7 @@
 
 Start here when you know the work you are trying to do, but not the AI workflow that fits it.
 
-Each scenario is meant to stand on its own. Open the closest one and use it as a working guide: when to use it, when to avoid it, how to choose between mainstream solution paths, which tools fit, and what to verify before trusting the workflow.
+Each scenario is meant to stand on its own. Open the closest one and read it as a tutorial: what is probably happening, what to try first, which route fits, what tools tend to show up, and what proof you need before trusting the workflow.
 
 ## Current map
 

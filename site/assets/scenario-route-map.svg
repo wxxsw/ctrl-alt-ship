@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 420" role="img" aria-labelledby="title desc">
+  <title id="title">Scenario route map</title>
+  <desc id="desc">A visual map of engineering work moving from situation to route, proof, review, and release.</desc>
+  <defs>
+    <linearGradient id="panel" x1="0" x2="1" y1="0" y2="1">
+      <stop stop-color="#ffffff" offset="0"/>
+      <stop stop-color="#edf4f3" offset="1"/>
+    </linearGradient>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="14" stdDeviation="18" flood-color="#164947" flood-opacity="0.16"/>
+    </filter>
+  </defs>
+  <rect width="760" height="420" rx="28" fill="url(#panel)"/>
+  <path d="M92 286 C188 180 250 342 350 228 C455 110 540 170 666 86" fill="none" stroke="#256f6c" stroke-width="10" stroke-linecap="round" opacity="0.84"/>
+  <path d="M92 318 C205 250 266 386 385 278 C487 184 558 226 676 154" fill="none" stroke="#d3993c" stroke-width="4" stroke-dasharray="14 14" stroke-linecap="round" opacity="0.78"/>
+  <g filter="url(#shadow)">
+    <rect x="58" y="64" width="184" height="104" rx="18" fill="#fff" stroke="#ded8cc"/>
+    <rect x="288" y="52" width="184" height="104" rx="18" fill="#fff" stroke="#ded8cc"/>
+    <rect x="518" y="194" width="184" height="104" rx="18" fill="#fff" stroke="#ded8cc"/>
+    <rect x="226" y="242" width="184" height="104" rx="18" fill="#fff" stroke="#ded8cc"/>
+  </g>
+  <g fill="#164947" font-family="Inter, Arial, sans-serif" font-weight="700" font-size="18">
+    <text x="84" y="104">Situation</text>
+    <text x="314" y="92">Route</text>
+    <text x="544" y="234">Evidence</text>
+    <text x="252" y="282">Review</text>
+  </g>
+  <g fill="#5d6675" font-family="Inter, Arial, sans-serif" font-size="14">
+    <text x="84" y="130">What is actually stuck?</text>
+    <text x="314" y="118">Which path fits?</text>
+    <text x="544" y="260">What proves it?</text>
+    <text x="252" y="308">Can a human trust it?</text>
+  </g>
+  <g fill="#256f6c">
+    <circle cx="92" cy="286" r="12"/>
+    <circle cx="350" cy="228" r="12"/>
+    <circle cx="666" cy="86" r="12"/>
+  </g>
+</svg>

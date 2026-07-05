@@ -4,19 +4,19 @@
 
 Use this when you have symptoms, but not a proven cause.
 
-## What this scenario is
+## The situation
 
 This scenario helps move from symptom to cause before code changes. AI is useful for summarizing logs, generating hypotheses, reading unfamiliar code paths, and proposing experiments. It is dangerous when it turns a plausible story into a confident fix without evidence.
 
 Good debugging is evidence-shaped. A useful AI interaction should produce a hypothesis that predicts the next observation, not a patch that merely sounds reasonable.
 
-## What you should end with
+## What you should have afterward
 
 - A short debugging note with symptom, evidence, hypotheses, experiments, and result.
 - A minimal reproduction or targeted check when possible.
 - A fix connected to evidence, plus a regression check.
 
-## Use it when
+## Start here when
 
 - You see an error, alert, flaky test, or user report but do not know the cause.
 - Logs, traces, stack traces, or metrics need to be connected.
@@ -24,14 +24,25 @@ Good debugging is evidence-shaped. A useful AI interaction should produce a hypo
 - You need help reading an unfamiliar code path.
 - A previous fix did not hold and you need a stronger causal chain.
 
-## Avoid starting here
+## Start somewhere else when
 
 - The system is actively burning and coordination matters more than root cause. Start with Incident Response.
 - The expected behavior is unclear. Start with Requirements to Tasks.
 - You already have a fix and need confidence. Start with Automated Verification.
 - The data includes secrets or customer information that should not be pasted into an AI tool.
 
-## Decision map
+## How to choose a route
+
+A quick way to read this page:
+
+```mermaid
+flowchart LR
+  A["What is stuck?"] --> B["Pick a route"]
+  B --> C["Take one small step"]
+  C --> D["Collect evidence"]
+  D --> E["Review or share"]
+```
+
 
 - If you can reproduce locally, write the reproduction first and then inspect code.
 - If you cannot reproduce, collect logs, traces, metrics, release history, and recent changes.
@@ -39,41 +50,41 @@ Good debugging is evidence-shaped. A useful AI interaction should produce a hypo
 - If the symptom began after a release, compare commits and use git bisect or deploy history.
 - If the bug affects customers now, coordinate through Incident Response while debugging continues.
 
-## Mainstream solution paths
+## Common routes
 
 ### Reproduction-first debugging
 
-Recommended when: local bugs, deterministic failures, failing tests, and UI regressions.
+Use this when: local bugs, deterministic failures, failing tests, and UI regressions.
 
-Avoid when: spending hours on a perfect reproduction when production impact needs immediate mitigation.
+Skip it when: spending hours on a perfect reproduction when production impact needs immediate mitigation.
 
-Common tools and practices: unit tests, integration tests, Playwright traces, browser devtools, debugger, minimal repro repos.
+Tools that often show up: unit tests, integration tests, Playwright traces, browser devtools, debugger, minimal repro repos.
 
 ### Observability-first debugging
 
-Recommended when: production-only failures, distributed systems, performance issues, and partial outages.
+Use this when: production-only failures, distributed systems, performance issues, and partial outages.
 
-Avoid when: treating dashboard correlation as proof without checking timing and causality.
+Skip it when: treating dashboard correlation as proof without checking timing and causality.
 
-Common tools and practices: Sentry, Datadog, New Relic, Grafana, OpenTelemetry traces, structured logs.
+Tools that often show up: Sentry, Datadog, New Relic, Grafana, OpenTelemetry traces, structured logs.
 
 ### Change-history debugging
 
-Recommended when: regressions after deploys, dependency upgrades, or configuration changes.
+Use this when: regressions after deploys, dependency upgrades, or configuration changes.
 
-Avoid when: assuming the newest change caused the bug without evidence.
+Skip it when: assuming the newest change caused the bug without evidence.
 
-Common tools and practices: git bisect, release notes, deploy logs, feature flag history, dependency lockfile diff.
+Tools that often show up: git bisect, release notes, deploy logs, feature flag history, dependency lockfile diff.
 
 ### AI-assisted hypothesis generation
 
-Recommended when: large logs, unfamiliar code, many possible causes, or messy incident threads.
+Use this when: large logs, unfamiliar code, many possible causes, or messy incident threads.
 
-Avoid when: accepting the first plausible explanation. Ask for competing hypotheses and evidence needed.
+Skip it when: accepting the first plausible explanation. Ask for competing hypotheses and evidence needed.
 
-Common tools and practices: chat assistants, log summarizers, codebase-aware assistants, notebook-style debugging notes.
+Tools that often show up: chat assistants, log summarizers, codebase-aware assistants, notebook-style debugging notes.
 
-## Practical workflow
+## Walk through it
 
 1. State the symptom in one sentence with time, environment, and affected user path.
 2. Collect the strongest evidence: error message, stack trace, request, release, logs, trace, screenshot.
@@ -106,7 +117,7 @@ Regression check:
 Add test for coupon plus non-default currency.
 ```
 
-## Verification checklist
+## Check yourself
 
 - Is the symptom specific enough to reproduce or search for?
 - Are observations separated from guesses?
@@ -114,7 +125,7 @@ Add test for coupon plus non-default currency.
 - Did the fix target the proven cause instead of a nearby smell?
 - Was a regression check added or updated?
 
-## Common failure modes
+## Where people get burned
 
 - AI writes a confident fix based on one stack trace.
 - The team changes several things at once and cannot tell what mattered.
@@ -122,7 +133,7 @@ Add test for coupon plus non-default currency.
 - Logs with sensitive data are pasted into external tools.
 - The fix removes the symptom but leaves the underlying invariant untested.
 
-## When this becomes team practice
+## When a team adopts it
 
 A team debugging habit should preserve the trail: symptom, evidence, hypotheses, experiment, result, fix, regression check. This is especially useful when AI summarizes long threads because the summary must stay anchored to facts.
 

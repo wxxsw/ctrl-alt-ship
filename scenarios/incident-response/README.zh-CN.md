@@ -4,19 +4,19 @@
 
 当日志、告警、dashboard 和聊天记录需要整理成共享事故图景，就看这个场景。
 
-## 这个场景是什么
+## 你现在遇到的其实是什么
 
 这个场景用于正在发生或刚结束的事故。AI 可以总结时间线、聚类日志、起草 status update、提出假设。但它不能替代 incident command、ownership 或直接系统证据。
 
 事故里，清楚比聪明更重要。团队需要一张共享图景：发生了什么、谁受影响、最近改了什么、已经试过什么、下一步决策是什么、谁负责。
 
-## 你应该拿到什么
+## 做完以后应该留下什么
 
 - 一条 live incident timeline，包含事实、行动、owner 和开放问题。
 - 把 mitigation、root-cause investigation 和 communication 分开。
 - 一份能产生后续任务的事故复盘，而不是甩锅文章。
 
-## 什么时候用
+## 什么时候从这里开始
 
 - 告警、日志、客户反馈和聊天同时涌进来。
 - 多人一起排查，上下文开始碎片化。
@@ -24,14 +24,25 @@
 - 还不知道完整根因，但需要先止血。
 - 事故应该沉淀成可跟踪的后续工作。
 
-## 什么时候别从这里开始
+## 什么时候先别看这一页
 
 - 只是本地 bug，没有活跃客户影响。先看调试。
 - 预期行为不清楚。先看需求到任务。
 - 需要把敏感客户数据贴进不安全工具。
 - 团队还没有 incident owner。先指定 incident commander，再谈工具优化。
 
-## 决策地图
+## 怎么选路线
+
+可以先按这条线读：
+
+```mermaid
+flowchart LR
+  A["现在卡在哪"] --> B["选一条路线"]
+  B --> C["先做一小步"]
+  C --> D["拿到证据"]
+  D --> E["review 或沉淀"]
+```
+
 
 - 如果客户正在受影响，先指定 incident command 和 mitigation owner。
 - 如果证据分散，先建 timeline，再争论 root cause。
@@ -39,41 +50,41 @@
 - 如果需要沟通，只用已确认事实起草 status update。
 - 如果事故已恢复，把经验转成后续任务、测试、runbook 或 alert。
 
-## 主流解决路径
+## 常见路线
 
 ### Incident command 和协调
 
-推荐在: 有多个 responder 或客户影响的活跃事故。
+适合: 有多个 responder 或客户影响的活跃事故。
 
-避免在: 每个人都追自己的理论，但没人负责整体决策。
+不适合: 每个人都追自己的理论，但没人负责整体决策。
 
 常见工具和做法: PagerDuty、Opsgenie、Slack/Teams incident channels、Zoom/Meet bridges、incident roles。
 
 ### Observability triage
 
-推荐在: alerts、errors、latency、traffic drops、queue growth 和局部故障。
+适合: alerts、errors、latency、traffic drops、queue growth 和局部故障。
 
-避免在: 看到图上 spike 就直接认定 root cause，不查 deploy 和 logs。
+不适合: 看到图上 spike 就直接认定 root cause，不查 deploy 和 logs。
 
 常见工具和做法: Datadog、Grafana、New Relic、Sentry、OpenTelemetry、cloud provider logs。
 
 ### 客户和 stakeholder 沟通
 
-推荐在: 用户可见故障、性能下降、数据疑虑或 support volume 激增。
+适合: 用户可见故障、性能下降、数据疑虑或 support volume 激增。
 
-避免在: 在公开更新里解释未经确认的原因。
+不适合: 在公开更新里解释未经确认的原因。
 
 常见工具和做法: Statuspage、incident comms templates、support macros、customer success notes。
 
 ### 事故后学习
 
-推荐在: 止血后，团队需要后续任务和预防工作。
+适合: 止血后，团队需要后续任务和预防工作。
 
-避免在: 把 postmortem 写成甩锅或没人行动的长文。
+不适合: 把 postmortem 写成甩锅或没人行动的长文。
 
 常见工具和做法: postmortem templates、action item trackers、runbooks、test and alert backlogs。
 
-## 实操流程
+## 跟着做一遍
 
 1. 需要时先指定 incident commander、technical lead、scribe 和 communication owner。
 2. 建立 timeline，写时间戳、事实、行动和证据链接。
@@ -106,7 +117,7 @@
 - 给 dashboard 加 checkout errors by currency。
 ```
 
-## 验证清单
+## 检查一下自己
 
 - 是否有单一 incident owner？
 - timeline 是否把事实和假设分开？
@@ -114,7 +125,7 @@
 - mitigation 和 root-cause work 是否分开？
 - 事故是否产生了可跟踪后续任务？
 
-## 常见坑
+## 最容易踩的坑
 
 - AI 总结线程时，把猜测当成事实。
 - 所有人都在 debug，但没人负责协调和沟通。
@@ -122,7 +133,7 @@
 - status update 写了未经确认的技术猜测。
 - postmortem action items 很虚，后面也没人跟。
 
-## 变成团队实践以后
+## 变成团队习惯以后
 
 团队应该在事故前定义 incident roles 和 timeline 格式。AI 可以帮 scribe 总结，但决策属于 incident commander。
 

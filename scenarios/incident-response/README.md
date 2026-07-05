@@ -4,19 +4,19 @@
 
 Use this when logs, alerts, dashboards, and chats need to become a shared incident picture.
 
-## What this scenario is
+## The situation
 
 This scenario is for active or recent incidents. AI can summarize timelines, cluster logs, draft status updates, and propose hypotheses. It should not replace incident command, ownership, or direct system evidence.
 
 During an incident, clarity beats cleverness. The team needs one shared picture: what is happening, who is affected, what changed, what has been tried, what decision is next, and who owns it.
 
-## What you should end with
+## What you should have afterward
 
 - A live incident timeline with facts, actions, owners, and open questions.
 - A separation between mitigation, root-cause investigation, and communication.
 - A post-incident note that produces follow-up tasks instead of blame.
 
-## Use it when
+## Start here when
 
 - Alerts, logs, customer reports, and chats are arriving at the same time.
 - Several people are investigating and context is fragmenting.
@@ -24,14 +24,25 @@ During an incident, clarity beats cleverness. The team needs one shared picture:
 - A mitigation is needed before full root cause is known.
 - An incident should produce durable follow-up work.
 
-## Avoid starting here
+## Start somewhere else when
 
 - The issue is a local bug with no active customer impact. Start with Debugging.
 - The expected behavior is unclear. Start with Requirements to Tasks.
 - Sensitive customer data would need to be pasted into an unsafe tool.
 - The team has no incident owner. Pick an incident commander before optimizing tooling.
 
-## Decision map
+## How to choose a route
+
+A quick way to read this page:
+
+```mermaid
+flowchart LR
+  A["What is stuck?"] --> B["Pick a route"]
+  B --> C["Take one small step"]
+  C --> D["Collect evidence"]
+  D --> E["Review or share"]
+```
+
 
 - If customers are currently affected, assign incident command and mitigation owner first.
 - If evidence is scattered, create a timeline before debating root cause.
@@ -39,41 +50,41 @@ During an incident, clarity beats cleverness. The team needs one shared picture:
 - If communication is needed, draft status updates from confirmed facts only.
 - If the incident is resolved, turn lessons into follow-up tasks, tests, runbooks, or alerts.
 
-## Mainstream solution paths
+## Common routes
 
 ### Incident command and coordination
 
-Recommended when: active incidents with multiple responders or customer impact.
+Use this when: active incidents with multiple responders or customer impact.
 
-Avoid when: letting every responder chase their own theory without ownership.
+Skip it when: letting every responder chase their own theory without ownership.
 
-Common tools and practices: PagerDuty, Opsgenie, Slack/Teams incident channels, Zoom/Meet bridges, incident roles.
+Tools that often show up: PagerDuty, Opsgenie, Slack/Teams incident channels, Zoom/Meet bridges, incident roles.
 
 ### Observability triage
 
-Recommended when: alerts, errors, latency, traffic drops, queue growth, and partial outages.
+Use this when: alerts, errors, latency, traffic drops, queue growth, and partial outages.
 
-Avoid when: jumping from a graph spike to root cause without checking deployments and logs.
+Skip it when: jumping from a graph spike to root cause without checking deployments and logs.
 
-Common tools and practices: Datadog, Grafana, New Relic, Sentry, OpenTelemetry, cloud provider logs.
+Tools that often show up: Datadog, Grafana, New Relic, Sentry, OpenTelemetry, cloud provider logs.
 
 ### Customer and stakeholder communication
 
-Recommended when: user-facing outages, degraded performance, data concerns, or support volume spikes.
+Use this when: user-facing outages, degraded performance, data concerns, or support volume spikes.
 
-Avoid when: overexplaining unconfirmed causes in public updates.
+Skip it when: overexplaining unconfirmed causes in public updates.
 
-Common tools and practices: Statuspage, incident comms templates, support macros, customer success notes.
+Tools that often show up: Statuspage, incident comms templates, support macros, customer success notes.
 
 ### Post-incident learning
 
-Recommended when: after mitigation, when the team needs follow-up tasks and prevention work.
+Use this when: after mitigation, when the team needs follow-up tasks and prevention work.
 
-Avoid when: turning the postmortem into blame or a long essay nobody acts on.
+Skip it when: turning the postmortem into blame or a long essay nobody acts on.
 
-Common tools and practices: postmortem templates, action item trackers, runbooks, test and alert backlogs.
+Tools that often show up: postmortem templates, action item trackers, runbooks, test and alert backlogs.
 
-## Practical workflow
+## Walk through it
 
 1. Name incident commander, technical lead, scribe, and communication owner if needed.
 2. Create a timeline with timestamps, facts, actions, and links to evidence.
@@ -106,7 +117,7 @@ Follow-up:
 - Add dashboard panel for checkout errors by currency.
 ```
 
-## Verification checklist
+## Check yourself
 
 - Is there a single incident owner?
 - Does the timeline distinguish facts from hypotheses?
@@ -114,7 +125,7 @@ Follow-up:
 - Are mitigation and root-cause work separated?
 - Did the incident produce tracked follow-up tasks?
 
-## Common failure modes
+## Where people get burned
 
 - AI summarizes a thread and accidentally treats guesses as facts.
 - Everyone debugs while nobody owns coordination or communication.
@@ -122,7 +133,7 @@ Follow-up:
 - Status updates include unconfirmed technical theories.
 - Postmortem action items are vague and never tracked.
 
-## When this becomes team practice
+## When a team adopts it
 
 Team practice should define incident roles and a timeline format before an incident happens. AI can help the scribe summarize, but the incident commander owns decisions.
 

@@ -23,7 +23,7 @@ Ctrl Alt Ship is a scenario map for that moment. Start with the work in front of
 
 ## How to use this repo
 
-Pick the scenario that matches your current work. Each scenario page is a standalone detailed guide with decision guidance, mainstream solution paths, tool fit, a practical workflow, examples, verification checks, and common failure modes.
+Pick the scenario that matches your current work. Read it like a tutorial, not a spec. Each page starts from the messy moment an engineer is likely facing, then gives routes, examples, checks, and traps to watch for.
 
 The tool notes are there for comparison after you know the scenario. They are not the starting point.
 
