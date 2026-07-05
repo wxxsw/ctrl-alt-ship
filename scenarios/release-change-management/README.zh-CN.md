@@ -2,69 +2,135 @@
 
 [English](README.md) | 简体中文
 
-当一个改动需要 release notes、灰度步骤或回滚思考，就看这个场景。
+当一个改动需要 release notes、灰度步骤、迁移说明或回滚思考，就看这个场景。
 
-## 解决什么问题
+## 这个场景是什么
 
-AI 可以很快总结 commits，但发布不只是总结。好的 release note 要告诉用户发生了什么。好的 rollout plan 要告诉团队观察什么。好的 rollback note 要告诉大家怎么恢复。
+这个场景覆盖从 merge 到安全采用之间的路。AI 可以草拟 release notes、总结 diff、生成 rollout checklist、对照 migration steps。但风险、时机、客户沟通和回滚决策仍然要由人负责。
 
-这个场景帮你把代码改动连接到真正的发布决策。
+问题不只是“改了什么”。还要问：谁会受影响？改动怎么到达他们？你怎么知道它健康？如果不健康，你准备怎么退？
+
+## 你应该拿到什么
+
+- 和真实改动、真实读者匹配的 release notes。
+- 有 owner、检查项和回滚条件的 rollout plan。
+- 给需要行动的人看的 migration 或 operational notes。
 
 ## 什么时候用
 
-- 改动影响用户、数据、计费、权限或基础设施。
-- Release notes 需要从 commits 或 PRs 里整理。
-- 迁移或回滚如果太晚规划，会很痛。
-- 功能需要分阶段发布或沟通。
+- 改动影响用户、运维、support、客户或下游团队。
+- 有 migration、feature flag、配置变化或依赖升级。
+- 发布需要监控、灰度或回滚计划。
+- AI 生成的代码要上线，你需要更清楚的 release review。
+- Support、sales 或 customer success 需要人话总结。
 
-## 小教程
+## 什么时候别从这里开始
 
-1. 先确认读者。
-   用户、客服、销售、运维和工程师需要的细节不一样。
+- 改动还没理解或验证。先看代码审查或自动化验证。
+- 系统已经在故障中。先看事故响应。
+- 改动是低风险内部变化，PR summary 已经足够。
+- 发布后没法监控行为。先补 observability。
 
-2. 从已合并工作总结变化。
-   可以从 PRs 和 commits 开始，但每一句都要对照真实 diff。
+## 决策地图
 
-3. 写清 rollout 路径。
-   是立即发布、feature flag、按账号灰度，还是和 migration 绑定？
+- 如果用户可见，用用户语言写 release notes。
+- 如果是运维变化，写 rollout 和 rollback steps。
+- 如果风险高，用 feature flag、canary、staged rollout 或 migration gate。
+- 如果客户需要行动，写 migration notes 和 support guidance。
+- 如果发布改变 AI 行为，附 eval 结果和 monitoring signals。
 
-4. 写回滚路径。
-   哪怕只是"revert this PR"，也比事故中临时找路好。
+## 主流解决路径
 
-5. 加观察信号。
-   写清哪些 logs、dashboards、support tickets 或 metrics 能说明出问题了。
+### Release notes 和 changelog
 
-## 示例 release note
+推荐在: 用户可见功能、修复、breaking changes 和客户沟通。
+
+避免在: 照抄 commit message，只讲实现，不讲影响。
+
+常见工具和做法: Keep a Changelog、Changesets、Release Please、semantic-release、GitHub Releases。
+
+### Feature flag 和 progressive rollout
+
+推荐在: 高风险行为变化、局部发布、实验和快速回滚。
+
+避免在: flag 永久存在，却没人负责清理。
+
+常见工具和做法: LaunchDarkly、Statsig、Unleash、Flipt、自建 flag 系统。
+
+### Migration planning
+
+推荐在: 数据库变化、API versioning、依赖升级、data backfill 和客户动作。
+
+避免在: 没有 backup、dry run 或 rollback 思考的单向迁移。
+
+常见工具和做法: migration frameworks、backfill jobs、OpenAPI versioning、runbooks、maintenance windows。
+
+### Release observability
+
+推荐在: 可能影响 latency、errors、revenue、support volume 或 AI output quality 的变化。
+
+避免在: 先上线，出问题后才决定看什么指标。
+
+常见工具和做法: Sentry、Datadog、New Relic、Grafana、OpenTelemetry、product analytics、eval dashboards。
+
+## 实操流程
+
+1. 用读者语言总结变化：用户、运维、开发者或客户。
+2. 列出受影响 surface：UI、API、data、permissions、billing、integrations、docs、support。
+3. 选择发布形态：全量、分阶段、feature flag、canary、beta、migration window。
+4. 发布前定义 health checks 和 rollback conditions。
+5. 如果工程外的人需要行动，写 migration 或 support notes。
+6. 附上测试、CI、手动检查或 eval 的验证证据。
+7. 发布后记录发生了什么，并清理临时 flags 或 notes。
+
+## 示例
 
 ```md
-User-facing change:
-Workspace admins 可以从 settings 邀请成员。
+发布:
+Workspace member invite flow 支持重复邀请处理。
+
+读者说明:
+管理员邀请已有 pending invite 的成员时，会看到清楚错误。
 
 Rollout:
-先对 internal workspaces 开启，24 小时后再全量。
+先给 10% workspaces 开 24 小时；健康后全量。
 
-Watch:
-- Invite creation errors
-- Email delivery failures
-- 提到 missing invites 的 support tickets
+Health checks:
+- Invite API 4xx/5xx rate。
+- 提到 invite errors 的 support tickets。
+- 待处理邀请创建数。
 
 Rollback:
-关闭 workspace_invites flag。
+如果 5xx rate 翻倍或 support tickets 激增，关闭 invite_duplicate_error_v2 flag。
+
+Support note:
+让管理员先 cancel pending invite，再发送新邀请。
 ```
 
-## 常见路径
+## 验证清单
 
-- Release notes。
-- Migration planning。
-- Feature flags。
-- Rollout checklist。
-- Rollback planning。
+- release note 是否讲影响，而不只是实现？
+- 受影响读者和 surface 是否写清？
+- rollout、owner 和 timing 是否明确？
+- health checks 和 rollback conditions 是否在发布前定义？
+- 临时 flags、migration code 或 docs 后面会不会清理？
 
-## 工具怎么选
+## 常见坑
 
-AI 适合根据 PRs 和 commits 起草摘要。人需要验证每条说法、客户影响和回滚风险。需要分阶段发布时，再接入 feature flag 和部署工具。
+- AI 从 commit message 草拟 release notes，漏掉用户影响。
+- 高风险变化没有 flag、canary 或 rollback path 就发布。
+- migration notes 没写谁在什么时候跑什么。
+- 出问题后才开始补 monitoring。
+- feature flags 变成永久复杂度。
 
-## 下一步场景
+## 变成团队实践以后
 
-- 如果改动还没验证，去看 [自动化验证](../automated-verification/README.zh-CN.md)。
-- 如果改动还需要 review，去看 [代码审查与质量门禁](../code-review-quality-gates/README.zh-CN.md)。
+团队实践应该把 PR evidence 和 release evidence 连起来。reviewer 应该能看到 merge 前验证了什么，发布后要观察什么。
+
+重复发布时，保留一份 release checklist。AI 可以帮填，但风险、rollout 和 rollback 决策必须由人批准。
+
+## 相关场景
+
+- [自动化验证](../automated-verification/README.zh-CN.md)
+- [事故响应](../incident-response/README.zh-CN.md)
+- [文档与知识](../documentation-knowledge/README.zh-CN.md)

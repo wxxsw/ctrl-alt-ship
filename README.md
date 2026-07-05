@@ -4,7 +4,7 @@
 
 AI coding tools are moving fast. The hard part is still knowing what to try in a real engineering situation.
 
-Ctrl Alt Ship is a scenario map for that moment. Start with the work in front of you, then choose a practical next step.
+Ctrl Alt Ship is a scenario map for that moment. Start with the work in front of you, then open the matching scenario as a standalone guide.
 
 ## Start with your situation
 
@@ -23,7 +23,7 @@ Ctrl Alt Ship is a scenario map for that moment. Start with the work in front of
 
 ## How to use this repo
 
-Pick the scenario that matches your current work. Each scenario page includes a short walkthrough, an example, common paths, and a practical first move.
+Pick the scenario that matches your current work. Each scenario page is a standalone detailed guide with decision guidance, mainstream solution paths, tool fit, a practical workflow, examples, verification checks, and common failure modes.
 
 The tool notes are there for comparison after you know the scenario. They are not the starting point.
 

@@ -2,69 +2,135 @@
 
 [English](README.md) | [简体中文](README.zh-CN.md)
 
-Use this when a change needs release notes, rollout steps, or rollback thinking.
+Use this when a change needs release notes, rollout steps, migration notes, or rollback thinking.
 
-## What this solves
+## What this scenario is
 
-AI can summarize commits quickly, but release work is more than summarization. A good release note tells users what changed. A good rollout plan tells the team what to watch. A good rollback note tells everyone how to recover.
+This scenario covers the path from merged change to safe adoption. AI can draft release notes, summarize diffs, build rollout checklists, and compare migration steps. Humans still need to own risk, timing, customer communication, and rollback decisions.
 
-This scenario helps connect code changes to shipping decisions.
+The question is not only what changed. It is who is affected, how the change reaches them, how you will know it is healthy, and what you will do if it is not.
+
+## What you should end with
+
+- Release notes that match the actual change and the audience.
+- A rollout plan with owners, checks, and rollback conditions.
+- Migration or operational notes for teams who need to act.
 
 ## Use it when
 
-- A change affects users, data, billing, permissions, or infrastructure.
-- Release notes need to be pulled from commits or PRs.
-- Migration or rollback would be painful if planned late.
-- A feature needs staged rollout or communication.
+- A change affects users, operators, support, customers, or downstream teams.
+- There is a migration, feature flag, config change, or dependency upgrade.
+- A release needs monitoring, staged rollout, or rollback planning.
+- AI-generated code is shipping and you need a sharper release review.
+- Support, sales, or customer success need a plain-language summary.
 
-## Mini tutorial
+## Avoid starting here
 
-1. Identify the audience.
-   Users, support, sales, operators, and engineers need different levels of detail.
+- The change is not understood or verified. Start with Code Review or Automated Verification.
+- The system is already failing. Start with Incident Response.
+- The change is internal and low risk, and a PR summary is enough.
+- The team cannot monitor the behavior after release. Build observability first.
 
-2. Summarize the change from merged work.
-   Start from PRs and commits, then verify every claim against the actual diff.
+## Decision map
 
-3. Name the rollout path.
-   Is it instant, behind a flag, staged by account, or tied to a migration?
+- If the change is user-visible, write release notes in user language.
+- If the change is operational, write rollout and rollback steps.
+- If the change is risky, use a feature flag, canary, staged rollout, or migration gate.
+- If customers must act, write migration notes and support guidance.
+- If the release changes AI behavior, include eval results and monitoring signals.
 
-4. Write the rollback path.
-   Even a simple "revert this PR" is better than discovering the path during an incident.
+## Mainstream solution paths
 
-5. Add watch signals.
-   Name logs, dashboards, support tickets, or metrics that would show trouble.
+### Release notes and changelog
 
-## Example release note
+Recommended when: user-visible features, fixes, breaking changes, and customer communication.
+
+Avoid when: copying commit messages that explain implementation instead of user impact.
+
+Common tools and practices: Keep a Changelog format, Changesets, Release Please, semantic-release, GitHub Releases.
+
+### Feature flag and progressive rollout
+
+Recommended when: risky behavior changes, partial rollout, experiments, and fast rollback.
+
+Avoid when: keeping flags forever without cleanup ownership.
+
+Common tools and practices: LaunchDarkly, Statsig, Unleash, Flipt, homegrown flag systems.
+
+### Migration planning
+
+Recommended when: database changes, API versioning, dependency upgrades, data backfills, and customer action.
+
+Avoid when: one-way migrations without backups, dry runs, or rollback thinking.
+
+Common tools and practices: migration frameworks, backfill jobs, OpenAPI versioning, runbooks, maintenance windows.
+
+### Release observability
+
+Recommended when: changes that could affect latency, errors, revenue, support volume, or AI output quality.
+
+Avoid when: shipping first and deciding metrics later.
+
+Common tools and practices: Sentry, Datadog, New Relic, Grafana, OpenTelemetry, product analytics, eval dashboards.
+
+## Practical workflow
+
+1. Summarize what changed in audience language: user, operator, developer, or customer.
+2. Identify affected surfaces: UI, API, data, permissions, billing, integrations, docs, support.
+3. Choose rollout shape: all at once, staged, feature flag, canary, beta, migration window.
+4. Define health checks and rollback conditions before release.
+5. Write migration or support notes if anyone outside engineering must act.
+6. Attach verification evidence from tests, CI, manual checks, or evals.
+7. After release, record what happened and clean up temporary flags or notes.
+
+## Example
 
 ```md
-User-facing change:
-Workspace admins can invite teammates from settings.
+Release:
+Workspace member invite flow now supports duplicate-invite handling.
+
+Audience note:
+Admins see a clear error when trying to invite someone who already has a pending invite.
 
 Rollout:
-Enabled for internal workspaces first, then all workspaces after 24 hours.
+Enable for 10 percent of workspaces for 24 hours, then 100 percent if healthy.
 
-Watch:
-- Invite creation errors
-- Email delivery failures
-- Support tickets mentioning missing invites
+Health checks:
+- Invite API 4xx/5xx rate.
+- Support tickets mentioning invite errors.
+- Pending invite creation count.
 
 Rollback:
-Disable workspace_invites flag.
+Disable invite_duplicate_error_v2 flag if 5xx rate doubles or support tickets spike.
+
+Support note:
+Ask admins to cancel the pending invite before sending a new one.
 ```
 
-## Common paths
+## Verification checklist
 
-- Release notes.
-- Migration planning.
-- Feature flags.
-- Rollout checklist.
-- Rollback planning.
+- Does the release note explain impact instead of implementation only?
+- Are affected audiences and surfaces named?
+- Are rollout, owner, and timing clear?
+- Are health checks and rollback conditions defined before release?
+- Will temporary flags, migration code, or docs be cleaned up later?
 
-## Tool fit
+## Common failure modes
 
-Use AI to draft summaries from PRs and commits. Use humans to verify claims, customer impact, and rollback risk. Use feature flag and deployment tools when the release needs staged exposure.
+- AI drafts release notes from commit messages and misses user impact.
+- A risky change ships without a flag, canary, or rollback path.
+- Migration notes omit who must run what and when.
+- Monitoring is added after the release goes wrong.
+- Feature flags become permanent complexity.
 
-## Next scenarios
+## When this becomes team practice
 
-- If the change is not verified yet, go to [Automated Verification](../automated-verification/README.md).
-- If the change needs review first, go to [Code Review and Quality Gates](../code-review-quality-gates/README.md).
+Team practice should connect PR evidence to release evidence. A reviewer should be able to see what was verified before merge and what will be watched after release.
+
+For repeated releases, keep a release checklist that AI can help fill in, but require humans to approve risk, rollout, and rollback decisions.
+
+## Related scenarios
+
+- [Automated Verification](../automated-verification/README.md)
+- [Incident Response](../incident-response/README.md)
+- [Documentation and Knowledge](../documentation-knowledge/README.md)

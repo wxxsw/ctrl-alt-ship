@@ -2,68 +2,135 @@
 
 [English](README.md) | [简体中文](README.zh-CN.md)
 
-Use this when AI-generated work needs review before it becomes maintenance debt.
+Use this when AI-assisted work needs review before it becomes maintenance debt.
 
-## What this solves
+## What this scenario is
 
-AI can produce a large diff that looks plausible. Reviewers need a way to check whether the change matches the task, preserves behavior, and includes enough evidence.
+This scenario protects the merge boundary. AI can produce plausible code quickly, so review has to check intent, scope, risk, and evidence before style. Quality gates automate the checks that should not depend on reviewer memory.
 
-This scenario helps turn review from "read every line and hope" into a more structured pass.
+The goal is not to slow every PR with ceremony. The goal is to make the risky parts visible: unexpected scope, missing tests, permission changes, new dependencies, generated code, data migrations, and security-sensitive behavior.
+
+## What you should end with
+
+- A review order that starts with task match and risk.
+- A set of automated gates that catch repeatable problems.
+- A PR standard for AI-assisted work: intent, diff, evidence, known limits.
 
 ## Use it when
 
-- AI-generated diffs are large or touch shared code.
-- Reviewers need a clearer merge bar.
-- Security, dependency, or architecture risk is involved.
-- The plan, code, and tests need to be checked together.
+- AI-generated or AI-assisted work is ready for review.
+- The diff is larger than a human can trust at a glance.
+- The team keeps catching the same issue late.
+- You need branch protection, required checks, or security scanning.
+- Reviewers need a clearer standard for what evidence belongs in a PR.
 
-## Mini tutorial
+## Avoid starting here
 
-1. Compare the diff with the original task.
-   Start with intent. Did the change solve the right problem?
+- The task itself is unclear. Start with Requirements to Tasks.
+- The code does not run. Start with Automated Verification.
+- The team is using gates to avoid making ownership decisions.
+- A gate is noisy enough that people routinely bypass it.
 
-2. Look for unexpected scope.
-   New dependencies, broad rewrites, unrelated formatting, and hidden behavior changes deserve attention.
+## Decision map
 
-3. Check tests and evidence.
-   A generated diff without verification is still unfinished work.
+- If the risk is subjective or architectural, use human review with explicit questions.
+- If the risk is repeatable, automate it with lint, typecheck, tests, or security scanning.
+- If the risk is ownership, use CODEOWNERS or required review rules.
+- If the risk is runtime behavior, require verification evidence in the PR.
+- If the risk is generated code volume, require smaller PRs or a generated-code note.
 
-4. Review risky areas manually.
-   Permissions, billing, auth, data migrations, and shared abstractions should not be rubber-stamped.
+## Mainstream solution paths
 
-5. Leave review notes tied to behavior.
-   "This breaks non-admin users" is more useful than "this looks suspicious".
+### Human review checklist
 
-## Example review checklist
+Recommended when: behavior, scope, architecture, readability, product fit, and risk judgment.
+
+Avoid when: reviewing style first while missing task drift or missing evidence.
+
+Common tools and practices: GitHub/GitLab PR reviews, review templates, CODEOWNERS, pair review.
+
+### Static and semantic checks
+
+Recommended when: repeatable code quality, type, formatting, security, and dependency issues.
+
+Avoid when: adding tools without deciding which failures block merge.
+
+Common tools and practices: ESLint, TypeScript, Ruff, go vet, CodeQL, Semgrep, SonarQube, Dependabot, Renovate.
+
+### Test and build gates
+
+Recommended when: behavior that can be checked automatically before merge.
+
+Avoid when: slow flaky pipelines that hide real signal.
+
+Common tools and practices: GitHub Actions, GitLab CI, Buildkite, CircleCI, required status checks.
+
+### AI-assisted review
+
+Recommended when: summarizing large diffs, pointing out risk areas, and checking PR against the task brief.
+
+Avoid when: treating AI review as approval. It is another reviewer signal, not ownership.
+
+Common tools and practices: code review assistants, repo-aware chat, custom review prompts, CI comments.
+
+## Practical workflow
+
+1. Read the task brief before the diff.
+2. Check whether the diff matches the task and respects non-goals.
+3. Scan for risky areas: auth, permissions, billing, data, migrations, external writes, secrets.
+4. Check automated evidence: tests, typecheck, lint, CI, security scan, manual smoke notes.
+5. Review the code for maintainability and local conventions.
+6. Ask for smaller PRs when the diff mixes unrelated goals.
+7. Turn repeated review comments into automated gates or templates.
+
+## Example
 
 ```md
-Task match:
+AI-assisted PR review order:
+
+1. Task match
 - Does the diff implement the accepted task?
 - Are non-goals respected?
 
-Risk:
-- Auth, permissions, billing, data, or migrations touched?
-- New dependency added?
+2. Risk
+- Auth, permissions, billing, data, migrations, or external writes touched?
+- New dependency or generated code added?
 
-Evidence:
+3. Evidence
 - Tests run?
 - Manual path checked?
-- Screenshots, logs, trace, or CI linked?
+- CI linked?
+
+4. Maintainability
+- Follows local patterns?
+- Names and boundaries make sense?
+- No unrelated cleanup?
 ```
 
-## Common paths
+## Verification checklist
 
-- AI-assisted PR review.
-- Security and dependency review.
-- Test coverage review.
-- Architecture review.
-- Merge readiness checklist.
+- Did the reviewer read the task before reviewing the diff?
+- Are risky areas explicitly called out?
+- Do required checks match the risk of the change?
+- Is there evidence for behavior, not only passing lint?
+- Can recurring review feedback become an automated gate?
 
-## Tool fit
+## Common failure modes
 
-AI review tools are useful for first-pass comments and missed patterns. They do not replace code ownership. Static analysis and CI are better for deterministic checks. Humans still need to review intent, product behavior, and risk.
+- Reviewers skim generated code and trust the assistant summary.
+- PRs include unrelated cleanup that hides the actual behavior change.
+- Gates check formatting but miss permissions, migrations, or data loss risk.
+- Security tools are added but nobody owns triage.
+- AI review comments are treated as a substitute for human ownership.
 
-## Next scenarios
+## When this becomes team practice
 
-- If the task is unclear, go to [Requirements to Tasks](../requirements-to-tasks/README.md).
-- If the change needs proof, go to [Automated Verification](../automated-verification/README.md).
+Team practice should define a PR evidence standard. For AI-assisted PRs, require task intent, verification, and known limitations. For high-risk areas, require owner review and stronger tests.
+
+Keep gates boring and trusted. A gate that fails too often for bad reasons becomes background noise.
+
+## Related scenarios
+
+- [Requirements to Tasks](../requirements-to-tasks/README.md)
+- [Automated Verification](../automated-verification/README.md)
+- [Team AI Governance](../team-ai-governance/README.md)

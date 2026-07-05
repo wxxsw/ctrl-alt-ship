@@ -2,69 +2,134 @@
 
 [English](README.md) | 简体中文
 
-当分散的信号需要变成团队共享的事故图景，就看这个场景。
+当日志、告警、dashboard 和聊天记录需要整理成共享事故图景，就看这个场景。
 
-## 解决什么问题
+## 这个场景是什么
 
-事故中，信息会从告警、dashboard、日志、客户反馈和聊天里同时涌进来。AI 可以帮忙总结，但不能替团队制造确定性。
+这个场景用于正在发生或刚结束的事故。AI 可以总结时间线、聚类日志、起草 status update、提出假设。但它不能替代 incident command、ownership 或直接系统证据。
 
-这个场景帮团队用 AI 做信息综合，同时让决策仍然由人负责。
+事故里，清楚比聪明更重要。团队需要一张共享图景：发生了什么、谁受影响、最近改了什么、已经试过什么、下一步决策是什么、谁负责。
+
+## 你应该拿到什么
+
+- 一条 live incident timeline，包含事实、行动、owner 和开放问题。
+- 把 mitigation、root-cause investigation 和 communication 分开。
+- 一份能产生后续任务的事故复盘，而不是甩锅文章。
 
 ## 什么时候用
 
-- 日志、告警、dashboard 和聊天记录需要放在一起读。
-- 响应者需要快速拿到时间线。
-- 需要总结客户影响。
-- Postmortem 需要一个干净的起点。
+- 告警、日志、客户反馈和聊天同时涌进来。
+- 多人一起排查，上下文开始碎片化。
+- 你需要 status update、timeline 或 handoff notes。
+- 还不知道完整根因，但需要先止血。
+- 事故应该沉淀成可跟踪的后续工作。
 
-## 小教程
+## 什么时候别从这里开始
 
-1. 先建时间线。
-   从时间戳、告警、deploy、用户反馈和缓解动作开始。
+- 只是本地 bug，没有活跃客户影响。先看调试。
+- 预期行为不清楚。先看需求到任务。
+- 需要把敏感客户数据贴进不安全工具。
+- 团队还没有 incident owner。先指定 incident commander，再谈工具优化。
 
-2. 把事实和假设分开。
-   "10:42 error rate 上升"是事实。"migration 导致问题"在证明前只是猜测。
+## 决策地图
 
-3. 追踪当前 owner 和下一步动作。
-   响应过程中，清楚比漂亮更重要。
+- 如果客户正在受影响，先指定 incident command 和 mitigation owner。
+- 如果证据分散，先建 timeline，再争论 root cause。
+- 如果 blast radius 不清楚，先确认受影响用户、区域、服务和时间窗。
+- 如果需要沟通，只用已确认事实起草 status update。
+- 如果事故已恢复，把经验转成后续任务、测试、runbook 或 alert。
 
-4. 总结客户影响。
-   谁受影响，多少人，多久，他们看到什么。
+## 主流解决路径
 
-5. 事故稳定后再写 postmortem。
-   AI 可以整理材料，但 root cause 和 follow-ups 要由人确认。
+### Incident command 和协调
 
-## 示例事故笔记
+推荐在: 有多个 responder 或客户影响的活跃事故。
+
+避免在: 每个人都追自己的理论，但没人负责整体决策。
+
+常见工具和做法: PagerDuty、Opsgenie、Slack/Teams incident channels、Zoom/Meet bridges、incident roles。
+
+### Observability triage
+
+推荐在: alerts、errors、latency、traffic drops、queue growth 和局部故障。
+
+避免在: 看到图上 spike 就直接认定 root cause，不查 deploy 和 logs。
+
+常见工具和做法: Datadog、Grafana、New Relic、Sentry、OpenTelemetry、cloud provider logs。
+
+### 客户和 stakeholder 沟通
+
+推荐在: 用户可见故障、性能下降、数据疑虑或 support volume 激增。
+
+避免在: 在公开更新里解释未经确认的原因。
+
+常见工具和做法: Statuspage、incident comms templates、support macros、customer success notes。
+
+### 事故后学习
+
+推荐在: 止血后，团队需要后续任务和预防工作。
+
+避免在: 把 postmortem 写成甩锅或没人行动的长文。
+
+常见工具和做法: postmortem templates、action item trackers、runbooks、test and alert backlogs。
+
+## 实操流程
+
+1. 需要时先指定 incident commander、technical lead、scribe 和 communication owner。
+2. 建立 timeline，写时间戳、事实、行动和证据链接。
+3. 写当前影响和信心等级。
+4. 把 mitigation options 和 root-cause hypotheses 分开。
+5. 只用已确认事实更新 stakeholders，不写猜测。
+6. 止血后，用证据写 root cause 和 contributing factors。
+7. 把预防动作变成 tracked work：测试、alerts、runbooks、dashboards、cleanup 或产品改动。
+
+## 示例
 
 ```md
-Timeline:
-- 10:42 error rate 上升
-- 10:45 alert 触发
-- 10:49 开始 rollback deploy
-- 10:55 error rate 回到正常
+事故时间线:
 
-Known facts:
-- EU 用户的 Checkout POST /payment 失败。
-- 最近 deploy 改了 currency handling。
+09:12 Alert: checkout 500 rate 超过 5%。
+09:14 Support 报告 EU checkout failures。
+09:18 发现最近发布是 2026.07.05。
+09:22 Mitigation: 对 EU traffic 关闭 checkout_coupon_v2。
+09:27 500 rate 回到 baseline。
 
-Open questions:
-- 为什么测试没发现？
-- 有没有 payment 被重复 capture？
+当前影响:
+只影响 EU checkout + coupon。没有证据显示 payment capture 错误。
+
+开放问题:
+- 为什么 coupon recalculation 丢了 currency_code？
+- 受影响用户是否 retry 成功？
+
+后续:
+- 补 coupon + 非默认币种回归测试。
+- 给 dashboard 加 checkout errors by currency。
 ```
 
-## 常见路径
+## 验证清单
 
-- Alert triage。
-- Timeline reconstruction。
-- Hypothesis tracking。
-- Customer impact summary。
-- Postmortem drafting。
+- 是否有单一 incident owner？
+- timeline 是否把事实和假设分开？
+- 客户影响是否带信心等级？
+- mitigation 和 root-cause work 是否分开？
+- 事故是否产生了可跟踪后续任务？
 
-## 工具怎么选
+## 常见坑
 
-AI 适合总结日志、聊天和时间线。Observability 工具负责提供源数据。影响范围、根因和责任归属仍然需要人 review。
+- AI 总结线程时，把猜测当成事实。
+- 所有人都在 debug，但没人负责协调和沟通。
+- 明明有 mitigation，团队还在争论 root cause。
+- status update 写了未经确认的技术猜测。
+- postmortem action items 很虚，后面也没人跟。
 
-## 下一步场景
+## 变成团队实践以后
 
-- 如果问题已经变成编码任务，去看 [编码与重构](../coding-and-refactoring/README.zh-CN.md)。
-- 如果修复需要证明，去看 [自动化验证](../automated-verification/README.zh-CN.md)。
+团队应该在事故前定义 incident roles 和 timeline 格式。AI 可以帮 scribe 总结，但决策属于 incident commander。
+
+用事故后 follow-up 强化其他场景：更好的验证、更好的发布检查、更好的文档和更好的 alerts。
+
+## 相关场景
+
+- [调试](../debugging/README.zh-CN.md)
+- [发布与变更管理](../release-change-management/README.zh-CN.md)
+- [文档与知识](../documentation-knowledge/README.zh-CN.md)

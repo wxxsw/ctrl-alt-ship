@@ -3,8 +3,8 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>场景教程 | Ctrl Alt Ship</title>
-    <meta name="description" content="面向 AI-assisted engineering work 的场景教程。">
+    <title>场景深挖教程 | Ctrl Alt Ship</title>
+    <meta name="description" content="面向 AI-assisted engineering work 的场景深挖教程。">
     <link rel="stylesheet" href="styles.css">
   </head>
   <body>
@@ -20,343 +20,736 @@
       <main>
         <section class="hero">
           <p class="eyebrow">场景教程</p>
-          <h1>把真实工程问题变成可执行工作流。</h1>
-          <p class="lede">每个教程都给你一个问题形状、一个第一步和一个具体例子。先选最接近的场景，再把它改成适合你项目的做法。</p>
+          <h1>每个场景都是一份独立工作指南。</h1>
+          <p class="lede">先找到你正在处理的工程场景，再看可选路径、主流方案、工具取舍、实操步骤和验证清单。工具是分支里的选择，不是入口。</p>
           <div class="intro-list">
             <a href="#requirements-to-tasks">需求到任务</a>
             <a href="#project-context-memory">项目上下文记忆</a>
             <a href="#coding-and-refactoring">编码与重构</a>
             <a href="#debugging">调试</a>
             <a href="#automated-verification">自动化验证</a>
-            <a href="#code-review-quality-gates">代码审查</a>
-            <a href="#documentation-and-knowledge">文档知识</a>
-            <a href="#release-and-change-management">发布变更</a>
+            <a href="#code-review-quality-gates">代码审查与质量门禁</a>
+            <a href="#documentation-knowledge">文档与知识</a>
+            <a href="#release-change-management">发布与变更管理</a>
             <a href="#incident-response">事故响应</a>
-            <a href="#team-ai-governance">团队治理</a>
+            <a href="#team-ai-governance">团队 AI 治理</a>
           </div>
         </section>
 
         <article class="scenario-block" id="requirements-to-tasks">
-          <h2>需求到任务</h2>
-          <p>当一个需求已经真实，但还模糊到工程师或 AI assistant 不能安全开工，就看这个场景。</p>
-          <div class="tutorial-grid">
+          <div class="scenario-heading">
+            <p class="eyebrow">场景深挖</p>
+            <h2>需求到任务</h2>
+            <p>当一个需求已经真实，但还模糊到工程师或 AI assistant 不能安全开工，就看这个场景。</p>
+          </div>
+          <div class="tutorial-grid wide">
             <div>
-              <h3>怎么做</h3>
-              <ol>
-                <li>用一句话写清用户能看到的变化。</li>
-                <li>写清哪些包括，哪些不包括。</li>
-                <li>把"完成"变成可观察的验收检查。</li>
-                <li>补充可能相关的页面、API、数据模型或命令。</li>
-                <li>在开工前写清验证方式。</li>
-              </ol>
-              <h3>第一步</h3>
-              <p>写一张短任务卡：意图、不做什么、验收标准、限制和验证方式。</p>
+              <h3>适用判断</h3>
+              <ul><li>一个请求可以被理解成好几种做法。</li><li>几个人需要先对 done 达成一致。</li><li>工作可能牵涉产品行为、设计、数据、权限、定价或发布。</li><li>你希望 AI assistant 不靠猜来补上下文。</li></ul>
+              <h3>实操流程</h3>
+              <ol><li>用一句话写清用户或系统会看到什么变化。</li><li>写出角色、起始状态、动作和预期结果。</li><li>先列不做什么。控制范围主要靠这一段。</li><li>用能观察到的语言写验收检查。例子比抽象要求更有用。</li><li>补实现线索：可能相关文件、API、命令、数据模型、feature flag 和风险区域。</li><li>选择验证方式：单测、集成测试、E2E 冒烟、手动检查或 CI gate。</li></ol>
             </div>
-            <div class="example-box">
-              <pre>意图:
-管理员可以通过邮箱邀请一位成员。
+            <div>
+              <h3>主流解决路径</h3>
+              <div class="solution-list">
+              <section class="solution-item">
+                <h4>轻量 issue 任务卡</h4>
+                <p><strong>推荐在:</strong> 小产品改动、UI 修复、单个接口，或预期行为已经明确的 bug。</p>
+                <p><strong>避免在:</strong> 跨团队工作、产品决策未定，或牵涉合规、计费、迁移风险的改动。</p>
+                <p><strong>常见工具:</strong> GitHub Issues、Linear、Jira、普通 Markdown、issue 模板。</p>
+              </section>
+              <section class="solution-item">
+                <h4>PRD 或 RFC 拆任务</h4>
+                <p><strong>推荐在:</strong> 方向已经定了，但工程侧需要切片、排顺序、识别依赖。</p>
+                <p><strong>避免在:</strong> 拿 PRD 掩盖还没定下来的产品决策。</p>
+                <p><strong>常见工具:</strong> Notion、Confluence、Google Docs、Linear projects、Jira epics、GitHub milestones。</p>
+              </section>
+              <section class="solution-item">
+                <h4>验收例子或 BDD 写法</h4>
+                <p><strong>推荐在:</strong> 行为依赖角色、状态、边界条件或用户可见文案。</p>
+                <p><strong>避免在:</strong> 把每个小任务都搞成流程。通常几个例子就够。</p>
+                <p><strong>常见工具:</strong> Given/When/Then、测试用例表、UI 状态故事、Storybook。</p>
+              </section>
+              <section class="solution-item">
+                <h4>AI 辅助梳理任务</h4>
+                <p><strong>推荐在:</strong> 你已经知道意图，想让 AI 帮你找缺口、拆步骤、补检查项。</p>
+                <p><strong>避免在:</strong> 让 AI 自己决定范围、定价、权限或发布策略。</p>
+                <p><strong>常见工具:</strong> 聊天助手、IDE assistant、coding agent、团队内部任务模板。</p>
+              </section>
+            </div>
+            </div>
+          </div>
+          <div class="example-box">
+            <pre>意图:
+工作区管理员可以在工作区设置里通过邮箱邀请一位成员。
 
 不做:
-不做批量邀请、角色变化或计费变化。
+- 不做批量邀请。
+- 不改角色管理。
+- 不碰计费逻辑。
 
 验收:
-待处理邀请出现。
-重复邀请显示错误。
-非管理员不能邀请。
+- 管理员可以提交一个合法邮箱。
+- 成员列表里出现待处理邀请。
+- 重复邀请会显示清楚的错误。
+- 非管理员用户不能访问邀请操作。
+
+实现线索:
+- Settings members 页面。
+- Invite API route。
+- Workspace membership 权限。
 
 验证:
-跑 member tests，手动做一次浏览器冒烟测试。</pre>
+- 跑成员权限相关测试。
+- 在浏览器里手动检查成功邀请和重复邀请。</pre>
+          </div>
+          <div class="scenario-footer">
+            <div>
+              <h3>常见坑</h3>
+              <ul><li>任务只写 improve 或 support，却没说行为怎么变。</li><li>验收标准只描述实现细节，不描述用户或系统结果。</li><li>给 AI 的任务太模糊，AI 用看似合理但错误的产品选择补空。</li><li>任务里藏着权限、计费、迁移、通知这类高风险改动。</li></ul>
             </div>
+            <a class="button secondary" href="https://github.com/wxxsw/ctrl-alt-ship/blob/main/scenarios/requirements-to-tasks/README.zh-CN.md">在 GitHub 阅读完整指南</a>
           </div>
         </article>
 
         <article class="scenario-block" id="project-context-memory">
-          <h2>项目上下文记忆</h2>
-          <p>当 AI 总是漏掉本地启动方式、项目约定或代码库结构，就看这个场景。</p>
-          <div class="tutorial-grid">
+          <div class="scenario-heading">
+            <p class="eyebrow">场景深挖</p>
+            <h2>项目上下文记忆</h2>
+            <p>当 AI 总是漏掉项目怎么工作，就看这个场景。</p>
+          </div>
+          <div class="tutorial-grid wide">
             <div>
-              <h3>怎么做</h3>
-              <ol>
-                <li>列出最近五件你反复解释的事。</li>
-                <li>只保留稳定上下文，去掉一次性任务细节。</li>
-                <li>在 repo 附近写一份短指南。</li>
-                <li>链接深层文档，不要复制全部内容。</li>
-                <li>同一个错误重复出现时更新指南。</li>
-              </ol>
-              <h3>第一步</h3>
-              <p>写下运行命令、测试命令、重要目录、本地约定和高风险区域。</p>
+              <h3>适用判断</h3>
+              <ul><li>每个新会话都要重复解释本地启动方式。</li><li>AI 漏掉本地风格、架构或 review 预期。</li><li>项目知识散在聊天、工单、文档和人的脑子里。</li><li>新贡献者需要更快理解 repo。</li></ul>
+              <h3>实操流程</h3>
+              <ol><li>列出最近五件你不得不告诉 assistant 或新队友的事。</li><li>把稳定上下文和一次性任务上下文分开。</li><li>把稳定上下文写在未来读者最可能看的地方。</li><li>补一张 repo map，说明重要目录，以及哪些地方不要随手改。</li><li>链接到更深文档，不要整段复制。</li><li>加一条小规则：同一个错误出现两次，就更新上下文。</li></ol>
             </div>
-            <div class="example-box">
-              <pre>Local commands:
-Install: pnpm install
-Test: pnpm test
-Typecheck: pnpm typecheck
-
-Project map:
-app/ 产品页面
-api/ server routes
-db/ schema 和 migrations
-
-Careful:
-Billing 和 membership 需要额外 review。</pre>
+            <div>
+              <h3>主流解决路径</h3>
+              <div class="solution-list">
+              <section class="solution-item">
+                <h4>Repo 指南</h4>
+                <p><strong>推荐在:</strong> 启动命令、测试命令、项目结构、代码约定和 review 预期。</p>
+                <p><strong>避免在:</strong> 写成没人会读的完整架构书。</p>
+                <p><strong>常见工具:</strong> README、CONTRIBUTING、docs 目录、团队批准的 assistant instructions。</p>
+              </section>
+              <section class="solution-item">
+                <h4>代码库地图</h4>
+                <p><strong>推荐在:</strong> 大 repo、monorepo、陌生老系统或新人 onboarding。</p>
+                <p><strong>避免在:</strong> 逐个列文件。地图应该说明决策在哪里发生。</p>
+                <p><strong>常见工具:</strong> 目录说明、Mermaid 图、架构概览页、依赖图。</p>
+              </section>
+              <section class="solution-item">
+                <h4>决策记忆</h4>
+                <p><strong>推荐在:</strong> 以后还会被问到的架构、安全、数据和产品取舍。</p>
+                <p><strong>避免在:</strong> 把历史写得过于漂亮，掩盖当时真实的取舍。</p>
+                <p><strong>常见工具:</strong> ADR、RFC archive、decision log、docs-as-code。</p>
+              </section>
+              <section class="solution-item">
+                <h4>Assistant 上下文层</h4>
+                <p><strong>推荐在:</strong> 团队反复在同一个 repo 里使用 coding agent 或 IDE assistant。</p>
+                <p><strong>避免在:</strong> 提交个人 prompt、私密凭证或敏感本地 agent 配置。</p>
+                <p><strong>常见工具:</strong> 项目说明、IDE rule files、workspace memory、被 ignore 的本地笔记。</p>
+              </section>
             </div>
+            </div>
+          </div>
+          <div class="example-box">
+            <pre>本地命令:
+- Install: pnpm install
+- Test: pnpm test
+- Typecheck: pnpm typecheck
+
+项目地图:
+- app/: 产品页面和 route-level state
+- api/: server routes 和 request validation
+- db/: schema 和 migrations
+
+约定:
+- UI state 放在 page-level hooks。
+- 权限变化需要补测试。
+- 优先使用已有 service helpers，不要新建 fetch wrapper。
+
+小心:
+- Billing 和 workspace membership 需要额外 review。
+- 不要提交个人 agent notes 或本地凭证。</pre>
+          </div>
+          <div class="scenario-footer">
+            <div>
+              <h3>常见坑</h3>
+              <ul><li>项目指南变成所有观点的垃圾场。</li><li>文档只讲命令，不讲项目形状。</li><li>敏感本地 instructions 被提交到公开 repo。</li><li>团队写了一次上下文，以后重复犯错也不更新。</li></ul>
+            </div>
+            <a class="button secondary" href="https://github.com/wxxsw/ctrl-alt-ship/blob/main/scenarios/project-context-memory/README.zh-CN.md">在 GitHub 阅读完整指南</a>
           </div>
         </article>
 
         <article class="scenario-block" id="coding-and-refactoring">
-          <h2>编码与重构</h2>
-          <p>当 AI 能帮你写代码或移动代码，但改动仍然需要人掌控，就看这个场景。</p>
-          <div class="tutorial-grid">
+          <div class="scenario-heading">
+            <p class="eyebrow">场景深挖</p>
+            <h2>编码与重构</h2>
+            <p>当 AI 可以帮你写代码或搬代码，但你仍然需要控制改动，就看这个场景。</p>
+          </div>
+          <div class="tutorial-grid wide">
             <div>
-              <h3>怎么做</h3>
-              <ol>
-                <li>从有边界的任务开始。</li>
-                <li>改代码前先要计划。</li>
-                <li>按可 review 的检查点推进。</li>
-                <li>每个有意义步骤后跑测试、typecheck、lint 或 smoke check。</li>
-                <li>最后拿 diff 对照原始任务。</li>
-              </ol>
-              <h3>第一步</h3>
-              <p>要求计划里写出可能文件、风险区域和验证方式。</p>
+              <h3>适用判断</h3>
+              <ul><li>你需要 AI 帮忙实现一个清楚任务。</li><li>重构有明确的行为边界。</li><li>迁移可以拆成可重复的机械步骤。</li><li>你想更快做代码搜索、编辑规划或测试补充。</li></ul>
+              <h3>实操流程</h3>
+              <ol><li>从任务卡开始，写清行为边界。</li><li>让 AI 先给计划，点出文件、风险区域和验证方式。</li><li>批准计划，或者在编辑前缩小范围。</li><li>按检查点改。每个检查点都应该能单独理解。</li><li>每完成一个有意义步骤，就跑最便宜的相关检查。</li><li>用原始任务来 review diff，不用 assistant 临时扩展出来的目标来 review。</li></ol>
             </div>
-            <div class="example-box">
-              <pre>Task:
-把 notification preference 逻辑移到 hook。
+            <div>
+              <h3>主流解决路径</h3>
+              <div class="solution-list">
+              <section class="solution-item">
+                <h4>结对式 assistant</h4>
+                <p><strong>推荐在:</strong> 有边界的编辑、代码搜索、小 bug 修复和测试草稿。</p>
+                <p><strong>避免在:</strong> 没有检查点的大范围自动重写。</p>
+                <p><strong>常见工具:</strong> IDE assistant、带 repo 上下文的聊天助手、terminal coding agent。</p>
+              </section>
+              <section class="solution-item">
+                <h4>Agentic implementation loop</h4>
+                <p><strong>推荐在:</strong> 需要多文件编辑，并且能通过命令行验证的任务。</p>
+                <p><strong>避免在:</strong> 未经批准就运行影响生产、写外部系统或处理 secrets 的命令。</p>
+                <p><strong>常见工具:</strong> coding agent、本地 sandbox、branch workflow、CI feedback。</p>
+              </section>
+              <section class="solution-item">
+                <h4>Codemod 或编译器支持的迁移</h4>
+                <p><strong>推荐在:</strong> rename、API 迁移、框架升级和重复模式改造。</p>
+                <p><strong>避免在:</strong> 语义变化太多，语法转换无法表达真实意图。</p>
+                <p><strong>常见工具:</strong> jscodeshift、ts-morph、OpenRewrite、Rector、gofmt/go vet、language server refactor。</p>
+              </section>
+              <section class="solution-item">
+                <h4>先补行为保护再重构</h4>
+                <p><strong>推荐在:</strong> 老代码区域，行为不能变。</p>
+                <p><strong>避免在:</strong> 用脆弱 snapshot test 锁死偶然行为。</p>
+                <p><strong>常见工具:</strong> 单测、集成测试、golden tests、approval tests、Playwright/Cypress UI 冒烟。</p>
+              </section>
+            </div>
+            </div>
+          </div>
+          <div class="example-box">
+            <pre>任务:
+把 notification preference 逻辑从 SettingsPage 移到可复用 hook。
 
-Plan:
-找出当前 state 和 API calls。
-抽出 hook，不改变行为。
-更新 component。
-跑 notification tests。
-Smoke test settings page。</pre>
+行为边界:
+UI 行为、API shape 和持久化行为都不能变。
+
+计划:
+1. 找到当前 state 和 API calls。
+2. 抽出 useNotificationPreferences。
+3. 更新 SettingsPage 调用 hook。
+4. 跑 notification tests 和 typecheck。
+5. 手动冒烟检查 settings page。
+
+停止条件:
+如果重构需要改 API，或者改变 loading/error 行为，先停下来确认。</pre>
+          </div>
+          <div class="scenario-footer">
+            <div>
+              <h3>常见坑</h3>
+              <ul><li>任务没有 non-goals，assistant 顺手做大范围 cleanup。</li><li>重构悄悄改变行为，测试只覆盖 happy path。</li><li>diff 太大，review 失去意义。</li><li>agent 新增依赖，而不是使用项目已有 helper。</li></ul>
             </div>
+            <a class="button secondary" href="https://github.com/wxxsw/ctrl-alt-ship/blob/main/scenarios/coding-and-refactoring/README.zh-CN.md">在 GitHub 阅读完整指南</a>
           </div>
         </article>
 
         <article class="scenario-block" id="debugging">
-          <h2>调试</h2>
-          <p>当你有症状，但还没有被证明的原因，就看这个场景。</p>
-          <div class="tutorial-grid">
+          <div class="scenario-heading">
+            <p class="eyebrow">场景深挖</p>
+            <h2>调试</h2>
+            <p>当你已经看到故障现象，但还没有证明根因，就看这个场景。</p>
+          </div>
+          <div class="tutorial-grid wide">
             <div>
-              <h3>怎么做</h3>
-              <ol>
-                <li>用一句话写清症状。</li>
-                <li>收集最强证据。</li>
-                <li>写一个能预测下一步观察结果的假设。</li>
-                <li>做一个小实验。</li>
-                <li>根因和证据连上之后，再改代码。</li>
-              </ol>
-              <h3>第一步</h3>
-              <p>写一条调试笔记：symptom、evidence、hypothesis、next check。</p>
+              <h3>适用判断</h3>
+              <ul><li>你看到 error、alert、flaky test 或用户反馈，但不知道原因。</li><li>日志、trace、stack trace 或 metrics 需要串起来。</li><li>bug 只在某些环境或数据状态下出现。</li><li>你需要读一条陌生代码路径。</li></ul>
+              <h3>实操流程</h3>
+              <ol><li>用一句话写清现象，带上时间、环境和受影响路径。</li><li>收集最强证据：错误信息、stack trace、request、release、日志、trace、截图。</li><li>把观察和解释分开，不要让 AI 混成一段。</li><li>写两三个假设，并说明每个假设会预测什么结果。</li><li>做能推翻某个假设的最小实验。</li><li>只有当根因和证据连上以后再修。</li></ol>
             </div>
-            <div class="example-box">
-              <pre>Symptom:
-应用 coupon 后 checkout 返回 500。
-
-Evidence:
-Server log 显示 currency_code 是 null。
-Request 有 coupon_id 和 currency=EUR。
-
-Hypothesis:
-Coupon recalculation 丢了 currency_code。
-
-Next check:
-沿 applyCoupon 追到 updatePaymentIntent。</pre>
+            <div>
+              <h3>主流解决路径</h3>
+              <div class="solution-list">
+              <section class="solution-item">
+                <h4>先复现再调试</h4>
+                <p><strong>推荐在:</strong> 本地 bug、确定性失败、失败测试和 UI 回归。</p>
+                <p><strong>避免在:</strong> 生产影响正在扩大时，花太久追求完美复现。</p>
+                <p><strong>常见工具:</strong> 单测、集成测试、Playwright traces、浏览器 devtools、debugger、最小复现 repo。</p>
+              </section>
+              <section class="solution-item">
+                <h4>先看可观测性</h4>
+                <p><strong>推荐在:</strong> 只在生产出现的问题、分布式系统、性能问题和局部故障。</p>
+                <p><strong>避免在:</strong> 把 dashboard 相关性当成证明，不检查时间线和因果。</p>
+                <p><strong>常见工具:</strong> Sentry、Datadog、New Relic、Grafana、OpenTelemetry traces、结构化日志。</p>
+              </section>
+              <section class="solution-item">
+                <h4>沿变更历史排查</h4>
+                <p><strong>推荐在:</strong> 发布、依赖升级或配置变化之后出现的回归。</p>
+                <p><strong>避免在:</strong> 没有证据就认定最近一次改动是原因。</p>
+                <p><strong>常见工具:</strong> git bisect、release notes、deploy logs、feature flag history、lockfile diff。</p>
+              </section>
+              <section class="solution-item">
+                <h4>AI 辅助生成假设</h4>
+                <p><strong>推荐在:</strong> 日志很长、代码陌生、可能原因很多，或事故聊天记录很乱。</p>
+                <p><strong>避免在:</strong> 接受第一个听起来合理的解释。要求 AI 给竞争假设和需要的证据。</p>
+                <p><strong>常见工具:</strong> 聊天助手、log summarizer、带 codebase 上下文的 assistant、调试笔记。</p>
+              </section>
             </div>
+            </div>
+          </div>
+          <div class="example-box">
+            <pre>现象:
+用户使用 coupon 后 checkout 返回 500。2026.07.05 发布后开始出现，目前只看到 EUR checkout 反馈。
+
+证据:
+- Server log: 更新 payment intent 时 currency_code 是 null。
+- Request 里有 coupon_id 和 currency=EUR。
+- 最近一小时 USD 没有失败。
+
+假设:
+1. Coupon recalculation 在非默认币种下丢了 currency_code。
+2. 支付服务拒绝某个 coupon 配置。
+3. Feature flag 给 EU 用户打开了新 checkout path。
+
+下一个实验:
+用 EUR 和 USD fixture trace applyCoupon 到 updatePaymentIntent。
+
+回归检查:
+补一条 coupon + 非默认币种测试。</pre>
+          </div>
+          <div class="scenario-footer">
+            <div>
+              <h3>常见坑</h3>
+              <ul><li>AI 根据一条 stack trace 写出很自信的修复。</li><li>团队一次改好几处，最后不知道哪处起作用。</li><li>本地修好了，但不是失败发生的那个环境。</li><li>带敏感数据的日志被贴到外部工具。</li></ul>
+            </div>
+            <a class="button secondary" href="https://github.com/wxxsw/ctrl-alt-ship/blob/main/scenarios/debugging/README.zh-CN.md">在 GitHub 阅读完整指南</a>
           </div>
         </article>
 
         <article class="scenario-block" id="automated-verification">
-          <h2>自动化验证</h2>
-          <p>当 AI 改了代码，而一句"看起来没问题"已经不够用，就看这个场景。</p>
-          <div class="tutorial-grid">
+          <div class="scenario-heading">
+            <p class="eyebrow">场景深挖</p>
+            <h2>自动化验证</h2>
+            <p>当 AI 改了代码，而你需要可重复的证据证明它仍然能工作，就看这个场景。</p>
+          </div>
+          <div class="tutorial-grid wide">
             <div>
-              <h3>怎么做</h3>
-              <ol>
-                <li>选一个要保护的行为。</li>
-                <li>选择最便宜的验证层。</li>
-                <li>故意让检查失败一次。</li>
-                <li>在 AI 改相关代码前先跑。</li>
-                <li>留下 trace、截图、日志或 CI 输出。</li>
-              </ol>
-              <h3>第一步</h3>
-              <p>先让一条关键路径可重复，再考虑扩大覆盖。</p>
+              <h3>适用判断</h3>
+              <ul><li>AI 生成的改动需要在 merge 前证明。</li><li>关键路径经常被人或 agent 改动。</li><li>手动 QA 慢、不稳定，或者容易忘。</li><li>一个 bug 应该变成回归测试。</li></ul>
+              <h3>实操流程</h3>
+              <ol><li>写清要保护的行为，以及它为什么重要。</li><li>选择能以足够信心抓住失败的最便宜层级。</li><li>让检查失败一次，或者至少确认它能抓住你关心的 bug。</li><li>让验证环境稳定：数据、auth、环境和 secrets。</li><li>在 review 前，本地或 CI 跑一次。</li><li>附上证据：logs、traces、截图、视频、测试输出或 eval summary。</li></ol>
             </div>
-            <div class="example-box">
-              <pre>Behavior:
-Admin 可以邀请一位成员。
-
-Check:
-打开 workspace settings。
-提交合法邮箱。
-确认 pending invite 出现。
-确认重复邀请显示错误。
-
-Evidence:
-Trace 或录屏，加测试输出。</pre>
+            <div>
+              <h3>主流解决路径</h3>
+              <div class="solution-list">
+              <section class="solution-item">
+                <h4>单测和组件测试</h4>
+                <p><strong>推荐在:</strong> 业务规则、解析、权限检查、UI component、bug 回归。</p>
+                <p><strong>避免在:</strong> mock 太多，最后测试已经不像真实行为。</p>
+                <p><strong>常见工具:</strong> Jest、Vitest、pytest、JUnit、XCTest、React Testing Library、Flutter widget tests。</p>
+              </section>
+              <section class="solution-item">
+                <h4>Web UI E2E</h4>
+                <p><strong>推荐在:</strong> signup、checkout、invite、settings、admin action 等关键浏览器流程。</p>
+                <p><strong>避免在:</strong> 用 E2E 测每个视觉细节。E2E 更适合流程，不适合所有组件状态。</p>
+                <p><strong>常见工具:</strong> Playwright、Cypress、Selenium、Storybook interaction tests。</p>
+              </section>
+              <section class="solution-item">
+                <h4>移动端 E2E</h4>
+                <p><strong>推荐在:</strong> 原生 app 流程、onboarding、支付、权限和设备相关行为。</p>
+                <p><strong>避免在:</strong> widget 或 integration test 能抓住风险时，一上来就做全设备测试。</p>
+                <p><strong>常见工具:</strong> Maestro、Detox、Appium、XCUITest、Espresso。</p>
+              </section>
+              <section class="solution-item">
+                <h4>API 和 contract 回归</h4>
+                <p><strong>推荐在:</strong> 后端服务、公开 API、webhook、auth 行为和集成。</p>
+                <p><strong>避免在:</strong> 集合依赖脆弱共享状态或手动 secrets。</p>
+                <p><strong>常见工具:</strong> Bruno、Postman、Pact、Schemathesis、OpenAPI validators、supertest。</p>
+              </section>
             </div>
+            </div>
+          </div>
+          <div class="example-box">
+            <pre>行为:
+工作区管理员可以邀请一位成员，重复邀请会显示错误。
+
+层级:
+Playwright 浏览器冒烟测试，因为风险跨 UI、API、auth 和 persistence。
+
+测试轮廓:
+1. 以 workspace admin 登录。
+2. 打开 members settings。
+3. 提交一个合法邮箱。
+4. 断言待处理邀请出现。
+5. 再提交同一个邮箱。
+6. 断言重复邀请错误出现。
+
+证据:
+CI test output，失败时保留 Playwright trace。</pre>
+          </div>
+          <div class="scenario-footer">
+            <div>
+              <h3>常见坑</h3>
+              <ul><li>因为 E2E 看起来真实，就写一堆宽泛 E2E，然后被 flake 淹没。</li><li>加 snapshot，把偶然输出批准成标准。</li><li>测试实现细节，但用户可见行为没有被保护。</li><li>测试只在本地跑，从不接进 CI 或 PR evidence。</li></ul>
+            </div>
+            <a class="button secondary" href="https://github.com/wxxsw/ctrl-alt-ship/blob/main/scenarios/automated-verification/README.zh-CN.md">在 GitHub 阅读完整指南</a>
           </div>
         </article>
 
         <article class="scenario-block" id="code-review-quality-gates">
-          <h2>代码审查与质量门禁</h2>
-          <p>当 AI 生成的工作需要先 review，免得变成维护债，就看这个场景。</p>
-          <div class="tutorial-grid">
+          <div class="scenario-heading">
+            <p class="eyebrow">场景深挖</p>
+            <h2>代码审查与质量门禁</h2>
+            <p>当 AI-assisted work 需要在变成维护债之前 review，就看这个场景。</p>
+          </div>
+          <div class="tutorial-grid wide">
             <div>
-              <h3>怎么做</h3>
-              <ol>
-                <li>拿 diff 对照原始任务。</li>
-                <li>找意外范围。</li>
-                <li>检查测试和证据。</li>
-                <li>手动 review 高风险区域。</li>
-                <li>Review note 要指向行为。</li>
-              </ol>
-              <h3>第一步</h3>
-              <p>先看 task match 和风险，再看风格细节。</p>
+              <h3>适用判断</h3>
+              <ul><li>AI 生成或 AI 辅助的工作已经准备 review。</li><li>diff 大到人不能一眼信任。</li><li>团队总是在很晚才抓到同一类问题。</li><li>你需要 branch protection、required checks 或 security scanning。</li></ul>
+              <h3>实操流程</h3>
+              <ol><li>先读任务卡，再看 diff。</li><li>检查 diff 是否匹配任务，并遵守 non-goals。</li><li>扫风险区域：auth、permissions、billing、data、migrations、external writes、secrets。</li><li>看自动化证据：tests、typecheck、lint、CI、security scan、manual smoke notes。</li><li>再 review 代码可维护性和本地约定。</li><li>当 diff 混了多个目标，要求拆小 PR。</li></ol>
             </div>
-            <div class="example-box">
-              <pre>Task match:
-Diff 是否实现了任务？
-Non-goals 有没有被尊重？
-
-Risk:
-是否碰到 auth、权限、计费、数据或迁移？
-是否新增依赖？
-
-Evidence:
-测试跑了吗？
-手动路径查了吗？
-CI 链接了吗？</pre>
+            <div>
+              <h3>主流解决路径</h3>
+              <div class="solution-list">
+              <section class="solution-item">
+                <h4>人工 review checklist</h4>
+                <p><strong>推荐在:</strong> 行为、范围、架构、可读性、产品匹配和风险判断。</p>
+                <p><strong>避免在:</strong> 先纠结风格，却漏掉任务漂移和缺证据。</p>
+                <p><strong>常见工具:</strong> GitHub/GitLab PR review、review template、CODEOWNERS、pair review。</p>
+              </section>
+              <section class="solution-item">
+                <h4>静态和语义检查</h4>
+                <p><strong>推荐在:</strong> 可重复的代码质量、类型、格式、安全和依赖问题。</p>
+                <p><strong>避免在:</strong> 加工具之前没决定哪些失败应该阻止 merge。</p>
+                <p><strong>常见工具:</strong> ESLint、TypeScript、Ruff、go vet、CodeQL、Semgrep、SonarQube、Dependabot、Renovate。</p>
+              </section>
+              <section class="solution-item">
+                <h4>测试和 build gates</h4>
+                <p><strong>推荐在:</strong> merge 前可以自动检查的行为。</p>
+                <p><strong>避免在:</strong> 慢且 flaky 的 pipeline，把真实信号藏起来。</p>
+                <p><strong>常见工具:</strong> GitHub Actions、GitLab CI、Buildkite、CircleCI、required status checks。</p>
+              </section>
+              <section class="solution-item">
+                <h4>AI 辅助 review</h4>
+                <p><strong>推荐在:</strong> 总结大 diff、指出风险区域、检查 PR 是否匹配任务卡。</p>
+                <p><strong>避免在:</strong> 把 AI review 当作批准。它只是 reviewer signal，不是 ownership。</p>
+                <p><strong>常见工具:</strong> code review assistant、repo-aware chat、自定义 review prompt、CI comments。</p>
+              </section>
             </div>
+            </div>
+          </div>
+          <div class="example-box">
+            <pre>AI-assisted PR review 顺序:
+
+1. 任务匹配
+- diff 是否实现已接受任务？
+- non-goals 是否被尊重？
+
+2. 风险
+- 是否碰到 auth、permissions、billing、data、migrations 或 external writes？
+- 是否新增依赖或生成代码？
+
+3. 证据
+- 测试跑了吗？
+- 手动路径检查了吗？
+- CI 链接了吗？
+
+4. 可维护性
+- 是否符合本地模式？
+- 命名和边界是否合理？
+- 有没有无关 cleanup？</pre>
+          </div>
+          <div class="scenario-footer">
+            <div>
+              <h3>常见坑</h3>
+              <ul><li>reviewer 扫一眼生成代码，然后相信 assistant summary。</li><li>PR 混入无关 cleanup，掩盖真正行为变化。</li><li>gate 只查格式，却漏掉权限、迁移或数据丢失风险。</li><li>安全工具加上了，但没人负责 triage。</li></ul>
+            </div>
+            <a class="button secondary" href="https://github.com/wxxsw/ctrl-alt-ship/blob/main/scenarios/code-review-quality-gates/README.zh-CN.md">在 GitHub 阅读完整指南</a>
           </div>
         </article>
 
-        <article class="scenario-block" id="documentation-and-knowledge">
-          <h2>文档与知识</h2>
-          <p>当决策和项目知识总是消失在聊天里，就看这个场景。</p>
-          <div class="tutorial-grid">
+        <article class="scenario-block" id="documentation-knowledge">
+          <div class="scenario-heading">
+            <p class="eyebrow">场景深挖</p>
+            <h2>文档与知识</h2>
+            <p>当决策和项目知识总是消失在聊天里，就看这个场景。</p>
+          </div>
+          <div class="tutorial-grid wide">
             <div>
-              <h3>怎么做</h3>
-              <ol>
-                <li>在离工作最近的地方记录决策。</li>
-                <li>写取舍，不只写结论。</li>
-                <li>放到人真的会找的地方。</li>
-                <li>保持小。</li>
-                <li>加维护提示。</li>
-              </ol>
-              <h3>第一步</h3>
-              <p>一次有意义工作后，写下决策、取舍和什么时候应该重看。</p>
+              <h3>适用判断</h3>
+              <ul><li>架构或产品决策以后还会被用到。</li><li>新队友缺少项目背景。</li><li>文档过期、分散，或者更新成本太高。</li><li>最近一次事故、迁移或发布里有可复用经验。</li></ul>
+              <h3>实操流程</h3>
+              <ol><li>趁上下文还新鲜，记录决策或经验。</li><li>先判断文档类型：decision、runbook、guide、reference 或 changelog。</li><li>写结论背后的取舍。</li><li>放到未来读者最先会找的地方。</li><li>链接相关代码、PR、事故、dashboard 或 ticket。</li><li>加维护提示：owner、review date 或 revisit condition。</li></ol>
             </div>
-            <div class="example-box">
-              <pre>决策:
-Invite actions 使用 server-side permission checks。
+            <div>
+              <h3>主流解决路径</h3>
+              <div class="solution-list">
+              <section class="solution-item">
+                <h4>Docs-as-code</h4>
+                <p><strong>推荐在:</strong> 需要和代码一起 review、version 的工程文档。</p>
+                <p><strong>避免在:</strong> 非工程同事很难参与贡献的跨团队文档。</p>
+                <p><strong>常见工具:</strong> Markdown、MkDocs、Docusaurus、VitePress、GitHub Pages、PR review。</p>
+              </section>
+              <section class="solution-item">
+                <h4>团队知识库</h4>
+                <p><strong>推荐在:</strong> 跨职能背景、onboarding、support playbooks 和产品决策。</p>
+                <p><strong>避免在:</strong> 需要严格变更历史或代码 review 的关键运维步骤。</p>
+                <p><strong>常见工具:</strong> Notion、Confluence、Google Docs、Slab、Linear docs。</p>
+              </section>
+              <section class="solution-item">
+                <h4>架构和决策记录</h4>
+                <p><strong>推荐在:</strong> 以后还会被质疑或追问的取舍。</p>
+                <p><strong>避免在:</strong> 每个小实现选择都写 ADR。</p>
+                <p><strong>常见工具:</strong> ADR templates、RFCs、decision logs、Mermaid diagrams。</p>
+              </section>
+              <section class="solution-item">
+                <h4>AI 辅助总结</h4>
+                <p><strong>推荐在:</strong> 把长 PR 讨论、事故记录和会议记录变成第一稿。</p>
+                <p><strong>避免在:</strong> 没核对事实、日期、owner 和开放问题就发布 summary。</p>
+                <p><strong>常见工具:</strong> 聊天助手、transcript summarizer、document assistant、内部搜索。</p>
+              </section>
+            </div>
+            </div>
+          </div>
+          <div class="example-box">
+            <pre>决策:
+Workspace invite actions 使用 server-side permission checks。
+
+背景:
+UI 已经会隐藏不可用操作，但用户仍然可以直接调用 API。
 
 原因:
-Client checks 改善 UX，但不能作为 auth 依据。
+Client-side checks 可以改善 UX，但不能作为授权边界。
 
 取舍:
-UI 隐藏操作，server 负责权限判断。
+UI 可能会为了 disabled states 重复一些 permission logic，但 server 仍然负责最终授权判断。
 
 什么时候重看:
-Permission model 改变。</pre>
+Workspace permission model 变化，或者 invite ownership 移到另一个 service。</pre>
+          </div>
+          <div class="scenario-footer">
+            <div>
+              <h3>常见坑</h3>
+              <ul><li>直接发布 AI summary，事实和假设混在一起。</li><li>创建没人维护的 wiki page。</li><li>写很长的背景文档，把真正决策埋起来。</li><li>复制一个经常变化的来源，导致很快过期。</li></ul>
             </div>
+            <a class="button secondary" href="https://github.com/wxxsw/ctrl-alt-ship/blob/main/scenarios/documentation-knowledge/README.zh-CN.md">在 GitHub 阅读完整指南</a>
           </div>
         </article>
 
-        <article class="scenario-block" id="release-and-change-management">
-          <h2>发布与变更管理</h2>
-          <p>当一个改动需要 release notes、灰度步骤或回滚思考，就看这个场景。</p>
-          <div class="tutorial-grid">
+        <article class="scenario-block" id="release-change-management">
+          <div class="scenario-heading">
+            <p class="eyebrow">场景深挖</p>
+            <h2>发布与变更管理</h2>
+            <p>当一个改动需要 release notes、灰度步骤、迁移说明或回滚思考，就看这个场景。</p>
+          </div>
+          <div class="tutorial-grid wide">
             <div>
-              <h3>怎么做</h3>
-              <ol>
-                <li>先确认读者。</li>
-                <li>从已合并工作总结变化。</li>
-                <li>写清 rollout 路径。</li>
-                <li>写回滚路径。</li>
-                <li>加观察信号。</li>
-              </ol>
-              <h3>第一步</h3>
-              <p>发布前先写清用户可见变化和 rollback path。</p>
+              <h3>适用判断</h3>
+              <ul><li>改动影响用户、运维、support、客户或下游团队。</li><li>有 migration、feature flag、配置变化或依赖升级。</li><li>发布需要监控、灰度或回滚计划。</li><li>AI 生成的代码要上线，你需要更清楚的 release review。</li></ul>
+              <h3>实操流程</h3>
+              <ol><li>用读者语言总结变化：用户、运维、开发者或客户。</li><li>列出受影响 surface：UI、API、data、permissions、billing、integrations、docs、support。</li><li>选择发布形态：全量、分阶段、feature flag、canary、beta、migration window。</li><li>发布前定义 health checks 和 rollback conditions。</li><li>如果工程外的人需要行动，写 migration 或 support notes。</li><li>附上测试、CI、手动检查或 eval 的验证证据。</li></ol>
             </div>
-            <div class="example-box">
-              <pre>User-facing change:
-Admins 可以从 settings 邀请成员。
+            <div>
+              <h3>主流解决路径</h3>
+              <div class="solution-list">
+              <section class="solution-item">
+                <h4>Release notes 和 changelog</h4>
+                <p><strong>推荐在:</strong> 用户可见功能、修复、breaking changes 和客户沟通。</p>
+                <p><strong>避免在:</strong> 照抄 commit message，只讲实现，不讲影响。</p>
+                <p><strong>常见工具:</strong> Keep a Changelog、Changesets、Release Please、semantic-release、GitHub Releases。</p>
+              </section>
+              <section class="solution-item">
+                <h4>Feature flag 和 progressive rollout</h4>
+                <p><strong>推荐在:</strong> 高风险行为变化、局部发布、实验和快速回滚。</p>
+                <p><strong>避免在:</strong> flag 永久存在，却没人负责清理。</p>
+                <p><strong>常见工具:</strong> LaunchDarkly、Statsig、Unleash、Flipt、自建 flag 系统。</p>
+              </section>
+              <section class="solution-item">
+                <h4>Migration planning</h4>
+                <p><strong>推荐在:</strong> 数据库变化、API versioning、依赖升级、data backfill 和客户动作。</p>
+                <p><strong>避免在:</strong> 没有 backup、dry run 或 rollback 思考的单向迁移。</p>
+                <p><strong>常见工具:</strong> migration frameworks、backfill jobs、OpenAPI versioning、runbooks、maintenance windows。</p>
+              </section>
+              <section class="solution-item">
+                <h4>Release observability</h4>
+                <p><strong>推荐在:</strong> 可能影响 latency、errors、revenue、support volume 或 AI output quality 的变化。</p>
+                <p><strong>避免在:</strong> 先上线，出问题后才决定看什么指标。</p>
+                <p><strong>常见工具:</strong> Sentry、Datadog、New Relic、Grafana、OpenTelemetry、product analytics、eval dashboards。</p>
+              </section>
+            </div>
+            </div>
+          </div>
+          <div class="example-box">
+            <pre>发布:
+Workspace member invite flow 支持重复邀请处理。
+
+读者说明:
+管理员邀请已有 pending invite 的成员时，会看到清楚错误。
 
 Rollout:
-Internal workspaces 先开，24 小时后全量。
+先给 10% workspaces 开 24 小时；健康后全量。
 
-Watch:
-Invite errors、email failures、support tickets。
+Health checks:
+- Invite API 4xx/5xx rate。
+- 提到 invite errors 的 support tickets。
+- 待处理邀请创建数。
 
 Rollback:
-关闭 workspace_invites flag。</pre>
+如果 5xx rate 翻倍或 support tickets 激增，关闭 invite_duplicate_error_v2 flag。
+
+Support note:
+让管理员先 cancel pending invite，再发送新邀请。</pre>
+          </div>
+          <div class="scenario-footer">
+            <div>
+              <h3>常见坑</h3>
+              <ul><li>AI 从 commit message 草拟 release notes，漏掉用户影响。</li><li>高风险变化没有 flag、canary 或 rollback path 就发布。</li><li>migration notes 没写谁在什么时候跑什么。</li><li>出问题后才开始补 monitoring。</li></ul>
             </div>
+            <a class="button secondary" href="https://github.com/wxxsw/ctrl-alt-ship/blob/main/scenarios/release-change-management/README.zh-CN.md">在 GitHub 阅读完整指南</a>
           </div>
         </article>
 
         <article class="scenario-block" id="incident-response">
-          <h2>事故响应</h2>
-          <p>当分散的信号需要变成团队共享的事故图景，就看这个场景。</p>
-          <div class="tutorial-grid">
+          <div class="scenario-heading">
+            <p class="eyebrow">场景深挖</p>
+            <h2>事故响应</h2>
+            <p>当日志、告警、dashboard 和聊天记录需要整理成共享事故图景，就看这个场景。</p>
+          </div>
+          <div class="tutorial-grid wide">
             <div>
-              <h3>怎么做</h3>
-              <ol>
-                <li>先建时间线。</li>
-                <li>把事实和假设分开。</li>
-                <li>追踪当前 owner 和下一步动作。</li>
-                <li>总结客户影响。</li>
-                <li>事故稳定后再写 postmortem。</li>
-              </ol>
-              <h3>第一步</h3>
-              <p>收集 timeline、known facts、open questions 和 current owner。</p>
+              <h3>适用判断</h3>
+              <ul><li>告警、日志、客户反馈和聊天同时涌进来。</li><li>多人一起排查，上下文开始碎片化。</li><li>你需要 status update、timeline 或 handoff notes。</li><li>还不知道完整根因，但需要先止血。</li></ul>
+              <h3>实操流程</h3>
+              <ol><li>需要时先指定 incident commander、technical lead、scribe 和 communication owner。</li><li>建立 timeline，写时间戳、事实、行动和证据链接。</li><li>写当前影响和信心等级。</li><li>把 mitigation options 和 root-cause hypotheses 分开。</li><li>只用已确认事实更新 stakeholders，不写猜测。</li><li>止血后，用证据写 root cause 和 contributing factors。</li></ol>
             </div>
-            <div class="example-box">
-              <pre>Timeline:
-10:42 error rate 上升
-10:45 alert 触发
-10:49 rollback 开始
-10:55 error rate 正常
-
-Known facts:
-EU 用户 checkout 失败。
-最近 deploy 改了 currency handling。
-
-Open questions:
-为什么测试没发现？</pre>
+            <div>
+              <h3>主流解决路径</h3>
+              <div class="solution-list">
+              <section class="solution-item">
+                <h4>Incident command 和协调</h4>
+                <p><strong>推荐在:</strong> 有多个 responder 或客户影响的活跃事故。</p>
+                <p><strong>避免在:</strong> 每个人都追自己的理论，但没人负责整体决策。</p>
+                <p><strong>常见工具:</strong> PagerDuty、Opsgenie、Slack/Teams incident channels、Zoom/Meet bridges、incident roles。</p>
+              </section>
+              <section class="solution-item">
+                <h4>Observability triage</h4>
+                <p><strong>推荐在:</strong> alerts、errors、latency、traffic drops、queue growth 和局部故障。</p>
+                <p><strong>避免在:</strong> 看到图上 spike 就直接认定 root cause，不查 deploy 和 logs。</p>
+                <p><strong>常见工具:</strong> Datadog、Grafana、New Relic、Sentry、OpenTelemetry、cloud provider logs。</p>
+              </section>
+              <section class="solution-item">
+                <h4>客户和 stakeholder 沟通</h4>
+                <p><strong>推荐在:</strong> 用户可见故障、性能下降、数据疑虑或 support volume 激增。</p>
+                <p><strong>避免在:</strong> 在公开更新里解释未经确认的原因。</p>
+                <p><strong>常见工具:</strong> Statuspage、incident comms templates、support macros、customer success notes。</p>
+              </section>
+              <section class="solution-item">
+                <h4>事故后学习</h4>
+                <p><strong>推荐在:</strong> 止血后，团队需要后续任务和预防工作。</p>
+                <p><strong>避免在:</strong> 把 postmortem 写成甩锅或没人行动的长文。</p>
+                <p><strong>常见工具:</strong> postmortem templates、action item trackers、runbooks、test and alert backlogs。</p>
+              </section>
             </div>
+            </div>
+          </div>
+          <div class="example-box">
+            <pre>事故时间线:
+
+09:12 Alert: checkout 500 rate 超过 5%。
+09:14 Support 报告 EU checkout failures。
+09:18 发现最近发布是 2026.07.05。
+09:22 Mitigation: 对 EU traffic 关闭 checkout_coupon_v2。
+09:27 500 rate 回到 baseline。
+
+当前影响:
+只影响 EU checkout + coupon。没有证据显示 payment capture 错误。
+
+开放问题:
+- 为什么 coupon recalculation 丢了 currency_code？
+- 受影响用户是否 retry 成功？
+
+后续:
+- 补 coupon + 非默认币种回归测试。
+- 给 dashboard 加 checkout errors by currency。</pre>
+          </div>
+          <div class="scenario-footer">
+            <div>
+              <h3>常见坑</h3>
+              <ul><li>AI 总结线程时，把猜测当成事实。</li><li>所有人都在 debug，但没人负责协调和沟通。</li><li>明明有 mitigation，团队还在争论 root cause。</li><li>status update 写了未经确认的技术猜测。</li></ul>
+            </div>
+            <a class="button secondary" href="https://github.com/wxxsw/ctrl-alt-ship/blob/main/scenarios/incident-response/README.zh-CN.md">在 GitHub 阅读完整指南</a>
           </div>
         </article>
 
         <article class="scenario-block" id="team-ai-governance">
-          <h2>团队 AI 治理</h2>
-          <p>当团队已经在用 AI 工具，并且需要统一边界，就看这个场景。</p>
-          <div class="tutorial-grid">
+          <div class="scenario-heading">
+            <p class="eyebrow">场景深挖</p>
+            <h2>团队 AI 治理</h2>
+            <p>当团队已经在用 AI 工具，并且需要统一边界，就看这个场景。</p>
+          </div>
+          <div class="tutorial-grid wide">
             <div>
-              <h3>怎么做</h3>
-              <ol>
-                <li>盘点当前 AI 使用。</li>
-                <li>定义数据边界。</li>
-                <li>定义写入边界。</li>
-                <li>设定 review 预期。</li>
-                <li>根据真实事故或漏网问题回看。</li>
-              </ol>
-              <h3>第一步</h3>
-              <p>写清 AI 工具可以读什么、可以改什么、什么需要人工批准。</p>
+              <h3>适用判断</h3>
+              <ul><li>大家用不同 AI 工具，而且用法不一致。</li><li>AI 工具可以访问 repos、tickets、terminals、browsers、logs 或敏感数据。</li><li>reviewer 不确定 AI-assisted work 应该带什么证据。</li><li>团队想提速，但不想引入不必要风险。</li></ul>
+              <h3>实操流程</h3>
+              <ol><li>盘点当前 AI tools、users、data access、write access 和 external integrations。</li><li>给数据分级：public、internal、confidential、customer、regulated、secrets。</li><li>分别定义读边界和写边界。</li><li>给 code changes、external writes、production settings 和 customer data 设置人工批准规则。</li><li>定义 AI-assisted work 的 PR evidence：task intent、verification、known limits 和 reviewer ownership。</li><li>本地个人 agent notes 和 secrets 不要提交到公开文件。</li></ol>
             </div>
-            <div class="example-box">
-              <pre>AI 可以:
-读取公开 docs 和 repository code。
-草拟 briefs、tests 和 PR summaries。
-
-AI 需要批准后才能:
-Push 代码。
-改 production settings。
-使用 customer data。
-
-每个 AI-assisted PR 带上:
-任务摘要、验证证据、已知限制。</pre>
+            <div>
+              <h3>主流解决路径</h3>
+              <div class="solution-list">
+              <section class="solution-item">
+                <h4>使用政策和数据分级</h4>
+                <p><strong>推荐在:</strong> 处理私有代码、客户数据、受监管数据或 vendor tools 的团队。</p>
+                <p><strong>避免在:</strong> 写一份没人记得住、真实工作里用不上的 policy。</p>
+                <p><strong>常见工具:</strong> 团队 policy docs、data classification tables、vendor review checklists、security questionnaires。</p>
+              </section>
+              <section class="solution-item">
+                <h4>工具访问和权限</h4>
+                <p><strong>推荐在:</strong> coding agents、browser agents、repo integrations、ticket integrations 和 terminal access。</p>
+                <p><strong>避免在:</strong> 因为配置方便就给宽泛写权限。</p>
+                <p><strong>常见工具:</strong> SSO、role-based access、GitHub permissions、sandboxing、audit logs、branch protection。</p>
+              </section>
+              <section class="solution-item">
+                <h4>AI-assisted work 标准</h4>
+                <p><strong>推荐在:</strong> AI 参与的 PR、事故记录、文档、测试和生成代码。</p>
+                <p><strong>避免在:</strong> 要求披露每次 autocomplete，却忽略高风险 agentic edits。</p>
+                <p><strong>常见工具:</strong> PR templates、review checklists、evidence requirements、CODEOWNERS。</p>
+              </section>
+              <section class="solution-item">
+                <h4>学习闭环</h4>
+                <p><strong>推荐在:</strong> 希望治理跟着真实使用变好，而不是停在静态 policy 的团队。</p>
+                <p><strong>避免在:</strong> 把治理当成一次性文档。</p>
+                <p><strong>常见工具:</strong> retros、incident reviews、tool audits、prompt and workflow libraries、enablement sessions。</p>
+              </section>
             </div>
+            </div>
+          </div>
+          <div class="example-box">
+            <pre>团队 AI 使用指南:
+
+AI 可以:
+- 读取公开文档和批准过的 repository code。
+- 草拟 task briefs、tests、documentation 和 PR summaries。
+- 在 branch 上建议 code changes。
+
+AI 需要人工批准后才能:
+- Push 代码。
+- 运行会影响外部系统的命令。
+- 修改 production settings。
+- 使用 customer data 或 private logs。
+
+每个 AI-assisted PR 应该带上:
+- 任务意图。
+- 验证证据。
+- 已知限制。
+- 对最终 diff 负责的人。</pre>
+          </div>
+          <div class="scenario-footer">
+            <div>
+              <h3>常见坑</h3>
+              <ul><li>policy 抽象地禁止或允许 AI，但不匹配真实 workflow。</li><li>个人 agent instructions 或 secrets 被提交到公开 repo。</li><li>AI 工具拿到宽泛 repo 或生产权限，却没有 auditability。</li><li>reviewer 看不出 PR 哪些部分是生成的、哪些被验证过。</li></ul>
+            </div>
+            <a class="button secondary" href="https://github.com/wxxsw/ctrl-alt-ship/blob/main/scenarios/team-ai-governance/README.zh-CN.md">在 GitHub 阅读完整指南</a>
           </div>
         </article>
       </main>

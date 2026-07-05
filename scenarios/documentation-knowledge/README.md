@@ -4,65 +4,128 @@
 
 Use this when decisions and project knowledge keep disappearing into chat.
 
-## What this solves
+## What this scenario is
 
-Teams often make good decisions in pull requests, incident threads, and chat. Three months later, nobody remembers the tradeoff.
+This scenario turns useful work context into durable knowledge. AI can summarize, draft, and reorganize, but the important human act is deciding what deserves to live beyond the conversation.
 
-This scenario helps turn important decisions and lessons into lightweight knowledge that people can find again.
+Good documentation is not a transcript. It is a maintained answer to a future question: why did we choose this, how does this work, what should someone do next, and when should they revisit the decision?
+
+## What you should end with
+
+- A decision note, runbook, guide, or reference page that future readers can find.
+- A lightweight rule for when chat or PR discussion becomes documentation.
+- A knowledge structure that separates stable guidance from volatile updates.
 
 ## Use it when
 
-- Architecture or product decisions need to be remembered later.
+- Architecture or product decisions will matter again.
 - New teammates lack project background.
 - Docs are stale, scattered, or too expensive to update.
-- A lesson from recent work should become reusable.
+- A recent incident, migration, or launch produced reusable lessons.
+- AI summaries are useful but currently vanish after the conversation.
 
-## Mini tutorial
+## Avoid starting here
 
-1. Capture the decision close to the work.
-   Do it when the context is still fresh.
+- The content is still private research or unreviewed speculation.
+- The document would duplicate a better-maintained source.
+- The team wants a knowledge base but has no owner for maintenance.
+- The issue is missing project setup context. Start with Project Context Memory.
 
-2. Write the tradeoff behind the conclusion.
-   Future readers need to know why the team chose one path over another.
+## Decision map
 
-3. Put it where people will look.
-   Repo docs work well for engineering decisions. Team knowledge bases work better for cross-functional context.
+- If it explains a choice, write a decision note or ADR.
+- If it explains how to operate something, write a runbook.
+- If it explains how to contribute, update README or CONTRIBUTING.
+- If it explains a product or API surface, publish reference docs or examples.
+- If it changes often, link to the maintained source and keep the page small.
 
-4. Keep the note small.
-   One decision, one page. Long docs become easier to ignore.
+## Mainstream solution paths
 
-5. Add a maintenance hint.
-   Tell future readers when the decision should be revisited.
+### Docs-as-code
 
-## Example decision note
+Recommended when: engineering docs that should be reviewed with code and versioned.
+
+Avoid when: cross-functional docs where non-engineers cannot comfortably contribute.
+
+Common tools and practices: Markdown, MkDocs, Docusaurus, VitePress, GitHub Pages, pull request review.
+
+### Team knowledge base
+
+Recommended when: cross-functional context, onboarding, support playbooks, and product decisions.
+
+Avoid when: critical operational steps that need code review or strict change history.
+
+Common tools and practices: Notion, Confluence, Google Docs, Slab, Linear docs.
+
+### Architecture and decision records
+
+Recommended when: tradeoffs that people will question again.
+
+Avoid when: writing ADRs for every small implementation choice.
+
+Common tools and practices: ADR templates, RFCs, decision logs, Mermaid diagrams.
+
+### AI-assisted summarization
+
+Recommended when: turning long PR threads, incident notes, and meetings into a first draft.
+
+Avoid when: publishing summaries without checking facts, dates, owners, and open questions.
+
+Common tools and practices: chat assistants, transcript summarizers, document assistants, internal search.
+
+## Practical workflow
+
+1. Capture the decision or lesson close to the work.
+2. Decide the document type: decision, runbook, guide, reference, or changelog.
+3. Write the tradeoff behind the conclusion.
+4. Put the document where future readers will look first.
+5. Link related code, PRs, incidents, dashboards, or tickets.
+6. Add a maintenance hint: owner, review date, or revisit condition.
+7. Remove stale or duplicate material when updating.
+
+## Example
 
 ```md
 Decision:
-Use server-side permission checks for workspace invite actions.
+Workspace invite actions use server-side permission checks.
+
+Context:
+The UI already hides unavailable actions, but users can still call APIs directly.
 
 Why:
-Client-side checks improve UX, but they cannot be trusted for authorization.
+Client-side checks improve UX but cannot be the authorization boundary.
 
 Tradeoff:
-The UI still hides unavailable actions, but the server remains the source of truth.
+The UI may duplicate some permission logic for disabled states, but the server remains the source of authorization.
 
 Revisit when:
-The workspace permission model changes.
+Workspace permission model changes or invite ownership moves to another service.
 ```
 
-## Common paths
+## Verification checklist
 
-- Decision records.
-- Architecture notes.
-- Runbooks.
-- Onboarding docs.
-- Personal knowledge systems.
+- Does the document answer a future question someone will actually ask?
+- Is it short enough to maintain?
+- Does it include tradeoffs, not only conclusions?
+- Is there an owner or revisit trigger?
+- Does it link to source material instead of copying everything?
 
-## Tool fit
+## Common failure modes
 
-Use docs-as-code for decisions tied to the repository. Use a team wiki for operating notes and cross-functional context. Use personal notes for research that is not ready to become team guidance.
+- Publishing AI summaries that blur facts and assumptions.
+- Creating a wiki page nobody owns.
+- Writing long context docs that bury the actual decision.
+- Duplicating content from a source that changes often.
+- Letting chat become the only place a decision exists.
 
-## Next scenarios
+## When this becomes team practice
 
-- If the missing knowledge is for AI work, go to [Project Context Memory](../project-context-memory/README.md).
-- If the note affects release communication, go to [Release and Change Management](../release-change-management/README.md).
+Team practice needs a capture rule. For example: any decision that affects future code review, on-call, onboarding, or customer behavior gets a short durable note.
+
+Use AI for first drafts and reorganization, then make a human responsible for factual accuracy, ownership, and maintenance.
+
+## Related scenarios
+
+- [Project Context Memory](../project-context-memory/README.md)
+- [Incident Response](../incident-response/README.md)
+- [Release and Change Management](../release-change-management/README.md)
