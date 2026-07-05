@@ -23,7 +23,7 @@ Ctrl Alt Ship is a scenario map for that moment. Start with the work in front of
 
 ## How to use this repo
 
-Pick the scenario that matches your current work. Each page gives a short description, when it helps, when to avoid it, and a small first move.
+Pick the scenario that matches your current work. Each scenario page includes a short walkthrough, an example, common paths, and a practical first move.
 
 The tool notes are there for comparison after you know the scenario. They are not the starting point.
 

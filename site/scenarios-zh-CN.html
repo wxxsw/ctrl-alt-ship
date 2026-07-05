@@ -1,0 +1,369 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>场景教程 | Ctrl Alt Ship</title>
+    <meta name="description" content="面向 AI-assisted engineering work 的场景教程。">
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body>
+    <div class="page">
+      <header class="topbar">
+        <a class="brand" href="zh-CN.html">Ctrl Alt Ship</a>
+        <nav class="nav" aria-label="Primary">
+          <a href="zh-CN.html">首页</a>
+          <a href="scenarios.html">English</a>
+        </nav>
+      </header>
+
+      <main>
+        <section class="hero">
+          <p class="eyebrow">场景教程</p>
+          <h1>把真实工程问题变成可执行工作流。</h1>
+          <p class="lede">每个教程都给你一个问题形状、一个第一步和一个具体例子。先选最接近的场景，再把它改成适合你项目的做法。</p>
+          <div class="intro-list">
+            <a href="#requirements-to-tasks">需求到任务</a>
+            <a href="#project-context-memory">项目上下文记忆</a>
+            <a href="#coding-and-refactoring">编码与重构</a>
+            <a href="#debugging">调试</a>
+            <a href="#automated-verification">自动化验证</a>
+            <a href="#code-review-quality-gates">代码审查</a>
+            <a href="#documentation-and-knowledge">文档知识</a>
+            <a href="#release-and-change-management">发布变更</a>
+            <a href="#incident-response">事故响应</a>
+            <a href="#team-ai-governance">团队治理</a>
+          </div>
+        </section>
+
+        <article class="scenario-block" id="requirements-to-tasks">
+          <h2>需求到任务</h2>
+          <p>当一个需求已经真实，但还模糊到工程师或 AI assistant 不能安全开工，就看这个场景。</p>
+          <div class="tutorial-grid">
+            <div>
+              <h3>怎么做</h3>
+              <ol>
+                <li>用一句话写清用户能看到的变化。</li>
+                <li>写清哪些包括，哪些不包括。</li>
+                <li>把"完成"变成可观察的验收检查。</li>
+                <li>补充可能相关的页面、API、数据模型或命令。</li>
+                <li>在开工前写清验证方式。</li>
+              </ol>
+              <h3>第一步</h3>
+              <p>写一张短任务卡：意图、不做什么、验收标准、限制和验证方式。</p>
+            </div>
+            <div class="example-box">
+              <pre>意图:
+管理员可以通过邮箱邀请一位成员。
+
+不做:
+不做批量邀请、角色变化或计费变化。
+
+验收:
+待处理邀请出现。
+重复邀请显示错误。
+非管理员不能邀请。
+
+验证:
+跑 member tests，手动做一次浏览器冒烟测试。</pre>
+            </div>
+          </div>
+        </article>
+
+        <article class="scenario-block" id="project-context-memory">
+          <h2>项目上下文记忆</h2>
+          <p>当 AI 总是漏掉本地启动方式、项目约定或代码库结构，就看这个场景。</p>
+          <div class="tutorial-grid">
+            <div>
+              <h3>怎么做</h3>
+              <ol>
+                <li>列出最近五件你反复解释的事。</li>
+                <li>只保留稳定上下文，去掉一次性任务细节。</li>
+                <li>在 repo 附近写一份短指南。</li>
+                <li>链接深层文档，不要复制全部内容。</li>
+                <li>同一个错误重复出现时更新指南。</li>
+              </ol>
+              <h3>第一步</h3>
+              <p>写下运行命令、测试命令、重要目录、本地约定和高风险区域。</p>
+            </div>
+            <div class="example-box">
+              <pre>Local commands:
+Install: pnpm install
+Test: pnpm test
+Typecheck: pnpm typecheck
+
+Project map:
+app/ 产品页面
+api/ server routes
+db/ schema 和 migrations
+
+Careful:
+Billing 和 membership 需要额外 review。</pre>
+            </div>
+          </div>
+        </article>
+
+        <article class="scenario-block" id="coding-and-refactoring">
+          <h2>编码与重构</h2>
+          <p>当 AI 能帮你写代码或移动代码，但改动仍然需要人掌控，就看这个场景。</p>
+          <div class="tutorial-grid">
+            <div>
+              <h3>怎么做</h3>
+              <ol>
+                <li>从有边界的任务开始。</li>
+                <li>改代码前先要计划。</li>
+                <li>按可 review 的检查点推进。</li>
+                <li>每个有意义步骤后跑测试、typecheck、lint 或 smoke check。</li>
+                <li>最后拿 diff 对照原始任务。</li>
+              </ol>
+              <h3>第一步</h3>
+              <p>要求计划里写出可能文件、风险区域和验证方式。</p>
+            </div>
+            <div class="example-box">
+              <pre>Task:
+把 notification preference 逻辑移到 hook。
+
+Plan:
+找出当前 state 和 API calls。
+抽出 hook，不改变行为。
+更新 component。
+跑 notification tests。
+Smoke test settings page。</pre>
+            </div>
+          </div>
+        </article>
+
+        <article class="scenario-block" id="debugging">
+          <h2>调试</h2>
+          <p>当你有症状，但还没有被证明的原因，就看这个场景。</p>
+          <div class="tutorial-grid">
+            <div>
+              <h3>怎么做</h3>
+              <ol>
+                <li>用一句话写清症状。</li>
+                <li>收集最强证据。</li>
+                <li>写一个能预测下一步观察结果的假设。</li>
+                <li>做一个小实验。</li>
+                <li>根因和证据连上之后，再改代码。</li>
+              </ol>
+              <h3>第一步</h3>
+              <p>写一条调试笔记：symptom、evidence、hypothesis、next check。</p>
+            </div>
+            <div class="example-box">
+              <pre>Symptom:
+应用 coupon 后 checkout 返回 500。
+
+Evidence:
+Server log 显示 currency_code 是 null。
+Request 有 coupon_id 和 currency=EUR。
+
+Hypothesis:
+Coupon recalculation 丢了 currency_code。
+
+Next check:
+沿 applyCoupon 追到 updatePaymentIntent。</pre>
+            </div>
+          </div>
+        </article>
+
+        <article class="scenario-block" id="automated-verification">
+          <h2>自动化验证</h2>
+          <p>当 AI 改了代码，而一句"看起来没问题"已经不够用，就看这个场景。</p>
+          <div class="tutorial-grid">
+            <div>
+              <h3>怎么做</h3>
+              <ol>
+                <li>选一个要保护的行为。</li>
+                <li>选择最便宜的验证层。</li>
+                <li>故意让检查失败一次。</li>
+                <li>在 AI 改相关代码前先跑。</li>
+                <li>留下 trace、截图、日志或 CI 输出。</li>
+              </ol>
+              <h3>第一步</h3>
+              <p>先让一条关键路径可重复，再考虑扩大覆盖。</p>
+            </div>
+            <div class="example-box">
+              <pre>Behavior:
+Admin 可以邀请一位成员。
+
+Check:
+打开 workspace settings。
+提交合法邮箱。
+确认 pending invite 出现。
+确认重复邀请显示错误。
+
+Evidence:
+Trace 或录屏，加测试输出。</pre>
+            </div>
+          </div>
+        </article>
+
+        <article class="scenario-block" id="code-review-quality-gates">
+          <h2>代码审查与质量门禁</h2>
+          <p>当 AI 生成的工作需要先 review，免得变成维护债，就看这个场景。</p>
+          <div class="tutorial-grid">
+            <div>
+              <h3>怎么做</h3>
+              <ol>
+                <li>拿 diff 对照原始任务。</li>
+                <li>找意外范围。</li>
+                <li>检查测试和证据。</li>
+                <li>手动 review 高风险区域。</li>
+                <li>Review note 要指向行为。</li>
+              </ol>
+              <h3>第一步</h3>
+              <p>先看 task match 和风险，再看风格细节。</p>
+            </div>
+            <div class="example-box">
+              <pre>Task match:
+Diff 是否实现了任务？
+Non-goals 有没有被尊重？
+
+Risk:
+是否碰到 auth、权限、计费、数据或迁移？
+是否新增依赖？
+
+Evidence:
+测试跑了吗？
+手动路径查了吗？
+CI 链接了吗？</pre>
+            </div>
+          </div>
+        </article>
+
+        <article class="scenario-block" id="documentation-and-knowledge">
+          <h2>文档与知识</h2>
+          <p>当决策和项目知识总是消失在聊天里，就看这个场景。</p>
+          <div class="tutorial-grid">
+            <div>
+              <h3>怎么做</h3>
+              <ol>
+                <li>在离工作最近的地方记录决策。</li>
+                <li>写取舍，不只写结论。</li>
+                <li>放到人真的会找的地方。</li>
+                <li>保持小。</li>
+                <li>加维护提示。</li>
+              </ol>
+              <h3>第一步</h3>
+              <p>一次有意义工作后，写下决策、取舍和什么时候应该重看。</p>
+            </div>
+            <div class="example-box">
+              <pre>决策:
+Invite actions 使用 server-side permission checks。
+
+原因:
+Client checks 改善 UX，但不能作为 auth 依据。
+
+取舍:
+UI 隐藏操作，server 负责权限判断。
+
+什么时候重看:
+Permission model 改变。</pre>
+            </div>
+          </div>
+        </article>
+
+        <article class="scenario-block" id="release-and-change-management">
+          <h2>发布与变更管理</h2>
+          <p>当一个改动需要 release notes、灰度步骤或回滚思考，就看这个场景。</p>
+          <div class="tutorial-grid">
+            <div>
+              <h3>怎么做</h3>
+              <ol>
+                <li>先确认读者。</li>
+                <li>从已合并工作总结变化。</li>
+                <li>写清 rollout 路径。</li>
+                <li>写回滚路径。</li>
+                <li>加观察信号。</li>
+              </ol>
+              <h3>第一步</h3>
+              <p>发布前先写清用户可见变化和 rollback path。</p>
+            </div>
+            <div class="example-box">
+              <pre>User-facing change:
+Admins 可以从 settings 邀请成员。
+
+Rollout:
+Internal workspaces 先开，24 小时后全量。
+
+Watch:
+Invite errors、email failures、support tickets。
+
+Rollback:
+关闭 workspace_invites flag。</pre>
+            </div>
+          </div>
+        </article>
+
+        <article class="scenario-block" id="incident-response">
+          <h2>事故响应</h2>
+          <p>当分散的信号需要变成团队共享的事故图景，就看这个场景。</p>
+          <div class="tutorial-grid">
+            <div>
+              <h3>怎么做</h3>
+              <ol>
+                <li>先建时间线。</li>
+                <li>把事实和假设分开。</li>
+                <li>追踪当前 owner 和下一步动作。</li>
+                <li>总结客户影响。</li>
+                <li>事故稳定后再写 postmortem。</li>
+              </ol>
+              <h3>第一步</h3>
+              <p>收集 timeline、known facts、open questions 和 current owner。</p>
+            </div>
+            <div class="example-box">
+              <pre>Timeline:
+10:42 error rate 上升
+10:45 alert 触发
+10:49 rollback 开始
+10:55 error rate 正常
+
+Known facts:
+EU 用户 checkout 失败。
+最近 deploy 改了 currency handling。
+
+Open questions:
+为什么测试没发现？</pre>
+            </div>
+          </div>
+        </article>
+
+        <article class="scenario-block" id="team-ai-governance">
+          <h2>团队 AI 治理</h2>
+          <p>当团队已经在用 AI 工具，并且需要统一边界，就看这个场景。</p>
+          <div class="tutorial-grid">
+            <div>
+              <h3>怎么做</h3>
+              <ol>
+                <li>盘点当前 AI 使用。</li>
+                <li>定义数据边界。</li>
+                <li>定义写入边界。</li>
+                <li>设定 review 预期。</li>
+                <li>根据真实事故或漏网问题回看。</li>
+              </ol>
+              <h3>第一步</h3>
+              <p>写清 AI 工具可以读什么、可以改什么、什么需要人工批准。</p>
+            </div>
+            <div class="example-box">
+              <pre>AI 可以:
+读取公开 docs 和 repository code。
+草拟 briefs、tests 和 PR summaries。
+
+AI 需要批准后才能:
+Push 代码。
+改 production settings。
+使用 customer data。
+
+每个 AI-assisted PR 带上:
+任务摘要、验证证据、已知限制。</pre>
+            </div>
+          </div>
+        </article>
+      </main>
+
+      <footer class="footer">
+        <p><a href="zh-CN.html">回到首页</a></p>
+      </footer>
+    </div>
+  </body>
+</html>

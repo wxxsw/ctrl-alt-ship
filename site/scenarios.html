@@ -1,0 +1,369 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Scenario tutorials | Ctrl Alt Ship</title>
+    <meta name="description" content="Practical scenario tutorials for AI-assisted engineering work.">
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body>
+    <div class="page">
+      <header class="topbar">
+        <a class="brand" href="index.html">Ctrl Alt Ship</a>
+        <nav class="nav" aria-label="Primary">
+          <a href="index.html">Home</a>
+          <a href="scenarios-zh-CN.html">简体中文</a>
+        </nav>
+      </header>
+
+      <main>
+        <section class="hero">
+          <p class="eyebrow">Scenario tutorials</p>
+          <h1>Small workflows for real engineering situations.</h1>
+          <p class="lede">Each tutorial gives you a problem shape, a first move, and a concrete example. Start with the closest scenario, then adapt it to your project.</p>
+          <div class="intro-list">
+            <a href="#requirements-to-tasks">Requirements to Tasks</a>
+            <a href="#project-context-memory">Project Context Memory</a>
+            <a href="#coding-and-refactoring">Coding and Refactoring</a>
+            <a href="#debugging">Debugging</a>
+            <a href="#automated-verification">Automated Verification</a>
+            <a href="#code-review-quality-gates">Code Review</a>
+            <a href="#documentation-and-knowledge">Documentation</a>
+            <a href="#release-and-change-management">Release</a>
+            <a href="#incident-response">Incident Response</a>
+            <a href="#team-ai-governance">Governance</a>
+          </div>
+        </section>
+
+        <article class="scenario-block" id="requirements-to-tasks">
+          <h2>Requirements to Tasks</h2>
+          <p>Use this when a request is real, but still too vague for an engineer or AI assistant to start safely.</p>
+          <div class="tutorial-grid">
+            <div>
+              <h3>Walkthrough</h3>
+              <ol>
+                <li>Write the user-facing change in one sentence.</li>
+                <li>Name what is included and what is out of scope.</li>
+                <li>Turn "done" into observable acceptance checks.</li>
+                <li>Add clues about likely screens, APIs, data models, or commands.</li>
+                <li>Decide how the work will be verified before coding starts.</li>
+              </ol>
+              <h3>Good first move</h3>
+              <p>Create a short task brief with intent, non-goals, acceptance checks, constraints, and verification.</p>
+            </div>
+            <div class="example-box">
+              <pre>Intent:
+Admins can invite one teammate by email.
+
+Non-goals:
+No bulk invite, role changes, or billing changes.
+
+Acceptance:
+Pending invite appears.
+Duplicate invite shows an error.
+Non-admins cannot invite.
+
+Verification:
+Run member tests and smoke test the browser flow.</pre>
+            </div>
+          </div>
+        </article>
+
+        <article class="scenario-block" id="project-context-memory">
+          <h2>Project Context Memory</h2>
+          <p>Use this when AI keeps missing setup, conventions, or project shape.</p>
+          <div class="tutorial-grid">
+            <div>
+              <h3>Walkthrough</h3>
+              <ol>
+                <li>List the last five things you had to explain repeatedly.</li>
+                <li>Keep stable context and remove one-off task detail.</li>
+                <li>Write a short guide near the repo.</li>
+                <li>Link deeper docs instead of copying them.</li>
+                <li>Update the guide when the same mistake repeats.</li>
+              </ol>
+              <h3>Good first move</h3>
+              <p>Document run commands, test commands, important directories, conventions, and risky areas.</p>
+            </div>
+            <div class="example-box">
+              <pre>Local commands:
+Install: pnpm install
+Test: pnpm test
+Typecheck: pnpm typecheck
+
+Project map:
+app/ product screens
+api/ server routes
+db/ schema and migrations
+
+Careful:
+Billing and membership need extra review.</pre>
+            </div>
+          </div>
+        </article>
+
+        <article class="scenario-block" id="coding-and-refactoring">
+          <h2>Coding and Refactoring</h2>
+          <p>Use this when AI can help write or move code, but the change still needs human control.</p>
+          <div class="tutorial-grid">
+            <div>
+              <h3>Walkthrough</h3>
+              <ol>
+                <li>Start from a bounded task.</li>
+                <li>Ask for a plan before edits.</li>
+                <li>Work in reviewable checkpoints.</li>
+                <li>Run tests, typechecks, lint, or smoke checks after meaningful steps.</li>
+                <li>Review the final diff against the original task.</li>
+              </ol>
+              <h3>Good first move</h3>
+              <p>Ask for a plan that names likely files, risk areas, and verification before code changes.</p>
+            </div>
+            <div class="example-box">
+              <pre>Task:
+Move notification preference logic into a hook.
+
+Plan:
+Find current state and API calls.
+Extract hook without changing behavior.
+Update component.
+Run notification tests.
+Smoke test settings page.</pre>
+            </div>
+          </div>
+        </article>
+
+        <article class="scenario-block" id="debugging">
+          <h2>Debugging</h2>
+          <p>Use this when you have symptoms, but not a proven cause.</p>
+          <div class="tutorial-grid">
+            <div>
+              <h3>Walkthrough</h3>
+              <ol>
+                <li>State the symptom in one sentence.</li>
+                <li>Collect the strongest evidence.</li>
+                <li>Write one hypothesis that predicts the next observation.</li>
+                <li>Run a small experiment.</li>
+                <li>Change code only after the cause is connected to evidence.</li>
+              </ol>
+              <h3>Good first move</h3>
+              <p>Write a debugging note with symptom, evidence, hypothesis, and next check.</p>
+            </div>
+            <div class="example-box">
+              <pre>Symptom:
+Checkout returns 500 after coupon is applied.
+
+Evidence:
+Server log shows currency_code is null.
+Request includes coupon_id and currency=EUR.
+
+Hypothesis:
+Coupon recalculation drops currency_code.
+
+Next check:
+Trace applyCoupon to updatePaymentIntent.</pre>
+            </div>
+          </div>
+        </article>
+
+        <article class="scenario-block" id="automated-verification">
+          <h2>Automated Verification</h2>
+          <p>Use this when AI changed code and "it seems fine" is not enough.</p>
+          <div class="tutorial-grid">
+            <div>
+              <h3>Walkthrough</h3>
+              <ol>
+                <li>Pick one behavior to protect.</li>
+                <li>Choose the cheapest layer to test.</li>
+                <li>Make the check fail on purpose once.</li>
+                <li>Run it before AI changes related code.</li>
+                <li>Save evidence such as trace, screenshot, log, or CI output.</li>
+              </ol>
+              <h3>Good first move</h3>
+              <p>Automate or script one critical path before expanding coverage.</p>
+            </div>
+            <div class="example-box">
+              <pre>Behavior:
+Admin can invite one teammate.
+
+Check:
+Open workspace settings.
+Submit a valid email.
+Confirm pending invite appears.
+Confirm duplicate invite shows an error.
+
+Evidence:
+Trace or screen recording plus test output.</pre>
+            </div>
+          </div>
+        </article>
+
+        <article class="scenario-block" id="code-review-quality-gates">
+          <h2>Code Review and Quality Gates</h2>
+          <p>Use this when AI-generated work needs review before it becomes maintenance debt.</p>
+          <div class="tutorial-grid">
+            <div>
+              <h3>Walkthrough</h3>
+              <ol>
+                <li>Compare the diff with the original task.</li>
+                <li>Look for unexpected scope.</li>
+                <li>Check tests and evidence.</li>
+                <li>Review risky areas manually.</li>
+                <li>Leave notes tied to behavior.</li>
+              </ol>
+              <h3>Good first move</h3>
+              <p>Review task match and risk before style details.</p>
+            </div>
+            <div class="example-box">
+              <pre>Task match:
+Does the diff implement the accepted task?
+Are non-goals respected?
+
+Risk:
+Auth, permissions, billing, data, or migrations touched?
+New dependency added?
+
+Evidence:
+Tests run?
+Manual path checked?
+CI linked?</pre>
+            </div>
+          </div>
+        </article>
+
+        <article class="scenario-block" id="documentation-and-knowledge">
+          <h2>Documentation and Knowledge</h2>
+          <p>Use this when decisions and project knowledge keep disappearing into chat.</p>
+          <div class="tutorial-grid">
+            <div>
+              <h3>Walkthrough</h3>
+              <ol>
+                <li>Capture the decision close to the work.</li>
+                <li>Write the tradeoff behind the conclusion.</li>
+                <li>Put it where people will look.</li>
+                <li>Keep the note small.</li>
+                <li>Add a maintenance hint.</li>
+              </ol>
+              <h3>Good first move</h3>
+              <p>After meaningful work, write down the decision, tradeoff, and revisit condition.</p>
+            </div>
+            <div class="example-box">
+              <pre>Decision:
+Use server-side permission checks for invites.
+
+Why:
+Client checks help UX, but cannot be trusted for auth.
+
+Tradeoff:
+UI hides actions, server remains source of truth.
+
+Revisit when:
+Permission model changes.</pre>
+            </div>
+          </div>
+        </article>
+
+        <article class="scenario-block" id="release-and-change-management">
+          <h2>Release and Change Management</h2>
+          <p>Use this when a change needs release notes, rollout steps, or rollback thinking.</p>
+          <div class="tutorial-grid">
+            <div>
+              <h3>Walkthrough</h3>
+              <ol>
+                <li>Identify the audience.</li>
+                <li>Summarize the change from merged work.</li>
+                <li>Name the rollout path.</li>
+                <li>Write the rollback path.</li>
+                <li>Add watch signals.</li>
+              </ol>
+              <h3>Good first move</h3>
+              <p>Write the user-facing change and rollback path before release.</p>
+            </div>
+            <div class="example-box">
+              <pre>User-facing change:
+Admins can invite teammates from settings.
+
+Rollout:
+Internal workspaces first, all workspaces after 24 hours.
+
+Watch:
+Invite errors, email delivery failures, support tickets.
+
+Rollback:
+Disable workspace_invites flag.</pre>
+            </div>
+          </div>
+        </article>
+
+        <article class="scenario-block" id="incident-response">
+          <h2>Incident Response</h2>
+          <p>Use this when scattered signals need to become a shared incident picture.</p>
+          <div class="tutorial-grid">
+            <div>
+              <h3>Walkthrough</h3>
+              <ol>
+                <li>Build the timeline first.</li>
+                <li>Separate facts from hypotheses.</li>
+                <li>Track current owner and next action.</li>
+                <li>Summarize customer impact.</li>
+                <li>Draft the postmortem after the incident is stable.</li>
+              </ol>
+              <h3>Good first move</h3>
+              <p>Collect timeline, known facts, open questions, and current owner.</p>
+            </div>
+            <div class="example-box">
+              <pre>Timeline:
+10:42 error rate increases
+10:45 alert fires
+10:49 rollback starts
+10:55 error rate normal
+
+Known facts:
+Checkout failed for EU users.
+Recent deploy changed currency handling.
+
+Open questions:
+Why did tests miss this?</pre>
+            </div>
+          </div>
+        </article>
+
+        <article class="scenario-block" id="team-ai-governance">
+          <h2>Team AI Governance</h2>
+          <p>Use this when a team is already using AI tools and needs shared boundaries.</p>
+          <div class="tutorial-grid">
+            <div>
+              <h3>Walkthrough</h3>
+              <ol>
+                <li>Inventory current AI use.</li>
+                <li>Define data boundaries.</li>
+                <li>Define write boundaries.</li>
+                <li>Set review expectations.</li>
+                <li>Revisit after real incidents or misses.</li>
+              </ol>
+              <h3>Good first move</h3>
+              <p>Write what AI tools may read, what they may change, and what needs human approval.</p>
+            </div>
+            <div class="example-box">
+              <pre>AI may:
+Read public docs and repository code.
+Draft task briefs, tests, and PR summaries.
+
+AI needs approval before:
+Pushing code.
+Changing production settings.
+Using customer data.
+
+Every AI-assisted PR includes:
+Task summary, verification evidence, known limits.</pre>
+            </div>
+          </div>
+        </article>
+      </main>
+
+      <footer class="footer">
+        <p><a href="index.html">Back to home</a></p>
+      </footer>
+    </div>
+  </body>
+</html>
