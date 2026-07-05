@@ -1,0 +1,164 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Release and Change Management | Ctrl Alt Ship</title>
+    <meta name="description" content="Use this when a change needs release notes, rollout steps, migration notes, or rollback thinking.">
+    <link rel="stylesheet" href="../../styles.css">
+  </head>
+  <body>
+    <div class="page">
+      <header class="topbar">
+        <a class="brand" href="../../index.html">Ctrl Alt Ship</a>
+        <nav class="nav" aria-label="Primary">
+          <a href="../../index.html">Home</a>
+          <a href="zh-CN.html">简体中文</a>
+        </nav>
+      </header>
+
+      <main class="doc-layout">
+        <aside class="side-nav" aria-label="Scenario navigation">
+          <strong>Scenarios</strong>
+          <a href="../requirements-to-tasks/">Requirements to Tasks</a>
+<a href="../project-context-memory/">Project Context Memory</a>
+<a href="../coding-and-refactoring/">Coding and Refactoring</a>
+<a href="../debugging/">Debugging</a>
+<a href="../automated-verification/">Automated Verification</a>
+<a href="../code-review-quality-gates/">Code Review and Quality Gates</a>
+<a href="../documentation-knowledge/">Documentation and Knowledge</a>
+<a href="../release-change-management/" aria-current="page">Release and Change Management</a>
+<a href="../incident-response/">Incident Response</a>
+<a href="../team-ai-governance/">Team AI Governance</a>
+        </aside>
+
+        <article class="doc-body">
+          <p class="eyebrow">Scenario guide</p>
+          <h1>Release and Change Management</h1>
+          <p class="lede">Use this when a change needs release notes, rollout steps, migration notes, or rollback thinking.</p>
+          <div class="doc-actions">
+            <a class="button secondary" href="https://github.com/wxxsw/ctrl-alt-ship/blob/main/scenarios/release-change-management/README.md">View source README</a>
+          </div>
+          <h2>The situation</h2>
+<p>This scenario covers the path from merged change to safe adoption. AI can draft release notes, summarize diffs, build rollout checklists, and compare migration steps. Humans still need to own risk, timing, customer communication, and rollback decisions.</p>
+<p>The question is not only what changed. It is who is affected, how the change reaches them, how you will know it is healthy, and what you will do if it is not.</p>
+<h2>What you should have afterward</h2>
+<ul>
+<li>Release notes that match the actual change and the audience.</li>
+<li>A rollout plan with owners, checks, and rollback conditions.</li>
+<li>Migration or operational notes for teams who need to act.</li>
+</ul>
+<h2>Start here when</h2>
+<ul>
+<li>A change affects users, operators, support, customers, or downstream teams.</li>
+<li>There is a migration, feature flag, config change, or dependency upgrade.</li>
+<li>A release needs monitoring, staged rollout, or rollback planning.</li>
+<li>AI-generated code is shipping and you need a sharper release review.</li>
+<li>Support, sales, or customer success need a plain-language summary.</li>
+</ul>
+<h2>Start somewhere else when</h2>
+<ul>
+<li>The change is not understood or verified. Start with Code Review or Automated Verification.</li>
+<li>The system is already failing. Start with Incident Response.</li>
+<li>The change is internal and low risk, and a PR summary is enough.</li>
+<li>The team cannot monitor the behavior after release. Build observability first.</li>
+</ul>
+<h2>How to choose a route</h2>
+<p>A quick way to read this page:</p>
+<pre class="mermaid">flowchart LR
+  A[&quot;What is stuck?&quot;] --&gt; B[&quot;Pick a route&quot;]
+  B --&gt; C[&quot;Take one small step&quot;]
+  C --&gt; D[&quot;Collect evidence&quot;]
+  D --&gt; E[&quot;Review or share&quot;]</pre>
+<ul>
+<li>If the change is user-visible, write release notes in user language.</li>
+<li>If the change is operational, write rollout and rollback steps.</li>
+<li>If the change is risky, use a feature flag, canary, staged rollout, or migration gate.</li>
+<li>If customers must act, write migration notes and support guidance.</li>
+<li>If the release changes AI behavior, include eval results and monitoring signals.</li>
+</ul>
+<h2>Common routes</h2>
+<h3>Release notes and changelog</h3>
+<p>Use this when: user-visible features, fixes, breaking changes, and customer communication.</p>
+<p>Skip it when: copying commit messages that explain implementation instead of user impact.</p>
+<p>Tools that often show up: Keep a Changelog format, Changesets, Release Please, semantic-release, GitHub Releases.</p>
+<h3>Feature flag and progressive rollout</h3>
+<p>Use this when: risky behavior changes, partial rollout, experiments, and fast rollback.</p>
+<p>Skip it when: keeping flags forever without cleanup ownership.</p>
+<p>Tools that often show up: LaunchDarkly, Statsig, Unleash, Flipt, homegrown flag systems.</p>
+<h3>Migration planning</h3>
+<p>Use this when: database changes, API versioning, dependency upgrades, data backfills, and customer action.</p>
+<p>Skip it when: one-way migrations without backups, dry runs, or rollback thinking.</p>
+<p>Tools that often show up: migration frameworks, backfill jobs, OpenAPI versioning, runbooks, maintenance windows.</p>
+<h3>Release observability</h3>
+<p>Use this when: changes that could affect latency, errors, revenue, support volume, or AI output quality.</p>
+<p>Skip it when: shipping first and deciding metrics later.</p>
+<p>Tools that often show up: Sentry, Datadog, New Relic, Grafana, OpenTelemetry, product analytics, eval dashboards.</p>
+<h2>Walk through it</h2>
+<ol>
+<li>Summarize what changed in audience language: user, operator, developer, or customer.</li>
+<li>Identify affected surfaces: UI, API, data, permissions, billing, integrations, docs, support.</li>
+<li>Choose rollout shape: all at once, staged, feature flag, canary, beta, migration window.</li>
+<li>Define health checks and rollback conditions before release.</li>
+<li>Write migration or support notes if anyone outside engineering must act.</li>
+<li>Attach verification evidence from tests, CI, manual checks, or evals.</li>
+<li>After release, record what happened and clean up temporary flags or notes.</li>
+</ol>
+<h2>Example</h2>
+<pre><code>Release:
+Workspace member invite flow now supports duplicate-invite handling.
+
+Audience note:
+Admins see a clear error when trying to invite someone who already has a pending invite.
+
+Rollout:
+Enable for 10 percent of workspaces for 24 hours, then 100 percent if healthy.
+
+Health checks:
+- Invite API 4xx/5xx rate.
+- Support tickets mentioning invite errors.
+- Pending invite creation count.
+
+Rollback:
+Disable invite_duplicate_error_v2 flag if 5xx rate doubles or support tickets spike.
+
+Support note:
+Ask admins to cancel the pending invite before sending a new one.</code></pre>
+<h2>Check yourself</h2>
+<ul>
+<li>Does the release note explain impact instead of implementation only?</li>
+<li>Are affected audiences and surfaces named?</li>
+<li>Are rollout, owner, and timing clear?</li>
+<li>Are health checks and rollback conditions defined before release?</li>
+<li>Will temporary flags, migration code, or docs be cleaned up later?</li>
+</ul>
+<h2>Where people get burned</h2>
+<ul>
+<li>AI drafts release notes from commit messages and misses user impact.</li>
+<li>A risky change ships without a flag, canary, or rollback path.</li>
+<li>Migration notes omit who must run what and when.</li>
+<li>Monitoring is added after the release goes wrong.</li>
+<li>Feature flags become permanent complexity.</li>
+</ul>
+<h2>When a team adopts it</h2>
+<p>Team practice should connect PR evidence to release evidence. A reviewer should be able to see what was verified before merge and what will be watched after release.</p>
+<p>For repeated releases, keep a release checklist that AI can help fill in, but require humans to approve risk, rollout, and rollback decisions.</p>
+<h2>Related scenarios</h2>
+<ul>
+<li><a href="../automated-verification/">Automated Verification</a></li>
+<li><a href="../incident-response/">Incident Response</a></li>
+<li><a href="../documentation-knowledge/">Documentation and Knowledge</a></li>
+</ul>
+        </article>
+      </main>
+
+      <footer class="footer">
+        <p><a href="../../index.html">Back to scenario index</a></p>
+      </footer>
+    </div>
+    <script type="module">
+      import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
+      mermaid.initialize({ startOnLoad: true, theme: 'neutral' });
+    </script>
+  </body>
+</html>

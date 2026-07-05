@@ -1,0 +1,163 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Team AI Governance | Ctrl Alt Ship</title>
+    <meta name="description" content="Use this when a team is already using AI tools and needs shared boundaries.">
+    <link rel="stylesheet" href="../../styles.css">
+  </head>
+  <body>
+    <div class="page">
+      <header class="topbar">
+        <a class="brand" href="../../index.html">Ctrl Alt Ship</a>
+        <nav class="nav" aria-label="Primary">
+          <a href="../../index.html">Home</a>
+          <a href="zh-CN.html">简体中文</a>
+        </nav>
+      </header>
+
+      <main class="doc-layout">
+        <aside class="side-nav" aria-label="Scenario navigation">
+          <strong>Scenarios</strong>
+          <a href="../requirements-to-tasks/">Requirements to Tasks</a>
+<a href="../project-context-memory/">Project Context Memory</a>
+<a href="../coding-and-refactoring/">Coding and Refactoring</a>
+<a href="../debugging/">Debugging</a>
+<a href="../automated-verification/">Automated Verification</a>
+<a href="../code-review-quality-gates/">Code Review and Quality Gates</a>
+<a href="../documentation-knowledge/">Documentation and Knowledge</a>
+<a href="../release-change-management/">Release and Change Management</a>
+<a href="../incident-response/">Incident Response</a>
+<a href="../team-ai-governance/" aria-current="page">Team AI Governance</a>
+        </aside>
+
+        <article class="doc-body">
+          <p class="eyebrow">Scenario guide</p>
+          <h1>Team AI Governance</h1>
+          <p class="lede">Use this when a team is already using AI tools and needs shared boundaries.</p>
+          <div class="doc-actions">
+            <a class="button secondary" href="https://github.com/wxxsw/ctrl-alt-ship/blob/main/scenarios/team-ai-governance/README.md">View source README</a>
+          </div>
+          <h2>The situation</h2>
+<p>This scenario helps teams define practical AI usage boundaries without turning governance into theater. The risk is not simply that AI is used. The risk is that tools gain access to repos, tickets, terminals, browsers, logs, and customer data without shared expectations.</p>
+<p>Good governance gives teams speed with clearer ownership. It says what tools can access, what humans must approve, what evidence belongs in AI-assisted work, and how the team learns from mistakes.</p>
+<h2>What you should have afterward</h2>
+<ul>
+<li>A short team AI usage guide with data, tool, write-access, and review rules.</li>
+<li>A lightweight approval path for higher-risk tools and workflows.</li>
+<li>A shared PR and incident standard for AI-assisted work.</li>
+</ul>
+<h2>Start here when</h2>
+<ul>
+<li>People use different AI tools in inconsistent ways.</li>
+<li>AI tools can access repos, tickets, terminals, browsers, logs, or sensitive data.</li>
+<li>Reviewers are unsure what evidence AI-assisted work should include.</li>
+<li>The team wants more speed but less accidental risk.</li>
+<li>A customer, security, legal, or compliance question has surfaced.</li>
+</ul>
+<h2>Start somewhere else when</h2>
+<ul>
+<li>Nobody is using AI in real workflows yet. Start with small pilots instead of policy.</li>
+<li>The team wants a huge policy before understanding actual usage.</li>
+<li>The issue is one unclear task or PR. Use the relevant scenario instead.</li>
+<li>The policy would be impossible to enforce or audit.</li>
+</ul>
+<h2>How to choose a route</h2>
+<p>A quick way to read this page:</p>
+<pre class="mermaid">flowchart LR
+  A[&quot;What is stuck?&quot;] --&gt; B[&quot;Pick a route&quot;]
+  B --&gt; C[&quot;Take one small step&quot;]
+  C --&gt; D[&quot;Collect evidence&quot;]
+  D --&gt; E[&quot;Review or share&quot;]</pre>
+<ul>
+<li>If the tool is read-only and uses public data, keep rules light.</li>
+<li>If the tool reads private code or tickets, define data boundaries and account ownership.</li>
+<li>If the tool can write code, run commands, create PRs, or call external systems, require review and approval rules.</li>
+<li>If the tool sees customer data, apply data classification, redaction, vendor review, and audit expectations.</li>
+<li>If AI output affects production or customers, require evidence and human ownership.</li>
+</ul>
+<h2>Common routes</h2>
+<h3>Usage policy and data classification</h3>
+<p>Use this when: teams handling private code, customer data, regulated data, or vendor tools.</p>
+<p>Skip it when: writing a policy nobody can remember or apply during real work.</p>
+<p>Tools that often show up: team policy docs, data classification tables, vendor review checklists, security questionnaires.</p>
+<h3>Tool access and permissions</h3>
+<p>Use this when: coding agents, browser agents, repo integrations, ticket integrations, and terminal access.</p>
+<p>Skip it when: granting broad write access because setup is easier.</p>
+<p>Tools that often show up: SSO, role-based access, GitHub permissions, sandboxing, audit logs, branch protection.</p>
+<h3>AI-assisted work standard</h3>
+<p>Use this when: PRs, incident notes, docs, tests, and generated code that AI helped produce.</p>
+<p>Skip it when: requiring people to disclose every autocomplete while ignoring high-risk agentic edits.</p>
+<p>Tools that often show up: PR templates, review checklists, evidence requirements, CODEOWNERS.</p>
+<h3>Learning loop</h3>
+<p>Use this when: teams that want governance to improve from real usage rather than static policy.</p>
+<p>Skip it when: treating governance as a one-time document.</p>
+<p>Tools that often show up: retros, incident reviews, tool audits, prompt and workflow libraries, enablement sessions.</p>
+<h2>Walk through it</h2>
+<ol>
+<li>Inventory current AI tools, users, data access, write access, and external integrations.</li>
+<li>Classify data: public, internal, confidential, customer, regulated, secrets.</li>
+<li>Define read boundaries and write boundaries separately.</li>
+<li>Set human approval rules for code changes, external writes, production settings, and customer data.</li>
+<li>Define PR evidence for AI-assisted work: task intent, verification, known limits, and reviewer ownership.</li>
+<li>Keep local personal agent notes and secrets out of committed public files.</li>
+<li>Review rules after real incidents, near misses, or workflow changes.</li>
+</ol>
+<h2>Example</h2>
+<pre><code>Team AI usage guide:
+
+AI may:
+- Read public docs and approved repository code.
+- Draft task briefs, tests, documentation, and PR summaries.
+- Suggest code changes on a branch.
+
+AI needs human approval before:
+- Pushing code.
+- Running commands that affect external systems.
+- Changing production settings.
+- Using customer data or private logs.
+
+Every AI-assisted PR should include:
+- Task intent.
+- Verification evidence.
+- Known limitations.
+- Human owner for the final diff.</code></pre>
+<h2>Check yourself</h2>
+<ul>
+<li>Do people know which data can and cannot go into AI tools?</li>
+<li>Are read access and write access treated differently?</li>
+<li>Are high-risk actions gated by human approval?</li>
+<li>Do AI-assisted PRs include evidence and ownership?</li>
+<li>Can the team update rules based on incidents or near misses?</li>
+</ul>
+<h2>Where people get burned</h2>
+<ul>
+<li>A policy bans or allows AI in the abstract but does not match real workflows.</li>
+<li>Personal agent instructions or secrets are committed to public repos.</li>
+<li>AI tools get broad repo or production access without auditability.</li>
+<li>Reviewers cannot tell which parts of a PR were generated or verified.</li>
+<li>Governance blocks low-risk work but misses high-risk data exposure.</li>
+</ul>
+<h2>When a team adopts it</h2>
+<p>Team practice should start small: document actual tools and workflows, then set boundaries around data and write access. Expand only when real usage demands it.</p>
+<p>Governance should connect to other scenarios. Requirements define what AI should do, verification proves it worked, review protects merge, and release management controls production exposure.</p>
+<h2>Related scenarios</h2>
+<ul>
+<li><a href="../project-context-memory/">Project Context Memory</a></li>
+<li><a href="../code-review-quality-gates/">Code Review and Quality Gates</a></li>
+<li><a href="../release-change-management/">Release and Change Management</a></li>
+</ul>
+        </article>
+      </main>
+
+      <footer class="footer">
+        <p><a href="../../index.html">Back to scenario index</a></p>
+      </footer>
+    </div>
+    <script type="module">
+      import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
+      mermaid.initialize({ startOnLoad: true, theme: 'neutral' });
+    </script>
+  </body>
+</html>

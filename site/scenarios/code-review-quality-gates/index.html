@@ -1,0 +1,164 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Code Review and Quality Gates | Ctrl Alt Ship</title>
+    <meta name="description" content="Use this when AI-assisted work needs review before it becomes maintenance debt.">
+    <link rel="stylesheet" href="../../styles.css">
+  </head>
+  <body>
+    <div class="page">
+      <header class="topbar">
+        <a class="brand" href="../../index.html">Ctrl Alt Ship</a>
+        <nav class="nav" aria-label="Primary">
+          <a href="../../index.html">Home</a>
+          <a href="zh-CN.html">简体中文</a>
+        </nav>
+      </header>
+
+      <main class="doc-layout">
+        <aside class="side-nav" aria-label="Scenario navigation">
+          <strong>Scenarios</strong>
+          <a href="../requirements-to-tasks/">Requirements to Tasks</a>
+<a href="../project-context-memory/">Project Context Memory</a>
+<a href="../coding-and-refactoring/">Coding and Refactoring</a>
+<a href="../debugging/">Debugging</a>
+<a href="../automated-verification/">Automated Verification</a>
+<a href="../code-review-quality-gates/" aria-current="page">Code Review and Quality Gates</a>
+<a href="../documentation-knowledge/">Documentation and Knowledge</a>
+<a href="../release-change-management/">Release and Change Management</a>
+<a href="../incident-response/">Incident Response</a>
+<a href="../team-ai-governance/">Team AI Governance</a>
+        </aside>
+
+        <article class="doc-body">
+          <p class="eyebrow">Scenario guide</p>
+          <h1>Code Review and Quality Gates</h1>
+          <p class="lede">Use this when AI-assisted work needs review before it becomes maintenance debt.</p>
+          <div class="doc-actions">
+            <a class="button secondary" href="https://github.com/wxxsw/ctrl-alt-ship/blob/main/scenarios/code-review-quality-gates/README.md">View source README</a>
+          </div>
+          <h2>The situation</h2>
+<p>This scenario protects the merge boundary. AI can produce plausible code quickly, so review has to check intent, scope, risk, and evidence before style. Quality gates automate the checks that should not depend on reviewer memory.</p>
+<p>The goal is not to slow every PR with ceremony. The goal is to make the risky parts visible: unexpected scope, missing tests, permission changes, new dependencies, generated code, data migrations, and security-sensitive behavior.</p>
+<h2>What you should have afterward</h2>
+<ul>
+<li>A review order that starts with task match and risk.</li>
+<li>A set of automated gates that catch repeatable problems.</li>
+<li>A PR standard for AI-assisted work: intent, diff, evidence, known limits.</li>
+</ul>
+<h2>Start here when</h2>
+<ul>
+<li>AI-generated or AI-assisted work is ready for review.</li>
+<li>The diff is larger than a human can trust at a glance.</li>
+<li>The team keeps catching the same issue late.</li>
+<li>You need branch protection, required checks, or security scanning.</li>
+<li>Reviewers need a clearer standard for what evidence belongs in a PR.</li>
+</ul>
+<h2>Start somewhere else when</h2>
+<ul>
+<li>The task itself is unclear. Start with Requirements to Tasks.</li>
+<li>The code does not run. Start with Automated Verification.</li>
+<li>The team is using gates to avoid making ownership decisions.</li>
+<li>A gate is noisy enough that people routinely bypass it.</li>
+</ul>
+<h2>How to choose a route</h2>
+<p>A quick way to read this page:</p>
+<pre class="mermaid">flowchart LR
+  A[&quot;What is stuck?&quot;] --&gt; B[&quot;Pick a route&quot;]
+  B --&gt; C[&quot;Take one small step&quot;]
+  C --&gt; D[&quot;Collect evidence&quot;]
+  D --&gt; E[&quot;Review or share&quot;]</pre>
+<ul>
+<li>If the risk is subjective or architectural, use human review with explicit questions.</li>
+<li>If the risk is repeatable, automate it with lint, typecheck, tests, or security scanning.</li>
+<li>If the risk is ownership, use CODEOWNERS or required review rules.</li>
+<li>If the risk is runtime behavior, require verification evidence in the PR.</li>
+<li>If the risk is generated code volume, require smaller PRs or a generated-code note.</li>
+</ul>
+<h2>Common routes</h2>
+<h3>Human review checklist</h3>
+<p>Use this when: behavior, scope, architecture, readability, product fit, and risk judgment.</p>
+<p>Skip it when: reviewing style first while missing task drift or missing evidence.</p>
+<p>Tools that often show up: GitHub/GitLab PR reviews, review templates, CODEOWNERS, pair review.</p>
+<h3>Static and semantic checks</h3>
+<p>Use this when: repeatable code quality, type, formatting, security, and dependency issues.</p>
+<p>Skip it when: adding tools without deciding which failures block merge.</p>
+<p>Tools that often show up: ESLint, TypeScript, Ruff, go vet, CodeQL, Semgrep, SonarQube, Dependabot, Renovate.</p>
+<h3>Test and build gates</h3>
+<p>Use this when: behavior that can be checked automatically before merge.</p>
+<p>Skip it when: slow flaky pipelines that hide real signal.</p>
+<p>Tools that often show up: GitHub Actions, GitLab CI, Buildkite, CircleCI, required status checks.</p>
+<h3>AI-assisted review</h3>
+<p>Use this when: summarizing large diffs, pointing out risk areas, and checking PR against the task brief.</p>
+<p>Skip it when: treating AI review as approval. It is another reviewer signal, not ownership.</p>
+<p>Tools that often show up: code review assistants, repo-aware chat, custom review prompts, CI comments.</p>
+<h2>Walk through it</h2>
+<ol>
+<li>Read the task brief before the diff.</li>
+<li>Check whether the diff matches the task and respects non-goals.</li>
+<li>Scan for risky areas: auth, permissions, billing, data, migrations, external writes, secrets.</li>
+<li>Check automated evidence: tests, typecheck, lint, CI, security scan, manual smoke notes.</li>
+<li>Review the code for maintainability and local conventions.</li>
+<li>Ask for smaller PRs when the diff mixes unrelated goals.</li>
+<li>Turn repeated review comments into automated gates or templates.</li>
+</ol>
+<h2>Example</h2>
+<pre><code>AI-assisted PR review order:
+
+1. Task match
+- Does the diff implement the accepted task?
+- Are non-goals respected?
+
+2. Risk
+- Auth, permissions, billing, data, migrations, or external writes touched?
+- New dependency or generated code added?
+
+3. Evidence
+- Tests run?
+- Manual path checked?
+- CI linked?
+
+4. Maintainability
+- Follows local patterns?
+- Names and boundaries make sense?
+- No unrelated cleanup?</code></pre>
+<h2>Check yourself</h2>
+<ul>
+<li>Did the reviewer read the task before reviewing the diff?</li>
+<li>Are risky areas explicitly called out?</li>
+<li>Do required checks match the risk of the change?</li>
+<li>Is there evidence for behavior, not only passing lint?</li>
+<li>Can recurring review feedback become an automated gate?</li>
+</ul>
+<h2>Where people get burned</h2>
+<ul>
+<li>Reviewers skim generated code and trust the assistant summary.</li>
+<li>PRs include unrelated cleanup that hides the actual behavior change.</li>
+<li>Gates check formatting but miss permissions, migrations, or data loss risk.</li>
+<li>Security tools are added but nobody owns triage.</li>
+<li>AI review comments are treated as a substitute for human ownership.</li>
+</ul>
+<h2>When a team adopts it</h2>
+<p>Team practice should define a PR evidence standard. For AI-assisted PRs, require task intent, verification, and known limitations. For high-risk areas, require owner review and stronger tests.</p>
+<p>Keep gates boring and trusted. A gate that fails too often for bad reasons becomes background noise.</p>
+<h2>Related scenarios</h2>
+<ul>
+<li><a href="../requirements-to-tasks/">Requirements to Tasks</a></li>
+<li><a href="../automated-verification/">Automated Verification</a></li>
+<li><a href="../team-ai-governance/">Team AI Governance</a></li>
+</ul>
+        </article>
+      </main>
+
+      <footer class="footer">
+        <p><a href="../../index.html">Back to scenario index</a></p>
+      </footer>
+    </div>
+    <script type="module">
+      import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
+      mermaid.initialize({ startOnLoad: true, theme: 'neutral' });
+    </script>
+  </body>
+</html>

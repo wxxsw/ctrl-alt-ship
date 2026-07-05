@@ -1,0 +1,163 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>调试 | Ctrl Alt Ship</title>
+    <meta name="description" content="当你已经看到故障现象，但还没有证明根因，就看这个场景。">
+    <link rel="stylesheet" href="../../styles.css">
+  </head>
+  <body>
+    <div class="page">
+      <header class="topbar">
+        <a class="brand" href="../../zh-CN.html">Ctrl Alt Ship</a>
+        <nav class="nav" aria-label="Primary">
+          <a href="../../zh-CN.html">首页</a>
+          <a href="./">English</a>
+        </nav>
+      </header>
+
+      <main class="doc-layout">
+        <aside class="side-nav" aria-label="场景导航">
+          <strong>场景</strong>
+          <a href="../requirements-to-tasks/zh-CN.html">需求到任务</a>
+<a href="../project-context-memory/zh-CN.html">项目上下文记忆</a>
+<a href="../coding-and-refactoring/zh-CN.html">编码与重构</a>
+<a href="../debugging/zh-CN.html" aria-current="page">调试</a>
+<a href="../automated-verification/zh-CN.html">自动化验证</a>
+<a href="../code-review-quality-gates/zh-CN.html">代码审查与质量门禁</a>
+<a href="../documentation-knowledge/zh-CN.html">文档与知识</a>
+<a href="../release-change-management/zh-CN.html">发布与变更管理</a>
+<a href="../incident-response/zh-CN.html">事故响应</a>
+<a href="../team-ai-governance/zh-CN.html">团队 AI 治理</a>
+        </aside>
+
+        <article class="doc-body">
+          <p class="eyebrow">场景教程</p>
+          <h1>调试</h1>
+          <p class="lede">当你已经看到故障现象，但还没有证明根因，就看这个场景。</p>
+          <div class="doc-actions">
+            <a class="button secondary" href="https://github.com/wxxsw/ctrl-alt-ship/blob/main/scenarios/debugging/README.zh-CN.md">查看源 README</a>
+          </div>
+          <h2>你现在遇到的其实是什么</h2>
+<p>这个场景帮你先从现象走到原因，再改代码。AI 很适合总结日志、生成假设、读陌生代码路径、提出实验。危险在于，它也很容易把一个听起来合理的故事包装成确定修复。</p>
+<p>好的调试是被证据牵引的。一次有用的 AI 交互应该产出一个能预测下一个观察结果的假设，而不是直接给一个听上去顺的 patch。</p>
+<h2>做完以后应该留下什么</h2>
+<ul>
+<li>一份短调试笔记：现象、证据、假设、实验和结果。</li>
+<li>尽可能有一个最小复现或目标明确的检查。</li>
+<li>修复和证据连在一起，并补上回归检查。</li>
+</ul>
+<h2>什么时候从这里开始</h2>
+<ul>
+<li>你看到 error、alert、flaky test 或用户反馈，但不知道原因。</li>
+<li>日志、trace、stack trace 或 metrics 需要串起来。</li>
+<li>bug 只在某些环境或数据状态下出现。</li>
+<li>你需要读一条陌生代码路径。</li>
+<li>之前的修复没有站住，需要更强的因果链。</li>
+</ul>
+<h2>什么时候先别看这一页</h2>
+<ul>
+<li>系统正在出生产事故，协调比根因更紧急。先看事故响应。</li>
+<li>预期行为本身不清楚。先看需求到任务。</li>
+<li>你已经有修复，现在需要信心。先看自动化验证。</li>
+<li>数据里包含不该贴进 AI 工具的 secrets 或客户信息。</li>
+</ul>
+<h2>怎么选路线</h2>
+<p>可以先按这条线读：</p>
+<pre class="mermaid">flowchart LR
+  A[&quot;现在卡在哪&quot;] --&gt; B[&quot;选一条路线&quot;]
+  B --&gt; C[&quot;先做一小步&quot;]
+  C --&gt; D[&quot;拿到证据&quot;]
+  D --&gt; E[&quot;review 或沉淀&quot;]</pre>
+<ul>
+<li>如果能本地复现，先写复现，再读代码。</li>
+<li>如果不能复现，先收集日志、trace、metrics、发布历史和最近改动。</li>
+<li>如果 bug 间歇出现，优先看 timing、并发、缓存、环境和数据形状差异。</li>
+<li>如果现象出现在某次发布后，查 commit、deploy history，必要时用 git bisect。</li>
+<li>如果当前影响客户，一边走事故响应，一边继续调试。</li>
+</ul>
+<h2>常见路线</h2>
+<h3>先复现再调试</h3>
+<p>适合: 本地 bug、确定性失败、失败测试和 UI 回归。</p>
+<p>不适合: 生产影响正在扩大时，花太久追求完美复现。</p>
+<p>常见工具和做法: 单测、集成测试、Playwright traces、浏览器 devtools、debugger、最小复现 repo。</p>
+<h3>先看可观测性</h3>
+<p>适合: 只在生产出现的问题、分布式系统、性能问题和局部故障。</p>
+<p>不适合: 把 dashboard 相关性当成证明，不检查时间线和因果。</p>
+<p>常见工具和做法: Sentry、Datadog、New Relic、Grafana、OpenTelemetry traces、结构化日志。</p>
+<h3>沿变更历史排查</h3>
+<p>适合: 发布、依赖升级或配置变化之后出现的回归。</p>
+<p>不适合: 没有证据就认定最近一次改动是原因。</p>
+<p>常见工具和做法: git bisect、release notes、deploy logs、feature flag history、lockfile diff。</p>
+<h3>AI 辅助生成假设</h3>
+<p>适合: 日志很长、代码陌生、可能原因很多，或事故聊天记录很乱。</p>
+<p>不适合: 接受第一个听起来合理的解释。要求 AI 给竞争假设和需要的证据。</p>
+<p>常见工具和做法: 聊天助手、log summarizer、带 codebase 上下文的 assistant、调试笔记。</p>
+<h2>跟着做一遍</h2>
+<ol>
+<li>用一句话写清现象，带上时间、环境和受影响路径。</li>
+<li>收集最强证据：错误信息、stack trace、request、release、日志、trace、截图。</li>
+<li>把观察和解释分开，不要让 AI 混成一段。</li>
+<li>写两三个假设，并说明每个假设会预测什么结果。</li>
+<li>做能推翻某个假设的最小实验。</li>
+<li>只有当根因和证据连上以后再修。</li>
+<li>补回归检查，避免这个 bug 静悄悄回来。</li>
+</ol>
+<h2>示例</h2>
+<pre><code>现象:
+用户使用 coupon 后 checkout 返回 500。2026.07.05 发布后开始出现，目前只看到 EUR checkout 反馈。
+
+证据:
+- Server log: 更新 payment intent 时 currency_code 是 null。
+- Request 里有 coupon_id 和 currency=EUR。
+- 最近一小时 USD 没有失败。
+
+假设:
+1. Coupon recalculation 在非默认币种下丢了 currency_code。
+2. 支付服务拒绝某个 coupon 配置。
+3. Feature flag 给 EU 用户打开了新 checkout path。
+
+下一个实验:
+用 EUR 和 USD fixture trace applyCoupon 到 updatePaymentIntent。
+
+回归检查:
+补一条 coupon + 非默认币种测试。</code></pre>
+<h2>检查一下自己</h2>
+<ul>
+<li>现象是否具体到可以复现或搜索？</li>
+<li>观察和猜测有没有分开？</li>
+<li>每个假设是否能预测一个可检查结果？</li>
+<li>修复是否指向被证明的根因，而不是旁边的 code smell？</li>
+<li>有没有补或更新回归检查？</li>
+</ul>
+<h2>最容易踩的坑</h2>
+<ul>
+<li>AI 根据一条 stack trace 写出很自信的修复。</li>
+<li>团队一次改好几处，最后不知道哪处起作用。</li>
+<li>本地修好了，但不是失败发生的那个环境。</li>
+<li>带敏感数据的日志被贴到外部工具。</li>
+<li>修复消除了现象，但没有测试背后的 invariant。</li>
+</ul>
+<h2>变成团队习惯以后</h2>
+<p>团队调试习惯应该保留轨迹：现象、证据、假设、实验、结果、修复、回归检查。AI 总结长线程时尤其需要这条轨迹，因为总结必须贴着事实走。</p>
+<p>反复出现的 bug 类型，应该从调试笔记沉淀成测试、runbook，或者写在 invariant 附近的代码注释。</p>
+<h2>相关场景</h2>
+<ul>
+<li><a href="../incident-response/zh-CN.html">事故响应</a></li>
+<li><a href="../automated-verification/zh-CN.html">自动化验证</a></li>
+<li><a href="../documentation-knowledge/zh-CN.html">文档与知识</a></li>
+</ul>
+        </article>
+      </main>
+
+      <footer class="footer">
+        <p><a href="../../zh-CN.html">回到首页场景索引</a></p>
+      </footer>
+    </div>
+    <script type="module">
+      import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
+      mermaid.initialize({ startOnLoad: true, theme: 'neutral' });
+    </script>
+  </body>
+</html>

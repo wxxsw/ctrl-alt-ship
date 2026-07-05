@@ -1,0 +1,167 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Requirements to Tasks | Ctrl Alt Ship</title>
+    <meta name="description" content="Use this when a request is real, but still too vague for an engineer or AI assistant to start safely.">
+    <link rel="stylesheet" href="../../styles.css">
+  </head>
+  <body>
+    <div class="page">
+      <header class="topbar">
+        <a class="brand" href="../../index.html">Ctrl Alt Ship</a>
+        <nav class="nav" aria-label="Primary">
+          <a href="../../index.html">Home</a>
+          <a href="zh-CN.html">简体中文</a>
+        </nav>
+      </header>
+
+      <main class="doc-layout">
+        <aside class="side-nav" aria-label="Scenario navigation">
+          <strong>Scenarios</strong>
+          <a href="../requirements-to-tasks/" aria-current="page">Requirements to Tasks</a>
+<a href="../project-context-memory/">Project Context Memory</a>
+<a href="../coding-and-refactoring/">Coding and Refactoring</a>
+<a href="../debugging/">Debugging</a>
+<a href="../automated-verification/">Automated Verification</a>
+<a href="../code-review-quality-gates/">Code Review and Quality Gates</a>
+<a href="../documentation-knowledge/">Documentation and Knowledge</a>
+<a href="../release-change-management/">Release and Change Management</a>
+<a href="../incident-response/">Incident Response</a>
+<a href="../team-ai-governance/">Team AI Governance</a>
+        </aside>
+
+        <article class="doc-body">
+          <p class="eyebrow">Scenario guide</p>
+          <h1>Requirements to Tasks</h1>
+          <p class="lede">Use this when a request is real, but still too vague for an engineer or AI assistant to start safely.</p>
+          <div class="doc-actions">
+            <a class="button secondary" href="https://github.com/wxxsw/ctrl-alt-ship/blob/main/scenarios/requirements-to-tasks/README.md">View source README</a>
+          </div>
+          <h2>The situation</h2>
+<p>This scenario turns loose intent into a piece of work that can be implemented, reviewed, and verified. It sits between product conversation and code. The output is not a full PRD unless the work needs one. The output is a task brief that removes the most dangerous ambiguity before implementation starts.</p>
+<p>The central question is simple: what does the user or system need to do differently, and how will we know the change is done? AI can help draft, split, and test a task, but it should not invent product decisions, permission rules, rollout constraints, or acceptance criteria without review.</p>
+<h2>What you should have afterward</h2>
+<ul>
+<li>A task brief with intent, non-goals, acceptance checks, constraints, and verification.</li>
+<li>A shared definition of done before code starts.</li>
+<li>A smaller implementation surface for a human engineer or coding agent.</li>
+</ul>
+<h2>Start here when</h2>
+<ul>
+<li>A request can be interpreted in several ways.</li>
+<li>Several people need to agree on what done means.</li>
+<li>The work may touch product behavior, design, data, permissions, pricing, or rollout.</li>
+<li>You want an AI assistant to implement without guessing missing context.</li>
+<li>A larger PRD, design, or customer request needs to become engineering tasks.</li>
+</ul>
+<h2>Start somewhere else when</h2>
+<ul>
+<li>The problem is still discovery work and nobody knows whether the feature should exist.</li>
+<li>The user journey or design is still changing every hour.</li>
+<li>The task is pure production incident response. Start with Incident Response instead.</li>
+<li>The code is already changed and the question is whether it works. Start with Automated Verification or Code Review.</li>
+</ul>
+<h2>How to choose a route</h2>
+<p>A quick way to read this page:</p>
+<pre class="mermaid">flowchart LR
+  A[&quot;What is stuck?&quot;] --&gt; B[&quot;Pick a route&quot;]
+  B --&gt; C[&quot;Take one small step&quot;]
+  C --&gt; D[&quot;Collect evidence&quot;]
+  D --&gt; E[&quot;Review or share&quot;]</pre>
+<ul>
+<li>If the request is one sentence and low risk, write a short task brief in the issue or PR description.</li>
+<li>If behavior touches multiple roles, data states, or permissions, add acceptance examples before implementation.</li>
+<li>If the work spans several teams, use a PRD, design doc, or RFC first, then split into tasks.</li>
+<li>If the work is old-system cleanup, add impact notes and rollback assumptions before asking AI to edit code.</li>
+<li>If the assistant keeps asking project questions, pair this with Project Context Memory.</li>
+</ul>
+<h2>Common routes</h2>
+<h3>Lightweight issue brief</h3>
+<p>Use this when: small product changes, UI fixes, one endpoint, or a bug with known expected behavior.</p>
+<p>Skip it when: cross-team work, unclear product decisions, or changes with compliance, billing, or migration risk.</p>
+<p>Tools that often show up: GitHub Issues, Linear, Jira, plain Markdown, issue templates.</p>
+<h3>PRD or RFC to task split</h3>
+<p>Use this when: the product direction exists, but engineers need scoped slices and sequencing.</p>
+<p>Skip it when: using a PRD as a substitute for unresolved product decisions.</p>
+<p>Tools that often show up: Notion, Confluence, Google Docs, Linear projects, Jira epics, GitHub milestones.</p>
+<h3>Acceptance example or BDD style</h3>
+<p>Use this when: behavior depends on roles, states, edge cases, or user-visible messages.</p>
+<p>Skip it when: turning every tiny task into ceremony. A few examples are often enough.</p>
+<p>Tools that often show up: Gherkin-style examples, Given/When/Then notes, test case tables, Storybook stories for UI states.</p>
+<h3>AI-assisted task shaping</h3>
+<p>Use this when: you already know the intent and want help finding gaps, splitting work, or drafting checks.</p>
+<p>Skip it when: letting the assistant decide scope, pricing, permissions, or rollout policy without a human decision.</p>
+<p>Tools that often show up: chat assistants, IDE assistants, coding agents, internal planning templates.</p>
+<h2>Walk through it</h2>
+<ol>
+<li>Write the user-facing or system-facing change in one sentence.</li>
+<li>Name the actor, starting state, action, and expected result.</li>
+<li>List non-goals before implementation starts. This is where scope control happens.</li>
+<li>Add acceptance checks in observable language. Prefer examples over abstract requirements.</li>
+<li>Add implementation clues: likely files, APIs, commands, data models, feature flags, and risk areas.</li>
+<li>Choose verification: unit test, integration test, E2E smoke test, manual check, or CI gate.</li>
+<li>Ask AI to restate the task and identify missing assumptions before it edits code.</li>
+</ol>
+<h2>Example</h2>
+<pre><code>Intent:
+Workspace admins can invite one teammate by email from workspace settings.
+
+Non-goals:
+- No bulk invites.
+- No role management changes.
+- No billing changes.
+
+Acceptance:
+- Admin can submit one valid email.
+- A pending invite appears in the members list.
+- Duplicate invite shows a clear error.
+- Non-admin users cannot access the invite action.
+
+Implementation clues:
+- Settings members page.
+- Invite API route.
+- Workspace membership permissions.
+
+Verification:
+- Run member permission tests.
+- Smoke test the browser flow for success and duplicate invite.</code></pre>
+<h2>Check yourself</h2>
+<ul>
+<li>Can a new engineer explain the task after reading it once?</li>
+<li>Are non-goals explicit enough to prevent scope creep?</li>
+<li>Are acceptance checks observable in the UI, API, database, or logs?</li>
+<li>Is there at least one verification path before merge?</li>
+<li>Are product, design, security, and rollout assumptions named instead of implied?</li>
+</ul>
+<h2>Where people get burned</h2>
+<ul>
+<li>The task says improve or support without naming the behavior that changes.</li>
+<li>Acceptance criteria describe implementation details but not user-visible outcomes.</li>
+<li>The assistant receives a vague task and fills gaps with plausible but wrong product choices.</li>
+<li>The task hides risky work such as permissions, billing, migration, or notification behavior.</li>
+<li>The team writes a long spec but never turns it into reviewable slices.</li>
+</ul>
+<h2>When a team adopts it</h2>
+<p>Teams should standardize the smallest useful task shape, not the largest possible spec. A useful template has intent, non-goals, acceptance checks, constraints, and verification. Larger documents can exist, but every implementation slice still needs a clear task brief.</p>
+<p>For AI-assisted work, ask contributors to include the original task brief in the PR. Reviewers can then judge whether the diff matches the task instead of reviewing a loose pile of generated code.</p>
+<h2>Related scenarios</h2>
+<ul>
+<li><a href="../project-context-memory/">Project Context Memory</a></li>
+<li><a href="../automated-verification/">Automated Verification</a></li>
+<li><a href="../code-review-quality-gates/">Code Review and Quality Gates</a></li>
+</ul>
+        </article>
+      </main>
+
+      <footer class="footer">
+        <p><a href="../../index.html">Back to scenario index</a></p>
+      </footer>
+    </div>
+    <script type="module">
+      import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
+      mermaid.initialize({ startOnLoad: true, theme: 'neutral' });
+    </script>
+  </body>
+</html>

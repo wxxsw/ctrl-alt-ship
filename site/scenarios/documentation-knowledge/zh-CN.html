@@ -1,0 +1,159 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>文档与知识 | Ctrl Alt Ship</title>
+    <meta name="description" content="当决策和项目知识总是消失在聊天里，就看这个场景。">
+    <link rel="stylesheet" href="../../styles.css">
+  </head>
+  <body>
+    <div class="page">
+      <header class="topbar">
+        <a class="brand" href="../../zh-CN.html">Ctrl Alt Ship</a>
+        <nav class="nav" aria-label="Primary">
+          <a href="../../zh-CN.html">首页</a>
+          <a href="./">English</a>
+        </nav>
+      </header>
+
+      <main class="doc-layout">
+        <aside class="side-nav" aria-label="场景导航">
+          <strong>场景</strong>
+          <a href="../requirements-to-tasks/zh-CN.html">需求到任务</a>
+<a href="../project-context-memory/zh-CN.html">项目上下文记忆</a>
+<a href="../coding-and-refactoring/zh-CN.html">编码与重构</a>
+<a href="../debugging/zh-CN.html">调试</a>
+<a href="../automated-verification/zh-CN.html">自动化验证</a>
+<a href="../code-review-quality-gates/zh-CN.html">代码审查与质量门禁</a>
+<a href="../documentation-knowledge/zh-CN.html" aria-current="page">文档与知识</a>
+<a href="../release-change-management/zh-CN.html">发布与变更管理</a>
+<a href="../incident-response/zh-CN.html">事故响应</a>
+<a href="../team-ai-governance/zh-CN.html">团队 AI 治理</a>
+        </aside>
+
+        <article class="doc-body">
+          <p class="eyebrow">场景教程</p>
+          <h1>文档与知识</h1>
+          <p class="lede">当决策和项目知识总是消失在聊天里，就看这个场景。</p>
+          <div class="doc-actions">
+            <a class="button secondary" href="https://github.com/wxxsw/ctrl-alt-ship/blob/main/scenarios/documentation-knowledge/README.zh-CN.md">查看源 README</a>
+          </div>
+          <h2>你现在遇到的其实是什么</h2>
+<p>这个场景把有用的工作上下文变成长期知识。AI 可以总结、起草、重组，但真正重要的人类动作，是判断什么值得离开聊天，留下来给未来的人看。</p>
+<p>好文档不是聊天记录。它是在维护一个未来问题的答案：我们为什么这么选？它怎么工作？后来的人该怎么做？什么时候需要重新看这个决定？</p>
+<h2>做完以后应该留下什么</h2>
+<ul>
+<li>一份未来读者能找到的 decision note、runbook、guide 或 reference page。</li>
+<li>一条轻量规则：什么时候聊天或 PR 讨论应该变成文档。</li>
+<li>一套把稳定 guidance 和易变 updates 分开的知识结构。</li>
+</ul>
+<h2>什么时候从这里开始</h2>
+<ul>
+<li>架构或产品决策以后还会被用到。</li>
+<li>新队友缺少项目背景。</li>
+<li>文档过期、分散，或者更新成本太高。</li>
+<li>最近一次事故、迁移或发布里有可复用经验。</li>
+<li>AI summary 有用，但现在聊完就消失。</li>
+</ul>
+<h2>什么时候先别看这一页</h2>
+<ul>
+<li>内容还只是私人研究或未经 review 的猜测。</li>
+<li>这份文档会复制另一个维护得更好的来源。</li>
+<li>团队想要知识库，但没有维护 owner。</li>
+<li>问题是缺少项目启动和本地约定。先看项目上下文记忆。</li>
+</ul>
+<h2>怎么选路线</h2>
+<p>可以先按这条线读：</p>
+<pre class="mermaid">flowchart LR
+  A[&quot;现在卡在哪&quot;] --&gt; B[&quot;选一条路线&quot;]
+  B --&gt; C[&quot;先做一小步&quot;]
+  C --&gt; D[&quot;拿到证据&quot;]
+  D --&gt; E[&quot;review 或沉淀&quot;]</pre>
+<ul>
+<li>如果解释的是一次选择，写 decision note 或 ADR。</li>
+<li>如果解释怎么操作，写 runbook。</li>
+<li>如果解释怎么贡献，更新 README 或 CONTRIBUTING。</li>
+<li>如果解释产品或 API surface，发布 reference docs 或 examples。</li>
+<li>如果内容经常变，链接到维护源，页面本身保持小。</li>
+</ul>
+<h2>常见路线</h2>
+<h3>Docs-as-code</h3>
+<p>适合: 需要和代码一起 review、version 的工程文档。</p>
+<p>不适合: 非工程同事很难参与贡献的跨团队文档。</p>
+<p>常见工具和做法: Markdown、MkDocs、Docusaurus、VitePress、GitHub Pages、PR review。</p>
+<h3>团队知识库</h3>
+<p>适合: 跨职能背景、onboarding、support playbooks 和产品决策。</p>
+<p>不适合: 需要严格变更历史或代码 review 的关键运维步骤。</p>
+<p>常见工具和做法: Notion、Confluence、Google Docs、Slab、Linear docs。</p>
+<h3>架构和决策记录</h3>
+<p>适合: 以后还会被质疑或追问的取舍。</p>
+<p>不适合: 每个小实现选择都写 ADR。</p>
+<p>常见工具和做法: ADR templates、RFCs、decision logs、Mermaid diagrams。</p>
+<h3>AI 辅助总结</h3>
+<p>适合: 把长 PR 讨论、事故记录和会议记录变成第一稿。</p>
+<p>不适合: 没核对事实、日期、owner 和开放问题就发布 summary。</p>
+<p>常见工具和做法: 聊天助手、transcript summarizer、document assistant、内部搜索。</p>
+<h2>跟着做一遍</h2>
+<ol>
+<li>趁上下文还新鲜，记录决策或经验。</li>
+<li>先判断文档类型：decision、runbook、guide、reference 或 changelog。</li>
+<li>写结论背后的取舍。</li>
+<li>放到未来读者最先会找的地方。</li>
+<li>链接相关代码、PR、事故、dashboard 或 ticket。</li>
+<li>加维护提示：owner、review date 或 revisit condition。</li>
+<li>更新时删掉过期或重复材料。</li>
+</ol>
+<h2>示例</h2>
+<pre><code>决策:
+Workspace invite actions 使用 server-side permission checks。
+
+背景:
+UI 已经会隐藏不可用操作，但用户仍然可以直接调用 API。
+
+原因:
+Client-side checks 可以改善 UX，但不能作为授权边界。
+
+取舍:
+UI 可能会为了 disabled states 重复一些 permission logic，但 server 仍然负责最终授权判断。
+
+什么时候重看:
+Workspace permission model 变化，或者 invite ownership 移到另一个 service。</code></pre>
+<h2>检查一下自己</h2>
+<ul>
+<li>这份文档是否回答了未来真的会出现的问题？</li>
+<li>它是否短到还能维护？</li>
+<li>有没有写取舍，而不只是结论？</li>
+<li>有没有 owner 或 revisit trigger？</li>
+<li>有没有链接到源材料，而不是复制全部内容？</li>
+</ul>
+<h2>最容易踩的坑</h2>
+<ul>
+<li>直接发布 AI summary，事实和假设混在一起。</li>
+<li>创建没人维护的 wiki page。</li>
+<li>写很长的背景文档，把真正决策埋起来。</li>
+<li>复制一个经常变化的来源，导致很快过期。</li>
+<li>让聊天成为唯一存在决策的地方。</li>
+</ul>
+<h2>变成团队习惯以后</h2>
+<p>团队实践需要一条 capture rule。例如：任何会影响未来 code review、on-call、onboarding 或客户行为的决策，都要留一份短 durable note。</p>
+<p>AI 可以用来起草和重组，但事实准确性、ownership 和维护仍然要有人负责。</p>
+<h2>相关场景</h2>
+<ul>
+<li><a href="../project-context-memory/zh-CN.html">项目上下文记忆</a></li>
+<li><a href="../incident-response/zh-CN.html">事故响应</a></li>
+<li><a href="../release-change-management/zh-CN.html">发布与变更管理</a></li>
+</ul>
+        </article>
+      </main>
+
+      <footer class="footer">
+        <p><a href="../../zh-CN.html">回到首页场景索引</a></p>
+      </footer>
+    </div>
+    <script type="module">
+      import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
+      mermaid.initialize({ startOnLoad: true, theme: 'neutral' });
+    </script>
+  </body>
+</html>

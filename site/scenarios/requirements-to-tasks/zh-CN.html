@@ -1,0 +1,167 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>需求到任务 | Ctrl Alt Ship</title>
+    <meta name="description" content="当一个需求已经真实，但还模糊到工程师或 AI assistant 不能安全开工，就看这个场景。">
+    <link rel="stylesheet" href="../../styles.css">
+  </head>
+  <body>
+    <div class="page">
+      <header class="topbar">
+        <a class="brand" href="../../zh-CN.html">Ctrl Alt Ship</a>
+        <nav class="nav" aria-label="Primary">
+          <a href="../../zh-CN.html">首页</a>
+          <a href="./">English</a>
+        </nav>
+      </header>
+
+      <main class="doc-layout">
+        <aside class="side-nav" aria-label="场景导航">
+          <strong>场景</strong>
+          <a href="../requirements-to-tasks/zh-CN.html" aria-current="page">需求到任务</a>
+<a href="../project-context-memory/zh-CN.html">项目上下文记忆</a>
+<a href="../coding-and-refactoring/zh-CN.html">编码与重构</a>
+<a href="../debugging/zh-CN.html">调试</a>
+<a href="../automated-verification/zh-CN.html">自动化验证</a>
+<a href="../code-review-quality-gates/zh-CN.html">代码审查与质量门禁</a>
+<a href="../documentation-knowledge/zh-CN.html">文档与知识</a>
+<a href="../release-change-management/zh-CN.html">发布与变更管理</a>
+<a href="../incident-response/zh-CN.html">事故响应</a>
+<a href="../team-ai-governance/zh-CN.html">团队 AI 治理</a>
+        </aside>
+
+        <article class="doc-body">
+          <p class="eyebrow">场景教程</p>
+          <h1>需求到任务</h1>
+          <p class="lede">当一个需求已经真实，但还模糊到工程师或 AI assistant 不能安全开工，就看这个场景。</p>
+          <div class="doc-actions">
+            <a class="button secondary" href="https://github.com/wxxsw/ctrl-alt-ship/blob/main/scenarios/requirements-to-tasks/README.zh-CN.md">查看源 README</a>
+          </div>
+          <h2>你现在遇到的其实是什么</h2>
+<p>这个场景负责把松散意图变成一块可以实现、可以 review、可以验证的工作。它在产品讨论和写代码之间，不一定要产出完整 PRD。很多时候，一张写清楚的任务卡就够了。</p>
+<p>核心问题很朴素：用户或系统会发生什么变化？我们怎么知道它已经完成？AI 可以帮你拆任务、补检查项、找缺口，但不应该替你拍板产品边界、权限规则、发布策略或验收标准。</p>
+<h2>做完以后应该留下什么</h2>
+<ul>
+<li>一张包含意图、不做什么、验收检查、限制和验证方式的任务卡。</li>
+<li>代码开工前，相关人对 done 有共同理解。</li>
+<li>给工程师或 coding agent 一个更小、更安全的实现边界。</li>
+</ul>
+<h2>什么时候从这里开始</h2>
+<ul>
+<li>一个请求可以被理解成好几种做法。</li>
+<li>几个人需要先对 done 达成一致。</li>
+<li>工作可能牵涉产品行为、设计、数据、权限、定价或发布。</li>
+<li>你希望 AI assistant 不靠猜来补上下文。</li>
+<li>一个 PRD、设计稿或客户请求需要拆成工程任务。</li>
+</ul>
+<h2>什么时候先别看这一页</h2>
+<ul>
+<li>问题还处在 discovery 阶段，没人确定这个功能该不该做。</li>
+<li>用户流程或设计还在频繁变化。</li>
+<li>当前是生产事故。那应该先看事故响应。</li>
+<li>代码已经改完，现在要证明能不能工作。那应该看自动化验证或代码审查。</li>
+</ul>
+<h2>怎么选路线</h2>
+<p>可以先按这条线读：</p>
+<pre class="mermaid">flowchart LR
+  A[&quot;现在卡在哪&quot;] --&gt; B[&quot;选一条路线&quot;]
+  B --&gt; C[&quot;先做一小步&quot;]
+  C --&gt; D[&quot;拿到证据&quot;]
+  D --&gt; E[&quot;review 或沉淀&quot;]</pre>
+<ul>
+<li>如果请求很小、风险低，把短任务卡写在 issue 或 PR 描述里。</li>
+<li>如果行为涉及多角色、多状态或权限，先写验收例子再实现。</li>
+<li>如果工作跨团队，先用 PRD、设计文档或 RFC 对齐，再拆任务。</li>
+<li>如果是老系统改造，先写影响范围和回滚假设，再让 AI 改代码。</li>
+<li>如果 assistant 一直问项目问题，把这个场景和项目上下文记忆一起用。</li>
+</ul>
+<h2>常见路线</h2>
+<h3>轻量 issue 任务卡</h3>
+<p>适合: 小产品改动、UI 修复、单个接口，或预期行为已经明确的 bug。</p>
+<p>不适合: 跨团队工作、产品决策未定，或牵涉合规、计费、迁移风险的改动。</p>
+<p>常见工具和做法: GitHub Issues、Linear、Jira、普通 Markdown、issue 模板。</p>
+<h3>PRD 或 RFC 拆任务</h3>
+<p>适合: 方向已经定了，但工程侧需要切片、排顺序、识别依赖。</p>
+<p>不适合: 拿 PRD 掩盖还没定下来的产品决策。</p>
+<p>常见工具和做法: Notion、Confluence、Google Docs、Linear projects、Jira epics、GitHub milestones。</p>
+<h3>验收例子或 BDD 写法</h3>
+<p>适合: 行为依赖角色、状态、边界条件或用户可见文案。</p>
+<p>不适合: 把每个小任务都搞成流程。通常几个例子就够。</p>
+<p>常见工具和做法: Given/When/Then、测试用例表、UI 状态故事、Storybook。</p>
+<h3>AI 辅助梳理任务</h3>
+<p>适合: 你已经知道意图，想让 AI 帮你找缺口、拆步骤、补检查项。</p>
+<p>不适合: 让 AI 自己决定范围、定价、权限或发布策略。</p>
+<p>常见工具和做法: 聊天助手、IDE assistant、coding agent、团队内部任务模板。</p>
+<h2>跟着做一遍</h2>
+<ol>
+<li>用一句话写清用户或系统会看到什么变化。</li>
+<li>写出角色、起始状态、动作和预期结果。</li>
+<li>先列不做什么。控制范围主要靠这一段。</li>
+<li>用能观察到的语言写验收检查。例子比抽象要求更有用。</li>
+<li>补实现线索：可能相关文件、API、命令、数据模型、feature flag 和风险区域。</li>
+<li>选择验证方式：单测、集成测试、E2E 冒烟、手动检查或 CI gate。</li>
+<li>让 AI 在改代码前复述任务，并指出它看到的缺失假设。</li>
+</ol>
+<h2>示例</h2>
+<pre><code>意图:
+工作区管理员可以在工作区设置里通过邮箱邀请一位成员。
+
+不做:
+- 不做批量邀请。
+- 不改角色管理。
+- 不碰计费逻辑。
+
+验收:
+- 管理员可以提交一个合法邮箱。
+- 成员列表里出现待处理邀请。
+- 重复邀请会显示清楚的错误。
+- 非管理员用户不能访问邀请操作。
+
+实现线索:
+- Settings members 页面。
+- Invite API route。
+- Workspace membership 权限。
+
+验证:
+- 跑成员权限相关测试。
+- 在浏览器里手动检查成功邀请和重复邀请。</code></pre>
+<h2>检查一下自己</h2>
+<ul>
+<li>新工程师读一遍后，能不能复述这件事？</li>
+<li>不做什么是否足够明确，可以挡住范围膨胀？</li>
+<li>验收检查能否在 UI、API、数据库或日志里观察到？</li>
+<li>merge 前至少有没有一种验证方式？</li>
+<li>产品、设计、安全和发布假设有没有写出来，而不是藏在脑子里？</li>
+</ul>
+<h2>最容易踩的坑</h2>
+<ul>
+<li>任务只写 improve 或 support，却没说行为怎么变。</li>
+<li>验收标准只描述实现细节，不描述用户或系统结果。</li>
+<li>给 AI 的任务太模糊，AI 用看似合理但错误的产品选择补空。</li>
+<li>任务里藏着权限、计费、迁移、通知这类高风险改动。</li>
+<li>团队写了很长的 spec，却没有拆成可 review 的小片。</li>
+</ul>
+<h2>变成团队习惯以后</h2>
+<p>团队应该统一最小可用任务形状，而不是统一最大文档模板。一个够用的模板通常包含意图、不做什么、验收检查、限制和验证方式。更大的文档可以存在，但每个实现切片仍然需要清楚的任务卡。</p>
+<p>AI-assisted work 的 PR 最好带上原始任务卡。这样 reviewer 可以先判断 diff 是否匹配任务，而不是直接面对一堆生成代码。</p>
+<h2>相关场景</h2>
+<ul>
+<li><a href="../project-context-memory/zh-CN.html">项目上下文记忆</a></li>
+<li><a href="../automated-verification/zh-CN.html">自动化验证</a></li>
+<li><a href="../code-review-quality-gates/zh-CN.html">代码审查与质量门禁</a></li>
+</ul>
+        </article>
+      </main>
+
+      <footer class="footer">
+        <p><a href="../../zh-CN.html">回到首页场景索引</a></p>
+      </footer>
+    </div>
+    <script type="module">
+      import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
+      mermaid.initialize({ startOnLoad: true, theme: 'neutral' });
+    </script>
+  </body>
+</html>

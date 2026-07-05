@@ -1,0 +1,159 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Documentation and Knowledge | Ctrl Alt Ship</title>
+    <meta name="description" content="Use this when decisions and project knowledge keep disappearing into chat.">
+    <link rel="stylesheet" href="../../styles.css">
+  </head>
+  <body>
+    <div class="page">
+      <header class="topbar">
+        <a class="brand" href="../../index.html">Ctrl Alt Ship</a>
+        <nav class="nav" aria-label="Primary">
+          <a href="../../index.html">Home</a>
+          <a href="zh-CN.html">简体中文</a>
+        </nav>
+      </header>
+
+      <main class="doc-layout">
+        <aside class="side-nav" aria-label="Scenario navigation">
+          <strong>Scenarios</strong>
+          <a href="../requirements-to-tasks/">Requirements to Tasks</a>
+<a href="../project-context-memory/">Project Context Memory</a>
+<a href="../coding-and-refactoring/">Coding and Refactoring</a>
+<a href="../debugging/">Debugging</a>
+<a href="../automated-verification/">Automated Verification</a>
+<a href="../code-review-quality-gates/">Code Review and Quality Gates</a>
+<a href="../documentation-knowledge/" aria-current="page">Documentation and Knowledge</a>
+<a href="../release-change-management/">Release and Change Management</a>
+<a href="../incident-response/">Incident Response</a>
+<a href="../team-ai-governance/">Team AI Governance</a>
+        </aside>
+
+        <article class="doc-body">
+          <p class="eyebrow">Scenario guide</p>
+          <h1>Documentation and Knowledge</h1>
+          <p class="lede">Use this when decisions and project knowledge keep disappearing into chat.</p>
+          <div class="doc-actions">
+            <a class="button secondary" href="https://github.com/wxxsw/ctrl-alt-ship/blob/main/scenarios/documentation-knowledge/README.md">View source README</a>
+          </div>
+          <h2>The situation</h2>
+<p>This scenario turns useful work context into durable knowledge. AI can summarize, draft, and reorganize, but the important human act is deciding what deserves to live beyond the conversation.</p>
+<p>Good documentation is not a transcript. It is a maintained answer to a future question: why did we choose this, how does this work, what should someone do next, and when should they revisit the decision?</p>
+<h2>What you should have afterward</h2>
+<ul>
+<li>A decision note, runbook, guide, or reference page that future readers can find.</li>
+<li>A lightweight rule for when chat or PR discussion becomes documentation.</li>
+<li>A knowledge structure that separates stable guidance from volatile updates.</li>
+</ul>
+<h2>Start here when</h2>
+<ul>
+<li>Architecture or product decisions will matter again.</li>
+<li>New teammates lack project background.</li>
+<li>Docs are stale, scattered, or too expensive to update.</li>
+<li>A recent incident, migration, or launch produced reusable lessons.</li>
+<li>AI summaries are useful but currently vanish after the conversation.</li>
+</ul>
+<h2>Start somewhere else when</h2>
+<ul>
+<li>The content is still private research or unreviewed speculation.</li>
+<li>The document would duplicate a better-maintained source.</li>
+<li>The team wants a knowledge base but has no owner for maintenance.</li>
+<li>The issue is missing project setup context. Start with Project Context Memory.</li>
+</ul>
+<h2>How to choose a route</h2>
+<p>A quick way to read this page:</p>
+<pre class="mermaid">flowchart LR
+  A[&quot;What is stuck?&quot;] --&gt; B[&quot;Pick a route&quot;]
+  B --&gt; C[&quot;Take one small step&quot;]
+  C --&gt; D[&quot;Collect evidence&quot;]
+  D --&gt; E[&quot;Review or share&quot;]</pre>
+<ul>
+<li>If it explains a choice, write a decision note or ADR.</li>
+<li>If it explains how to operate something, write a runbook.</li>
+<li>If it explains how to contribute, update README or CONTRIBUTING.</li>
+<li>If it explains a product or API surface, publish reference docs or examples.</li>
+<li>If it changes often, link to the maintained source and keep the page small.</li>
+</ul>
+<h2>Common routes</h2>
+<h3>Docs-as-code</h3>
+<p>Use this when: engineering docs that should be reviewed with code and versioned.</p>
+<p>Skip it when: cross-functional docs where non-engineers cannot comfortably contribute.</p>
+<p>Tools that often show up: Markdown, MkDocs, Docusaurus, VitePress, GitHub Pages, pull request review.</p>
+<h3>Team knowledge base</h3>
+<p>Use this when: cross-functional context, onboarding, support playbooks, and product decisions.</p>
+<p>Skip it when: critical operational steps that need code review or strict change history.</p>
+<p>Tools that often show up: Notion, Confluence, Google Docs, Slab, Linear docs.</p>
+<h3>Architecture and decision records</h3>
+<p>Use this when: tradeoffs that people will question again.</p>
+<p>Skip it when: writing ADRs for every small implementation choice.</p>
+<p>Tools that often show up: ADR templates, RFCs, decision logs, Mermaid diagrams.</p>
+<h3>AI-assisted summarization</h3>
+<p>Use this when: turning long PR threads, incident notes, and meetings into a first draft.</p>
+<p>Skip it when: publishing summaries without checking facts, dates, owners, and open questions.</p>
+<p>Tools that often show up: chat assistants, transcript summarizers, document assistants, internal search.</p>
+<h2>Walk through it</h2>
+<ol>
+<li>Capture the decision or lesson close to the work.</li>
+<li>Decide the document type: decision, runbook, guide, reference, or changelog.</li>
+<li>Write the tradeoff behind the conclusion.</li>
+<li>Put the document where future readers will look first.</li>
+<li>Link related code, PRs, incidents, dashboards, or tickets.</li>
+<li>Add a maintenance hint: owner, review date, or revisit condition.</li>
+<li>Remove stale or duplicate material when updating.</li>
+</ol>
+<h2>Example</h2>
+<pre><code>Decision:
+Workspace invite actions use server-side permission checks.
+
+Context:
+The UI already hides unavailable actions, but users can still call APIs directly.
+
+Why:
+Client-side checks improve UX but cannot be the authorization boundary.
+
+Tradeoff:
+The UI may duplicate some permission logic for disabled states, but the server remains the source of authorization.
+
+Revisit when:
+Workspace permission model changes or invite ownership moves to another service.</code></pre>
+<h2>Check yourself</h2>
+<ul>
+<li>Does the document answer a future question someone will actually ask?</li>
+<li>Is it short enough to maintain?</li>
+<li>Does it include tradeoffs, not only conclusions?</li>
+<li>Is there an owner or revisit trigger?</li>
+<li>Does it link to source material instead of copying everything?</li>
+</ul>
+<h2>Where people get burned</h2>
+<ul>
+<li>Publishing AI summaries that blur facts and assumptions.</li>
+<li>Creating a wiki page nobody owns.</li>
+<li>Writing long context docs that bury the actual decision.</li>
+<li>Duplicating content from a source that changes often.</li>
+<li>Letting chat become the only place a decision exists.</li>
+</ul>
+<h2>When a team adopts it</h2>
+<p>Team practice needs a capture rule. For example: any decision that affects future code review, on-call, onboarding, or customer behavior gets a short durable note.</p>
+<p>Use AI for first drafts and reorganization, then make a human responsible for factual accuracy, ownership, and maintenance.</p>
+<h2>Related scenarios</h2>
+<ul>
+<li><a href="../project-context-memory/">Project Context Memory</a></li>
+<li><a href="../incident-response/">Incident Response</a></li>
+<li><a href="../release-change-management/">Release and Change Management</a></li>
+</ul>
+        </article>
+      </main>
+
+      <footer class="footer">
+        <p><a href="../../index.html">Back to scenario index</a></p>
+      </footer>
+    </div>
+    <script type="module">
+      import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
+      mermaid.initialize({ startOnLoad: true, theme: 'neutral' });
+    </script>
+  </body>
+</html>

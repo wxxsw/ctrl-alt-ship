@@ -505,6 +505,166 @@ html[lang="zh-CN"] h1 {
   margin-bottom: 6px;
 }
 
+.home-copy {
+  max-width: 760px;
+}
+
+.home-copy p,
+.home-copy li {
+  color: var(--muted);
+}
+
+.doc-layout {
+  display: grid;
+  grid-template-columns: 230px minmax(0, 1fr);
+  gap: 42px;
+  min-width: 0;
+  padding: 46px 0 56px;
+}
+
+.side-nav {
+  position: sticky;
+  top: 18px;
+  align-self: start;
+  display: grid;
+  gap: 6px;
+  padding: 14px;
+  min-width: 0;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: rgb(255 255 255 / 76%);
+  box-shadow: 0 14px 34px rgb(22 73 71 / 6%);
+}
+
+.side-nav strong {
+  margin: 0 0 4px;
+  color: var(--accent-strong);
+  font-size: 0.88rem;
+}
+
+.side-nav a {
+  padding: 8px 9px;
+  border-radius: 6px;
+  color: var(--muted);
+  font-size: 0.9rem;
+  line-height: 1.35;
+  text-decoration: none;
+  overflow-wrap: anywhere;
+}
+
+.side-nav a:hover,
+.side-nav a[aria-current="page"] {
+  background: var(--soft);
+  color: var(--accent-strong);
+}
+
+.side-nav a[aria-current="page"] {
+  font-weight: 700;
+}
+
+.doc-body {
+  max-width: 830px;
+  min-width: 0;
+  overflow-wrap: break-word;
+}
+
+.doc-body h1 {
+  max-width: 780px;
+  font-size: clamp(2.25rem, 5vw, 4.4rem);
+  line-height: 1.03;
+}
+
+html[lang="zh-CN"] .doc-body h1 {
+  max-width: 720px;
+  font-size: clamp(2.1rem, 4.2vw, 3.5rem);
+  line-height: 1.12;
+}
+
+.doc-body h2 {
+  margin: 46px 0 14px;
+  padding-top: 20px;
+  border-top: 1px solid var(--line);
+  font-size: clamp(1.55rem, 3vw, 2.15rem);
+  line-height: 1.2;
+  letter-spacing: 0;
+}
+
+.doc-body h3 {
+  margin: 30px 0 8px;
+  font-size: 1.12rem;
+  line-height: 1.35;
+  letter-spacing: 0;
+}
+
+.doc-body h4 {
+  margin: 22px 0 6px;
+  font-size: 1rem;
+  letter-spacing: 0;
+}
+
+.doc-body p,
+.doc-body li {
+  color: var(--muted);
+}
+
+.doc-body ul,
+.doc-body ol {
+  padding-left: 24px;
+}
+
+.doc-body li + li {
+  margin-top: 5px;
+}
+
+.doc-body code {
+  padding: 0.12em 0.32em;
+  border-radius: 4px;
+  background: var(--soft);
+  color: var(--accent-strong);
+  font-size: 0.92em;
+}
+
+.doc-body pre {
+  overflow-x: auto;
+  margin: 18px 0 26px;
+  padding: 18px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--card);
+  box-shadow: 0 16px 38px rgb(22 73 71 / 7%);
+}
+
+.doc-body pre code {
+  padding: 0;
+  background: transparent;
+  color: var(--text);
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 0.92rem;
+  line-height: 1.6;
+}
+
+.doc-body pre.mermaid {
+  background: #f7fbfa;
+  color: var(--text);
+  text-align: center;
+  white-space: pre-wrap;
+}
+
+.doc-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin: 24px 0 28px;
+}
+
+.redirect-page {
+  padding: 90px 0;
+}
+
+.redirect-page h1 {
+  font-size: clamp(2rem, 5vw, 3.8rem);
+}
+
 .footer {
   padding: 30px 0 44px;
   color: var(--muted);
@@ -530,11 +690,17 @@ html[lang="zh-CN"] h1 {
   .tutorial-hero,
   .flowline,
   .route-grid,
-  .lesson-bottom {
+  .lesson-bottom,
+  .doc-layout {
     grid-template-columns: 1fr;
   }
 
   .hero-map {
     order: -1;
+  }
+
+  .side-nav {
+    position: static;
+    width: 100%;
   }
 }

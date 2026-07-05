@@ -1,0 +1,163 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Debugging | Ctrl Alt Ship</title>
+    <meta name="description" content="Use this when you have symptoms, but not a proven cause.">
+    <link rel="stylesheet" href="../../styles.css">
+  </head>
+  <body>
+    <div class="page">
+      <header class="topbar">
+        <a class="brand" href="../../index.html">Ctrl Alt Ship</a>
+        <nav class="nav" aria-label="Primary">
+          <a href="../../index.html">Home</a>
+          <a href="zh-CN.html">简体中文</a>
+        </nav>
+      </header>
+
+      <main class="doc-layout">
+        <aside class="side-nav" aria-label="Scenario navigation">
+          <strong>Scenarios</strong>
+          <a href="../requirements-to-tasks/">Requirements to Tasks</a>
+<a href="../project-context-memory/">Project Context Memory</a>
+<a href="../coding-and-refactoring/">Coding and Refactoring</a>
+<a href="../debugging/" aria-current="page">Debugging</a>
+<a href="../automated-verification/">Automated Verification</a>
+<a href="../code-review-quality-gates/">Code Review and Quality Gates</a>
+<a href="../documentation-knowledge/">Documentation and Knowledge</a>
+<a href="../release-change-management/">Release and Change Management</a>
+<a href="../incident-response/">Incident Response</a>
+<a href="../team-ai-governance/">Team AI Governance</a>
+        </aside>
+
+        <article class="doc-body">
+          <p class="eyebrow">Scenario guide</p>
+          <h1>Debugging</h1>
+          <p class="lede">Use this when you have symptoms, but not a proven cause.</p>
+          <div class="doc-actions">
+            <a class="button secondary" href="https://github.com/wxxsw/ctrl-alt-ship/blob/main/scenarios/debugging/README.md">View source README</a>
+          </div>
+          <h2>The situation</h2>
+<p>This scenario helps move from symptom to cause before code changes. AI is useful for summarizing logs, generating hypotheses, reading unfamiliar code paths, and proposing experiments. It is dangerous when it turns a plausible story into a confident fix without evidence.</p>
+<p>Good debugging is evidence-shaped. A useful AI interaction should produce a hypothesis that predicts the next observation, not a patch that merely sounds reasonable.</p>
+<h2>What you should have afterward</h2>
+<ul>
+<li>A short debugging note with symptom, evidence, hypotheses, experiments, and result.</li>
+<li>A minimal reproduction or targeted check when possible.</li>
+<li>A fix connected to evidence, plus a regression check.</li>
+</ul>
+<h2>Start here when</h2>
+<ul>
+<li>You see an error, alert, flaky test, or user report but do not know the cause.</li>
+<li>Logs, traces, stack traces, or metrics need to be connected.</li>
+<li>A bug appears only in some environments or data states.</li>
+<li>You need help reading an unfamiliar code path.</li>
+<li>A previous fix did not hold and you need a stronger causal chain.</li>
+</ul>
+<h2>Start somewhere else when</h2>
+<ul>
+<li>The system is actively burning and coordination matters more than root cause. Start with Incident Response.</li>
+<li>The expected behavior is unclear. Start with Requirements to Tasks.</li>
+<li>You already have a fix and need confidence. Start with Automated Verification.</li>
+<li>The data includes secrets or customer information that should not be pasted into an AI tool.</li>
+</ul>
+<h2>How to choose a route</h2>
+<p>A quick way to read this page:</p>
+<pre class="mermaid">flowchart LR
+  A[&quot;What is stuck?&quot;] --&gt; B[&quot;Pick a route&quot;]
+  B --&gt; C[&quot;Take one small step&quot;]
+  C --&gt; D[&quot;Collect evidence&quot;]
+  D --&gt; E[&quot;Review or share&quot;]</pre>
+<ul>
+<li>If you can reproduce locally, write the reproduction first and then inspect code.</li>
+<li>If you cannot reproduce, collect logs, traces, metrics, release history, and recent changes.</li>
+<li>If the bug is intermittent, look for timing, concurrency, cache, environment, and data-shape differences.</li>
+<li>If the symptom began after a release, compare commits and use git bisect or deploy history.</li>
+<li>If the bug affects customers now, coordinate through Incident Response while debugging continues.</li>
+</ul>
+<h2>Common routes</h2>
+<h3>Reproduction-first debugging</h3>
+<p>Use this when: local bugs, deterministic failures, failing tests, and UI regressions.</p>
+<p>Skip it when: spending hours on a perfect reproduction when production impact needs immediate mitigation.</p>
+<p>Tools that often show up: unit tests, integration tests, Playwright traces, browser devtools, debugger, minimal repro repos.</p>
+<h3>Observability-first debugging</h3>
+<p>Use this when: production-only failures, distributed systems, performance issues, and partial outages.</p>
+<p>Skip it when: treating dashboard correlation as proof without checking timing and causality.</p>
+<p>Tools that often show up: Sentry, Datadog, New Relic, Grafana, OpenTelemetry traces, structured logs.</p>
+<h3>Change-history debugging</h3>
+<p>Use this when: regressions after deploys, dependency upgrades, or configuration changes.</p>
+<p>Skip it when: assuming the newest change caused the bug without evidence.</p>
+<p>Tools that often show up: git bisect, release notes, deploy logs, feature flag history, dependency lockfile diff.</p>
+<h3>AI-assisted hypothesis generation</h3>
+<p>Use this when: large logs, unfamiliar code, many possible causes, or messy incident threads.</p>
+<p>Skip it when: accepting the first plausible explanation. Ask for competing hypotheses and evidence needed.</p>
+<p>Tools that often show up: chat assistants, log summarizers, codebase-aware assistants, notebook-style debugging notes.</p>
+<h2>Walk through it</h2>
+<ol>
+<li>State the symptom in one sentence with time, environment, and affected user path.</li>
+<li>Collect the strongest evidence: error message, stack trace, request, release, logs, trace, screenshot.</li>
+<li>Separate observation from interpretation. Do not let AI blend them.</li>
+<li>Write two or three hypotheses and what each would predict.</li>
+<li>Run the smallest experiment that can disprove one hypothesis.</li>
+<li>Fix only after the cause is tied to evidence.</li>
+<li>Add a regression check so the bug does not return silently.</li>
+</ol>
+<h2>Example</h2>
+<pre><code>Symptom:
+Checkout returns 500 after a coupon is applied. Started after release 2026.07.05. Only EUR checkouts reported so far.
+
+Evidence:
+- Server log: currency_code is null when updating payment intent.
+- Request includes coupon_id and currency=EUR.
+- No failures for USD in the last hour.
+
+Hypotheses:
+1. Coupon recalculation drops currency_code for non-default currencies.
+2. Payment provider rejects one coupon configuration.
+3. A feature flag enabled the new checkout path for EU users.
+
+Next experiment:
+Trace applyCoupon to updatePaymentIntent with EUR and USD fixtures.
+
+Regression check:
+Add test for coupon plus non-default currency.</code></pre>
+<h2>Check yourself</h2>
+<ul>
+<li>Is the symptom specific enough to reproduce or search for?</li>
+<li>Are observations separated from guesses?</li>
+<li>Does each hypothesis predict a checkable result?</li>
+<li>Did the fix target the proven cause instead of a nearby smell?</li>
+<li>Was a regression check added or updated?</li>
+</ul>
+<h2>Where people get burned</h2>
+<ul>
+<li>AI writes a confident fix based on one stack trace.</li>
+<li>The team changes several things at once and cannot tell what mattered.</li>
+<li>The bug is fixed locally but not in the environment where it failed.</li>
+<li>Logs with sensitive data are pasted into external tools.</li>
+<li>The fix removes the symptom but leaves the underlying invariant untested.</li>
+</ul>
+<h2>When a team adopts it</h2>
+<p>A team debugging habit should preserve the trail: symptom, evidence, hypotheses, experiment, result, fix, regression check. This is especially useful when AI summarizes long threads because the summary must stay anchored to facts.</p>
+<p>For recurring bug classes, turn the debugging note into a test, runbook, or code comment near the invariant.</p>
+<h2>Related scenarios</h2>
+<ul>
+<li><a href="../incident-response/">Incident Response</a></li>
+<li><a href="../automated-verification/">Automated Verification</a></li>
+<li><a href="../documentation-knowledge/">Documentation and Knowledge</a></li>
+</ul>
+        </article>
+      </main>
+
+      <footer class="footer">
+        <p><a href="../../index.html">Back to scenario index</a></p>
+      </footer>
+    </div>
+    <script type="module">
+      import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
+      mermaid.initialize({ startOnLoad: true, theme: 'neutral' });
+    </script>
+  </body>
+</html>

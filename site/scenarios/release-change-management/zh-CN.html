@@ -1,0 +1,164 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>发布与变更管理 | Ctrl Alt Ship</title>
+    <meta name="description" content="当一个改动需要 release notes、灰度步骤、迁移说明或回滚思考，就看这个场景。">
+    <link rel="stylesheet" href="../../styles.css">
+  </head>
+  <body>
+    <div class="page">
+      <header class="topbar">
+        <a class="brand" href="../../zh-CN.html">Ctrl Alt Ship</a>
+        <nav class="nav" aria-label="Primary">
+          <a href="../../zh-CN.html">首页</a>
+          <a href="./">English</a>
+        </nav>
+      </header>
+
+      <main class="doc-layout">
+        <aside class="side-nav" aria-label="场景导航">
+          <strong>场景</strong>
+          <a href="../requirements-to-tasks/zh-CN.html">需求到任务</a>
+<a href="../project-context-memory/zh-CN.html">项目上下文记忆</a>
+<a href="../coding-and-refactoring/zh-CN.html">编码与重构</a>
+<a href="../debugging/zh-CN.html">调试</a>
+<a href="../automated-verification/zh-CN.html">自动化验证</a>
+<a href="../code-review-quality-gates/zh-CN.html">代码审查与质量门禁</a>
+<a href="../documentation-knowledge/zh-CN.html">文档与知识</a>
+<a href="../release-change-management/zh-CN.html" aria-current="page">发布与变更管理</a>
+<a href="../incident-response/zh-CN.html">事故响应</a>
+<a href="../team-ai-governance/zh-CN.html">团队 AI 治理</a>
+        </aside>
+
+        <article class="doc-body">
+          <p class="eyebrow">场景教程</p>
+          <h1>发布与变更管理</h1>
+          <p class="lede">当一个改动需要 release notes、灰度步骤、迁移说明或回滚思考，就看这个场景。</p>
+          <div class="doc-actions">
+            <a class="button secondary" href="https://github.com/wxxsw/ctrl-alt-ship/blob/main/scenarios/release-change-management/README.zh-CN.md">查看源 README</a>
+          </div>
+          <h2>你现在遇到的其实是什么</h2>
+<p>这个场景覆盖从 merge 到安全采用之间的路。AI 可以草拟 release notes、总结 diff、生成 rollout checklist、对照 migration steps。但风险、时机、客户沟通和回滚决策仍然要由人负责。</p>
+<p>问题不只是“改了什么”。还要问：谁会受影响？改动怎么到达他们？你怎么知道它健康？如果不健康，你准备怎么退？</p>
+<h2>做完以后应该留下什么</h2>
+<ul>
+<li>和真实改动、真实读者匹配的 release notes。</li>
+<li>有 owner、检查项和回滚条件的 rollout plan。</li>
+<li>给需要行动的人看的 migration 或 operational notes。</li>
+</ul>
+<h2>什么时候从这里开始</h2>
+<ul>
+<li>改动影响用户、运维、support、客户或下游团队。</li>
+<li>有 migration、feature flag、配置变化或依赖升级。</li>
+<li>发布需要监控、灰度或回滚计划。</li>
+<li>AI 生成的代码要上线，你需要更清楚的 release review。</li>
+<li>Support、sales 或 customer success 需要人话总结。</li>
+</ul>
+<h2>什么时候先别看这一页</h2>
+<ul>
+<li>改动还没理解或验证。先看代码审查或自动化验证。</li>
+<li>系统已经在故障中。先看事故响应。</li>
+<li>改动是低风险内部变化，PR summary 已经足够。</li>
+<li>发布后没法监控行为。先补 observability。</li>
+</ul>
+<h2>怎么选路线</h2>
+<p>可以先按这条线读：</p>
+<pre class="mermaid">flowchart LR
+  A[&quot;现在卡在哪&quot;] --&gt; B[&quot;选一条路线&quot;]
+  B --&gt; C[&quot;先做一小步&quot;]
+  C --&gt; D[&quot;拿到证据&quot;]
+  D --&gt; E[&quot;review 或沉淀&quot;]</pre>
+<ul>
+<li>如果用户可见，用用户语言写 release notes。</li>
+<li>如果是运维变化，写 rollout 和 rollback steps。</li>
+<li>如果风险高，用 feature flag、canary、staged rollout 或 migration gate。</li>
+<li>如果客户需要行动，写 migration notes 和 support guidance。</li>
+<li>如果发布改变 AI 行为，附 eval 结果和 monitoring signals。</li>
+</ul>
+<h2>常见路线</h2>
+<h3>Release notes 和 changelog</h3>
+<p>适合: 用户可见功能、修复、breaking changes 和客户沟通。</p>
+<p>不适合: 照抄 commit message，只讲实现，不讲影响。</p>
+<p>常见工具和做法: Keep a Changelog、Changesets、Release Please、semantic-release、GitHub Releases。</p>
+<h3>Feature flag 和 progressive rollout</h3>
+<p>适合: 高风险行为变化、局部发布、实验和快速回滚。</p>
+<p>不适合: flag 永久存在，却没人负责清理。</p>
+<p>常见工具和做法: LaunchDarkly、Statsig、Unleash、Flipt、自建 flag 系统。</p>
+<h3>Migration planning</h3>
+<p>适合: 数据库变化、API versioning、依赖升级、data backfill 和客户动作。</p>
+<p>不适合: 没有 backup、dry run 或 rollback 思考的单向迁移。</p>
+<p>常见工具和做法: migration frameworks、backfill jobs、OpenAPI versioning、runbooks、maintenance windows。</p>
+<h3>Release observability</h3>
+<p>适合: 可能影响 latency、errors、revenue、support volume 或 AI output quality 的变化。</p>
+<p>不适合: 先上线，出问题后才决定看什么指标。</p>
+<p>常见工具和做法: Sentry、Datadog、New Relic、Grafana、OpenTelemetry、product analytics、eval dashboards。</p>
+<h2>跟着做一遍</h2>
+<ol>
+<li>用读者语言总结变化：用户、运维、开发者或客户。</li>
+<li>列出受影响 surface：UI、API、data、permissions、billing、integrations、docs、support。</li>
+<li>选择发布形态：全量、分阶段、feature flag、canary、beta、migration window。</li>
+<li>发布前定义 health checks 和 rollback conditions。</li>
+<li>如果工程外的人需要行动，写 migration 或 support notes。</li>
+<li>附上测试、CI、手动检查或 eval 的验证证据。</li>
+<li>发布后记录发生了什么，并清理临时 flags 或 notes。</li>
+</ol>
+<h2>示例</h2>
+<pre><code>发布:
+Workspace member invite flow 支持重复邀请处理。
+
+读者说明:
+管理员邀请已有 pending invite 的成员时，会看到清楚错误。
+
+Rollout:
+先给 10% workspaces 开 24 小时；健康后全量。
+
+Health checks:
+- Invite API 4xx/5xx rate。
+- 提到 invite errors 的 support tickets。
+- 待处理邀请创建数。
+
+Rollback:
+如果 5xx rate 翻倍或 support tickets 激增，关闭 invite_duplicate_error_v2 flag。
+
+Support note:
+让管理员先 cancel pending invite，再发送新邀请。</code></pre>
+<h2>检查一下自己</h2>
+<ul>
+<li>release note 是否讲影响，而不只是实现？</li>
+<li>受影响读者和 surface 是否写清？</li>
+<li>rollout、owner 和 timing 是否明确？</li>
+<li>health checks 和 rollback conditions 是否在发布前定义？</li>
+<li>临时 flags、migration code 或 docs 后面会不会清理？</li>
+</ul>
+<h2>最容易踩的坑</h2>
+<ul>
+<li>AI 从 commit message 草拟 release notes，漏掉用户影响。</li>
+<li>高风险变化没有 flag、canary 或 rollback path 就发布。</li>
+<li>migration notes 没写谁在什么时候跑什么。</li>
+<li>出问题后才开始补 monitoring。</li>
+<li>feature flags 变成永久复杂度。</li>
+</ul>
+<h2>变成团队习惯以后</h2>
+<p>团队实践应该把 PR evidence 和 release evidence 连起来。reviewer 应该能看到 merge 前验证了什么，发布后要观察什么。</p>
+<p>重复发布时，保留一份 release checklist。AI 可以帮填，但风险、rollout 和 rollback 决策必须由人批准。</p>
+<h2>相关场景</h2>
+<ul>
+<li><a href="../automated-verification/zh-CN.html">自动化验证</a></li>
+<li><a href="../incident-response/zh-CN.html">事故响应</a></li>
+<li><a href="../documentation-knowledge/zh-CN.html">文档与知识</a></li>
+</ul>
+        </article>
+      </main>
+
+      <footer class="footer">
+        <p><a href="../../zh-CN.html">回到首页场景索引</a></p>
+      </footer>
+    </div>
+    <script type="module">
+      import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
+      mermaid.initialize({ startOnLoad: true, theme: 'neutral' });
+    </script>
+  </body>
+</html>

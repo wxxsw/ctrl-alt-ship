@@ -1,0 +1,160 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Coding and Refactoring | Ctrl Alt Ship</title>
+    <meta name="description" content="Use this when AI can help write or move code, but the change still needs human control.">
+    <link rel="stylesheet" href="../../styles.css">
+  </head>
+  <body>
+    <div class="page">
+      <header class="topbar">
+        <a class="brand" href="../../index.html">Ctrl Alt Ship</a>
+        <nav class="nav" aria-label="Primary">
+          <a href="../../index.html">Home</a>
+          <a href="zh-CN.html">简体中文</a>
+        </nav>
+      </header>
+
+      <main class="doc-layout">
+        <aside class="side-nav" aria-label="Scenario navigation">
+          <strong>Scenarios</strong>
+          <a href="../requirements-to-tasks/">Requirements to Tasks</a>
+<a href="../project-context-memory/">Project Context Memory</a>
+<a href="../coding-and-refactoring/" aria-current="page">Coding and Refactoring</a>
+<a href="../debugging/">Debugging</a>
+<a href="../automated-verification/">Automated Verification</a>
+<a href="../code-review-quality-gates/">Code Review and Quality Gates</a>
+<a href="../documentation-knowledge/">Documentation and Knowledge</a>
+<a href="../release-change-management/">Release and Change Management</a>
+<a href="../incident-response/">Incident Response</a>
+<a href="../team-ai-governance/">Team AI Governance</a>
+        </aside>
+
+        <article class="doc-body">
+          <p class="eyebrow">Scenario guide</p>
+          <h1>Coding and Refactoring</h1>
+          <p class="lede">Use this when AI can help write or move code, but the change still needs human control.</p>
+          <div class="doc-actions">
+            <a class="button secondary" href="https://github.com/wxxsw/ctrl-alt-ship/blob/main/scenarios/coding-and-refactoring/README.md">View source README</a>
+          </div>
+          <h2>The situation</h2>
+<p>This scenario covers implementation, migration, cleanup, and refactoring with AI in the loop. The goal is not to let AI write as much code as possible. The goal is to keep the change understandable, reviewable, and backed by evidence.</p>
+<p>AI is strongest when the task is bounded, the project context is visible, and verification is close. It is weakest when the request mixes product decisions, architecture redesign, and broad code edits in one prompt.</p>
+<h2>What you should have afterward</h2>
+<ul>
+<li>A bounded implementation plan before edits start.</li>
+<li>Small checkpoints that can be reviewed and tested.</li>
+<li>A final diff that matches the task instead of drifting into opportunistic cleanup.</li>
+</ul>
+<h2>Start here when</h2>
+<ul>
+<li>You need AI help implementing a clear task.</li>
+<li>A refactor has a defined behavioral boundary.</li>
+<li>A migration can be split into repeatable mechanical steps.</li>
+<li>You want faster code search, edit planning, or test generation.</li>
+<li>You can run meaningful tests or checks during the work.</li>
+</ul>
+<h2>Start somewhere else when</h2>
+<ul>
+<li>The task is vague. Start with Requirements to Tasks.</li>
+<li>The assistant does not understand the repo conventions. Start with Project Context Memory.</li>
+<li>The change touches security, money, data loss, or migrations without a rollback plan.</li>
+<li>You cannot run or inspect the system at all. Start by creating a verification path.</li>
+</ul>
+<h2>How to choose a route</h2>
+<p>A quick way to read this page:</p>
+<pre class="mermaid">flowchart LR
+  A[&quot;What is stuck?&quot;] --&gt; B[&quot;Pick a route&quot;]
+  B --&gt; C[&quot;Take one small step&quot;]
+  C --&gt; D[&quot;Collect evidence&quot;]
+  D --&gt; E[&quot;Review or share&quot;]</pre>
+<ul>
+<li>If the work is local and low risk, use AI for edit planning and small patches.</li>
+<li>If the work is repetitive, prefer codemods, typed refactors, or compiler-backed changes.</li>
+<li>If the work changes behavior, pair AI edits with tests or manual smoke checks.</li>
+<li>If the work touches architecture, ask for options and tradeoffs before code.</li>
+<li>If the diff grows beyond review, stop and split the task.</li>
+</ul>
+<h2>Common routes</h2>
+<h3>Pair-programming assistant</h3>
+<p>Use this when: bounded edits, code search, small bug fixes, and test drafting.</p>
+<p>Skip it when: large autonomous rewrites without checkpoints.</p>
+<p>Tools that often show up: IDE assistants, chat assistants with repo context, terminal coding agents.</p>
+<h3>Agentic implementation loop</h3>
+<p>Use this when: tasks that need multi-file edits plus command-line verification.</p>
+<p>Skip it when: production-affecting commands, secret handling, or external writes without approval.</p>
+<p>Tools that often show up: coding agents, local sandboxes, branch-based workflows, CI feedback.</p>
+<h3>Codemod or compiler-backed migration</h3>
+<p>Use this when: renames, API migrations, framework upgrades, and repeated patterns.</p>
+<p>Skip it when: semantic changes where a syntactic transform cannot capture intent.</p>
+<p>Tools that often show up: jscodeshift, ts-morph, OpenRewrite, Rector, gofmt/go vet, language server refactors.</p>
+<h3>Test-first or characterization-first refactor</h3>
+<p>Use this when: legacy areas where behavior must not change.</p>
+<p>Skip it when: writing brittle snapshot tests that freeze accidental behavior.</p>
+<p>Tools that often show up: unit tests, integration tests, golden tests, approval tests, Playwright/Cypress for UI smoke.</p>
+<h2>Walk through it</h2>
+<ol>
+<li>Start with a task brief and name the intended behavior boundary.</li>
+<li>Ask AI for a plan that names files, risk areas, and verification.</li>
+<li>Approve the plan or narrow it before edits start.</li>
+<li>Edit in checkpoints. Each checkpoint should be understandable on its own.</li>
+<li>Run the cheapest relevant check after each meaningful step.</li>
+<li>Review the diff against the original task, not against what the assistant decided to do.</li>
+<li>Write a PR summary that includes verification and known limits.</li>
+</ol>
+<h2>Example</h2>
+<pre><code>Task:
+Move notification preference logic from SettingsPage into a reusable hook.
+
+Behavior boundary:
+No UI behavior, API shape, or persistence behavior should change.
+
+Plan:
+1. Find current state and API calls.
+2. Extract useNotificationPreferences.
+3. Update SettingsPage to call the hook.
+4. Run notification tests and typecheck.
+5. Smoke test the settings page.
+
+Stop if:
+The refactor requires API changes or changes loading/error behavior.</code></pre>
+<h2>Check yourself</h2>
+<ul>
+<li>Is the task small enough to review in one PR?</li>
+<li>Did the assistant name likely files and risk areas before editing?</li>
+<li>Does each checkpoint keep the system runnable?</li>
+<li>Were tests, typechecks, lint, or smoke checks run?</li>
+<li>Does the final diff avoid unrelated cleanup?</li>
+</ul>
+<h2>Where people get burned</h2>
+<ul>
+<li>The assistant does broad cleanup because the task lacked non-goals.</li>
+<li>A refactor quietly changes behavior and tests only cover happy paths.</li>
+<li>The diff is too large for meaningful review.</li>
+<li>The agent adds new dependencies instead of using local helpers.</li>
+<li>A mechanical migration is done by freehand edits instead of a repeatable transform.</li>
+</ul>
+<h2>When a team adopts it</h2>
+<p>Team practice should define which AI edits are allowed without extra review and which areas require human approval. Auth, billing, migrations, data deletion, and external integrations usually deserve stronger review.</p>
+<p>For repeated migrations, capture the prompt, codemod, command sequence, and verification evidence. The second migration should be cheaper and safer than the first.</p>
+<h2>Related scenarios</h2>
+<ul>
+<li><a href="../requirements-to-tasks/">Requirements to Tasks</a></li>
+<li><a href="../automated-verification/">Automated Verification</a></li>
+<li><a href="../code-review-quality-gates/">Code Review and Quality Gates</a></li>
+</ul>
+        </article>
+      </main>
+
+      <footer class="footer">
+        <p><a href="../../index.html">Back to scenario index</a></p>
+      </footer>
+    </div>
+    <script type="module">
+      import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
+      mermaid.initialize({ startOnLoad: true, theme: 'neutral' });
+    </script>
+  </body>
+</html>

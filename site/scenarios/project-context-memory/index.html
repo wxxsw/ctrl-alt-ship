@@ -1,0 +1,163 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Project Context Memory | Ctrl Alt Ship</title>
+    <meta name="description" content="Use this when AI keeps missing how your project works.">
+    <link rel="stylesheet" href="../../styles.css">
+  </head>
+  <body>
+    <div class="page">
+      <header class="topbar">
+        <a class="brand" href="../../index.html">Ctrl Alt Ship</a>
+        <nav class="nav" aria-label="Primary">
+          <a href="../../index.html">Home</a>
+          <a href="zh-CN.html">简体中文</a>
+        </nav>
+      </header>
+
+      <main class="doc-layout">
+        <aside class="side-nav" aria-label="Scenario navigation">
+          <strong>Scenarios</strong>
+          <a href="../requirements-to-tasks/">Requirements to Tasks</a>
+<a href="../project-context-memory/" aria-current="page">Project Context Memory</a>
+<a href="../coding-and-refactoring/">Coding and Refactoring</a>
+<a href="../debugging/">Debugging</a>
+<a href="../automated-verification/">Automated Verification</a>
+<a href="../code-review-quality-gates/">Code Review and Quality Gates</a>
+<a href="../documentation-knowledge/">Documentation and Knowledge</a>
+<a href="../release-change-management/">Release and Change Management</a>
+<a href="../incident-response/">Incident Response</a>
+<a href="../team-ai-governance/">Team AI Governance</a>
+        </aside>
+
+        <article class="doc-body">
+          <p class="eyebrow">Scenario guide</p>
+          <h1>Project Context Memory</h1>
+          <p class="lede">Use this when AI keeps missing how your project works.</p>
+          <div class="doc-actions">
+            <a class="button secondary" href="https://github.com/wxxsw/ctrl-alt-ship/blob/main/scenarios/project-context-memory/README.md">View source README</a>
+          </div>
+          <h2>The situation</h2>
+<p>This scenario creates durable project context for humans and AI assistants. The goal is not to document the whole repo. The goal is to capture the few facts that repeatedly decide whether work goes well: setup, commands, architecture boundaries, conventions, risky areas, and review expectations.</p>
+<p>Good context memory reduces repeated explanation. It also prevents a common AI failure: the assistant reads files but misses the local rule that matters most.</p>
+<h2>What you should have afterward</h2>
+<ul>
+<li>A short project guide that explains how to work in the repo.</li>
+<li>A codebase map that tells readers where to look first.</li>
+<li>A process for promoting repeated lessons into durable docs.</li>
+</ul>
+<h2>Start here when</h2>
+<ul>
+<li>Every new session needs the same setup explanation.</li>
+<li>AI misses local style, architecture, or review expectations.</li>
+<li>Project knowledge is scattered across chats, tickets, docs, and people.</li>
+<li>New contributors need a quicker way to understand the repo.</li>
+<li>You are introducing coding agents and want them to stop making the same first-day mistakes.</li>
+</ul>
+<h2>Start somewhere else when</h2>
+<ul>
+<li>The knowledge is still speculative research. Keep it in personal notes until it stabilizes.</li>
+<li>The team has no shared agreement yet. Capture the disagreement instead of pretending it is a rule.</li>
+<li>The information is secret, credential-like, or personal local setup. Keep it out of public docs.</li>
+<li>The task itself is unclear. Start with Requirements to Tasks.</li>
+</ul>
+<h2>How to choose a route</h2>
+<p>A quick way to read this page:</p>
+<pre class="mermaid">flowchart LR
+  A[&quot;What is stuck?&quot;] --&gt; B[&quot;Pick a route&quot;]
+  B --&gt; C[&quot;Take one small step&quot;]
+  C --&gt; D[&quot;Collect evidence&quot;]
+  D --&gt; E[&quot;Review or share&quot;]</pre>
+<ul>
+<li>If the fact affects most tasks, put it in the repo guide or contributor guide.</li>
+<li>If the fact affects one subsystem, put it near that subsystem or link from the subsystem README.</li>
+<li>If the fact explains a decision, write an ADR or decision note.</li>
+<li>If the fact is personal, temporary, or sensitive, keep it in local ignored notes.</li>
+<li>If the fact changes every week, link to the source of truth instead of copying it.</li>
+</ul>
+<h2>Common routes</h2>
+<h3>Repo guide</h3>
+<p>Use this when: setup commands, test commands, project layout, coding conventions, and review expectations.</p>
+<p>Skip it when: turning it into a full architecture book that nobody reads.</p>
+<p>Tools that often show up: README, CONTRIBUTING, docs folder, team-approved assistant instructions.</p>
+<h3>Codebase map</h3>
+<p>Use this when: large repos, monorepos, unfamiliar legacy systems, or onboarding.</p>
+<p>Skip it when: listing every file. A map should show where decisions happen.</p>
+<p>Tools that often show up: directory notes, Mermaid diagrams, architecture overview pages, dependency graphs.</p>
+<h3>Decision memory</h3>
+<p>Use this when: architecture, security, data, and product tradeoffs that people will ask about again.</p>
+<p>Skip it when: rewriting history to make decisions look cleaner than they were.</p>
+<p>Tools that often show up: ADR, RFC archive, decision log, docs-as-code.</p>
+<h3>Assistant context layer</h3>
+<p>Use this when: teams using coding agents or IDE assistants repeatedly in the same repo.</p>
+<p>Skip it when: committing personal prompts, private credentials, or sensitive local agent configuration.</p>
+<p>Tools that often show up: project instructions, IDE rule files, workspace memory, ignored local notes.</p>
+<h2>Walk through it</h2>
+<ol>
+<li>List the last five things you had to explain to an assistant or new teammate.</li>
+<li>Separate stable context from task-specific context.</li>
+<li>Write the stable context in the shortest public place future readers will check.</li>
+<li>Add a repo map with important directories and where not to make casual changes.</li>
+<li>Link deeper docs instead of copying them.</li>
+<li>Add a small review rule: if the same mistake happens twice, update the context.</li>
+<li>Keep local, personal, or sensitive agent notes ignored by git.</li>
+</ol>
+<h2>Example</h2>
+<pre><code>Local commands:
+- Install: pnpm install
+- Test: pnpm test
+- Typecheck: pnpm typecheck
+
+Project map:
+- app/: product screens and route-level state
+- api/: server routes and request validation
+- db/: schema and migrations
+
+Conventions:
+- Keep UI state in page-level hooks.
+- Add tests for permission changes.
+- Prefer existing service helpers over new fetch wrappers.
+
+Careful:
+- Billing and workspace membership need extra review.
+- Do not commit personal agent notes or local credentials.</code></pre>
+<h2>Check yourself</h2>
+<ul>
+<li>Can a new session run and test the project without asking basic setup questions?</li>
+<li>Does the guide say which directories are important and why?</li>
+<li>Does it name risky areas such as auth, billing, data migrations, and notifications?</li>
+<li>Does it link to deeper docs instead of duplicating them?</li>
+<li>Are personal agent notes and local secrets ignored by git?</li>
+</ul>
+<h2>Where people get burned</h2>
+<ul>
+<li>The guide becomes a dumping ground for every opinion.</li>
+<li>The doc explains commands but not the project shape.</li>
+<li>Sensitive local instructions are committed to the public repo.</li>
+<li>The team writes context once and never updates it after repeated mistakes.</li>
+<li>AI is asked to infer architecture from file names alone.</li>
+</ul>
+<h2>When a team adopts it</h2>
+<p>Team practice starts with ownership. Decide who can change the project guide and when. Treat it like code: small changes, review when the guidance affects many people, and remove stale rules.</p>
+<p>For AI-assisted teams, separate public project guidance from private local agent configuration. The public guide should help any contributor. Local ignored notes can hold personal workflow details.</p>
+<h2>Related scenarios</h2>
+<ul>
+<li><a href="../requirements-to-tasks/">Requirements to Tasks</a></li>
+<li><a href="../documentation-knowledge/">Documentation and Knowledge</a></li>
+<li><a href="../team-ai-governance/">Team AI Governance</a></li>
+</ul>
+        </article>
+      </main>
+
+      <footer class="footer">
+        <p><a href="../../index.html">Back to scenario index</a></p>
+      </footer>
+    </div>
+    <script type="module">
+      import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
+      mermaid.initialize({ startOnLoad: true, theme: 'neutral' });
+    </script>
+  </body>
+</html>

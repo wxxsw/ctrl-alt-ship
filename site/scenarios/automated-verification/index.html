@@ -1,0 +1,170 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Automated Verification | Ctrl Alt Ship</title>
+    <meta name="description" content="Use this when AI changed code and you need repeatable evidence that it still works.">
+    <link rel="stylesheet" href="../../styles.css">
+  </head>
+  <body>
+    <div class="page">
+      <header class="topbar">
+        <a class="brand" href="../../index.html">Ctrl Alt Ship</a>
+        <nav class="nav" aria-label="Primary">
+          <a href="../../index.html">Home</a>
+          <a href="zh-CN.html">简体中文</a>
+        </nav>
+      </header>
+
+      <main class="doc-layout">
+        <aside class="side-nav" aria-label="Scenario navigation">
+          <strong>Scenarios</strong>
+          <a href="../requirements-to-tasks/">Requirements to Tasks</a>
+<a href="../project-context-memory/">Project Context Memory</a>
+<a href="../coding-and-refactoring/">Coding and Refactoring</a>
+<a href="../debugging/">Debugging</a>
+<a href="../automated-verification/" aria-current="page">Automated Verification</a>
+<a href="../code-review-quality-gates/">Code Review and Quality Gates</a>
+<a href="../documentation-knowledge/">Documentation and Knowledge</a>
+<a href="../release-change-management/">Release and Change Management</a>
+<a href="../incident-response/">Incident Response</a>
+<a href="../team-ai-governance/">Team AI Governance</a>
+        </aside>
+
+        <article class="doc-body">
+          <p class="eyebrow">Scenario guide</p>
+          <h1>Automated Verification</h1>
+          <p class="lede">Use this when AI changed code and you need repeatable evidence that it still works.</p>
+          <div class="doc-actions">
+            <a class="button secondary" href="https://github.com/wxxsw/ctrl-alt-ship/blob/main/scenarios/automated-verification/README.md">View source README</a>
+          </div>
+          <h2>The situation</h2>
+<p>This scenario turns confidence into evidence. AI-assisted coding increases the amount of change a team can produce, so verification has to become cheaper and more repeatable. The point is not to automate everything. The point is to protect the behaviors that would hurt if they silently broke.</p>
+<p>Verification should be chosen by behavior and risk, not by tool popularity. A unit test, API regression test, browser E2E flow, mobile scenario, CI gate, or AI application eval can all be correct in different branches of this scenario.</p>
+<h2>What you should have afterward</h2>
+<ul>
+<li>A clear behavior under protection.</li>
+<li>A test or check at the cheapest reliable layer.</li>
+<li>Evidence that can be attached to a PR or release decision.</li>
+</ul>
+<h2>Start here when</h2>
+<ul>
+<li>AI-generated changes need proof before merge.</li>
+<li>A critical path is repeatedly changed by humans or agents.</li>
+<li>Manual QA is slow, inconsistent, or easy to forget.</li>
+<li>A bug should become a regression test.</li>
+<li>An AI product feature needs evaluation beyond a single demo prompt.</li>
+</ul>
+<h2>Start somewhere else when</h2>
+<ul>
+<li>Nobody agrees on expected behavior. Start with Requirements to Tasks.</li>
+<li>The system cannot be run or observed. Start by making it observable or scriptable.</li>
+<li>A one-off prototype is cheaper to throw away than to automate.</li>
+<li>The check would be more brittle than the behavior it protects.</li>
+</ul>
+<h2>How to choose a route</h2>
+<p>A quick way to read this page:</p>
+<pre class="mermaid">flowchart LR
+  A[&quot;What is stuck?&quot;] --&gt; B[&quot;Pick a route&quot;]
+  B --&gt; C[&quot;Take one small step&quot;]
+  C --&gt; D[&quot;Collect evidence&quot;]
+  D --&gt; E[&quot;Review or share&quot;]</pre>
+<ul>
+<li>If logic is pure or close to pure, prefer unit tests.</li>
+<li>If behavior crosses service boundaries, use integration or contract tests.</li>
+<li>If the user flow matters, use E2E or scripted browser/mobile verification.</li>
+<li>If the API is the product boundary, use API regression collections or contract checks.</li>
+<li>If an AI system produces variable outputs, use evals, golden datasets, traces, and review samples.</li>
+<li>If the check must block unsafe changes, run it in CI with clear failure output.</li>
+</ul>
+<h2>Common routes</h2>
+<h3>Unit and component tests</h3>
+<p>Use this when: business rules, parsing, permission checks, UI components, and bug regression cases.</p>
+<p>Skip it when: mocking so much that the test no longer resembles real behavior.</p>
+<p>Tools that often show up: Jest, Vitest, pytest, JUnit, XCTest, React Testing Library, Flutter widget tests.</p>
+<h3>Web UI E2E</h3>
+<p>Use this when: critical browser flows such as signup, checkout, invite, settings, and admin actions.</p>
+<p>Skip it when: testing every visual detail through E2E. Keep E2E for flows, not every component state.</p>
+<p>Tools that often show up: Playwright, Cypress, Selenium, Storybook interaction tests.</p>
+<h3>Mobile E2E</h3>
+<p>Use this when: native app flows, onboarding, payments, permissions, and device-specific behavior.</p>
+<p>Skip it when: starting with full-device tests when a widget or integration test would catch the risk.</p>
+<p>Tools that often show up: Maestro, Detox, Appium, XCUITest, Espresso.</p>
+<h3>API and contract regression</h3>
+<p>Use this when: backend services, public APIs, webhooks, auth behavior, and integrations.</p>
+<p>Skip it when: collections that require fragile shared state or manual secrets.</p>
+<p>Tools that often show up: Bruno, Postman, Pact, Schemathesis, OpenAPI validators, supertest.</p>
+<h3>AI application evals</h3>
+<p>Use this when: RAG, agents, classifiers, extraction, moderation, and generated responses.</p>
+<p>Skip it when: judging an AI feature with one golden prompt. Use datasets and failure review.</p>
+<p>Tools that often show up: Braintrust, Langfuse, OpenAI Evals patterns, promptfoo, custom evaluation harnesses.</p>
+<h3>CI quality gate</h3>
+<p>Use this when: checks that should block merge or release.</p>
+<p>Skip it when: slow, flaky gates that train people to ignore failures.</p>
+<p>Tools that often show up: GitHub Actions, GitLab CI, CircleCI, Buildkite, required status checks.</p>
+<h2>Walk through it</h2>
+<ol>
+<li>Name the behavior and why it matters.</li>
+<li>Choose the cheapest layer that can detect the failure with enough confidence.</li>
+<li>Make the check fail once, or at least confirm it would have caught the bug.</li>
+<li>Keep setup deterministic: data, auth, environment, and secrets.</li>
+<li>Run the check locally or in CI before asking for review.</li>
+<li>Attach evidence: logs, traces, screenshots, video, test output, or eval summary.</li>
+<li>Revisit flaky or slow checks quickly. A noisy gate loses authority.</li>
+</ol>
+<h2>Example</h2>
+<pre><code>Behavior:
+Workspace admins can invite one teammate and duplicate invites show an error.
+
+Layer:
+Playwright browser smoke test because the risk crosses UI, API, auth, and persistence.
+
+Test outline:
+1. Login as workspace admin.
+2. Open members settings.
+3. Submit a valid email.
+4. Assert pending invite appears.
+5. Submit the same email again.
+6. Assert duplicate invite error appears.
+
+Evidence:
+CI test output plus Playwright trace on failure.</code></pre>
+<h2>Check yourself</h2>
+<ul>
+<li>Does the check protect a named behavior?</li>
+<li>Is this the cheapest reliable layer?</li>
+<li>Would the check fail for the bug or regression you care about?</li>
+<li>Can someone run it without tribal knowledge?</li>
+<li>Is the failure output useful enough for a reviewer or on-call engineer?</li>
+</ul>
+<h2>Where people get burned</h2>
+<ul>
+<li>Writing broad E2E tests because they feel realistic, then drowning in flake.</li>
+<li>Adding snapshots that approve accidental output.</li>
+<li>Testing implementation details while the user-visible behavior remains unprotected.</li>
+<li>Keeping tests local and never wiring them into CI or PR evidence.</li>
+<li>Using AI eval scores without reviewing failure examples.</li>
+</ul>
+<h2>When a team adopts it</h2>
+<p>Teams should maintain a verification ladder: unit, integration, API, UI, mobile, eval, and CI gate. The ladder helps reviewers ask why a check lives at a certain layer.</p>
+<p>For AI-assisted coding, ask every PR to state which checks were run and why those checks are enough for the risk. That sentence often matters as much as the test itself.</p>
+<h2>Related scenarios</h2>
+<ul>
+<li><a href="../requirements-to-tasks/">Requirements to Tasks</a></li>
+<li><a href="../code-review-quality-gates/">Code Review and Quality Gates</a></li>
+<li><a href="../release-change-management/">Release and Change Management</a></li>
+</ul>
+        </article>
+      </main>
+
+      <footer class="footer">
+        <p><a href="../../index.html">Back to scenario index</a></p>
+      </footer>
+    </div>
+    <script type="module">
+      import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
+      mermaid.initialize({ startOnLoad: true, theme: 'neutral' });
+    </script>
+  </body>
+</html>

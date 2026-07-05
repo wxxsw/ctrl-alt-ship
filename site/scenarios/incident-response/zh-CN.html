@@ -1,0 +1,163 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>事故响应 | Ctrl Alt Ship</title>
+    <meta name="description" content="当日志、告警、dashboard 和聊天记录需要整理成共享事故图景，就看这个场景。">
+    <link rel="stylesheet" href="../../styles.css">
+  </head>
+  <body>
+    <div class="page">
+      <header class="topbar">
+        <a class="brand" href="../../zh-CN.html">Ctrl Alt Ship</a>
+        <nav class="nav" aria-label="Primary">
+          <a href="../../zh-CN.html">首页</a>
+          <a href="./">English</a>
+        </nav>
+      </header>
+
+      <main class="doc-layout">
+        <aside class="side-nav" aria-label="场景导航">
+          <strong>场景</strong>
+          <a href="../requirements-to-tasks/zh-CN.html">需求到任务</a>
+<a href="../project-context-memory/zh-CN.html">项目上下文记忆</a>
+<a href="../coding-and-refactoring/zh-CN.html">编码与重构</a>
+<a href="../debugging/zh-CN.html">调试</a>
+<a href="../automated-verification/zh-CN.html">自动化验证</a>
+<a href="../code-review-quality-gates/zh-CN.html">代码审查与质量门禁</a>
+<a href="../documentation-knowledge/zh-CN.html">文档与知识</a>
+<a href="../release-change-management/zh-CN.html">发布与变更管理</a>
+<a href="../incident-response/zh-CN.html" aria-current="page">事故响应</a>
+<a href="../team-ai-governance/zh-CN.html">团队 AI 治理</a>
+        </aside>
+
+        <article class="doc-body">
+          <p class="eyebrow">场景教程</p>
+          <h1>事故响应</h1>
+          <p class="lede">当日志、告警、dashboard 和聊天记录需要整理成共享事故图景，就看这个场景。</p>
+          <div class="doc-actions">
+            <a class="button secondary" href="https://github.com/wxxsw/ctrl-alt-ship/blob/main/scenarios/incident-response/README.zh-CN.md">查看源 README</a>
+          </div>
+          <h2>你现在遇到的其实是什么</h2>
+<p>这个场景用于正在发生或刚结束的事故。AI 可以总结时间线、聚类日志、起草 status update、提出假设。但它不能替代 incident command、ownership 或直接系统证据。</p>
+<p>事故里，清楚比聪明更重要。团队需要一张共享图景：发生了什么、谁受影响、最近改了什么、已经试过什么、下一步决策是什么、谁负责。</p>
+<h2>做完以后应该留下什么</h2>
+<ul>
+<li>一条 live incident timeline，包含事实、行动、owner 和开放问题。</li>
+<li>把 mitigation、root-cause investigation 和 communication 分开。</li>
+<li>一份能产生后续任务的事故复盘，而不是甩锅文章。</li>
+</ul>
+<h2>什么时候从这里开始</h2>
+<ul>
+<li>告警、日志、客户反馈和聊天同时涌进来。</li>
+<li>多人一起排查，上下文开始碎片化。</li>
+<li>你需要 status update、timeline 或 handoff notes。</li>
+<li>还不知道完整根因，但需要先止血。</li>
+<li>事故应该沉淀成可跟踪的后续工作。</li>
+</ul>
+<h2>什么时候先别看这一页</h2>
+<ul>
+<li>只是本地 bug，没有活跃客户影响。先看调试。</li>
+<li>预期行为不清楚。先看需求到任务。</li>
+<li>需要把敏感客户数据贴进不安全工具。</li>
+<li>团队还没有 incident owner。先指定 incident commander，再谈工具优化。</li>
+</ul>
+<h2>怎么选路线</h2>
+<p>可以先按这条线读：</p>
+<pre class="mermaid">flowchart LR
+  A[&quot;现在卡在哪&quot;] --&gt; B[&quot;选一条路线&quot;]
+  B --&gt; C[&quot;先做一小步&quot;]
+  C --&gt; D[&quot;拿到证据&quot;]
+  D --&gt; E[&quot;review 或沉淀&quot;]</pre>
+<ul>
+<li>如果客户正在受影响，先指定 incident command 和 mitigation owner。</li>
+<li>如果证据分散，先建 timeline，再争论 root cause。</li>
+<li>如果 blast radius 不清楚，先确认受影响用户、区域、服务和时间窗。</li>
+<li>如果需要沟通，只用已确认事实起草 status update。</li>
+<li>如果事故已恢复，把经验转成后续任务、测试、runbook 或 alert。</li>
+</ul>
+<h2>常见路线</h2>
+<h3>Incident command 和协调</h3>
+<p>适合: 有多个 responder 或客户影响的活跃事故。</p>
+<p>不适合: 每个人都追自己的理论，但没人负责整体决策。</p>
+<p>常见工具和做法: PagerDuty、Opsgenie、Slack/Teams incident channels、Zoom/Meet bridges、incident roles。</p>
+<h3>Observability triage</h3>
+<p>适合: alerts、errors、latency、traffic drops、queue growth 和局部故障。</p>
+<p>不适合: 看到图上 spike 就直接认定 root cause，不查 deploy 和 logs。</p>
+<p>常见工具和做法: Datadog、Grafana、New Relic、Sentry、OpenTelemetry、cloud provider logs。</p>
+<h3>客户和 stakeholder 沟通</h3>
+<p>适合: 用户可见故障、性能下降、数据疑虑或 support volume 激增。</p>
+<p>不适合: 在公开更新里解释未经确认的原因。</p>
+<p>常见工具和做法: Statuspage、incident comms templates、support macros、customer success notes。</p>
+<h3>事故后学习</h3>
+<p>适合: 止血后，团队需要后续任务和预防工作。</p>
+<p>不适合: 把 postmortem 写成甩锅或没人行动的长文。</p>
+<p>常见工具和做法: postmortem templates、action item trackers、runbooks、test and alert backlogs。</p>
+<h2>跟着做一遍</h2>
+<ol>
+<li>需要时先指定 incident commander、technical lead、scribe 和 communication owner。</li>
+<li>建立 timeline，写时间戳、事实、行动和证据链接。</li>
+<li>写当前影响和信心等级。</li>
+<li>把 mitigation options 和 root-cause hypotheses 分开。</li>
+<li>只用已确认事实更新 stakeholders，不写猜测。</li>
+<li>止血后，用证据写 root cause 和 contributing factors。</li>
+<li>把预防动作变成 tracked work：测试、alerts、runbooks、dashboards、cleanup 或产品改动。</li>
+</ol>
+<h2>示例</h2>
+<pre><code>事故时间线:
+
+09:12 Alert: checkout 500 rate 超过 5%。
+09:14 Support 报告 EU checkout failures。
+09:18 发现最近发布是 2026.07.05。
+09:22 Mitigation: 对 EU traffic 关闭 checkout_coupon_v2。
+09:27 500 rate 回到 baseline。
+
+当前影响:
+只影响 EU checkout + coupon。没有证据显示 payment capture 错误。
+
+开放问题:
+- 为什么 coupon recalculation 丢了 currency_code？
+- 受影响用户是否 retry 成功？
+
+后续:
+- 补 coupon + 非默认币种回归测试。
+- 给 dashboard 加 checkout errors by currency。</code></pre>
+<h2>检查一下自己</h2>
+<ul>
+<li>是否有单一 incident owner？</li>
+<li>timeline 是否把事实和假设分开？</li>
+<li>客户影响是否带信心等级？</li>
+<li>mitigation 和 root-cause work 是否分开？</li>
+<li>事故是否产生了可跟踪后续任务？</li>
+</ul>
+<h2>最容易踩的坑</h2>
+<ul>
+<li>AI 总结线程时，把猜测当成事实。</li>
+<li>所有人都在 debug，但没人负责协调和沟通。</li>
+<li>明明有 mitigation，团队还在争论 root cause。</li>
+<li>status update 写了未经确认的技术猜测。</li>
+<li>postmortem action items 很虚，后面也没人跟。</li>
+</ul>
+<h2>变成团队习惯以后</h2>
+<p>团队应该在事故前定义 incident roles 和 timeline 格式。AI 可以帮 scribe 总结，但决策属于 incident commander。</p>
+<p>用事故后 follow-up 强化其他场景：更好的验证、更好的发布检查、更好的文档和更好的 alerts。</p>
+<h2>相关场景</h2>
+<ul>
+<li><a href="../debugging/zh-CN.html">调试</a></li>
+<li><a href="../release-change-management/zh-CN.html">发布与变更管理</a></li>
+<li><a href="../documentation-knowledge/zh-CN.html">文档与知识</a></li>
+</ul>
+        </article>
+      </main>
+
+      <footer class="footer">
+        <p><a href="../../zh-CN.html">回到首页场景索引</a></p>
+      </footer>
+    </div>
+    <script type="module">
+      import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
+      mermaid.initialize({ startOnLoad: true, theme: 'neutral' });
+    </script>
+  </body>
+</html>

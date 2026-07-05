@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Ctrl Alt Ship</title>
-    <meta name="description" content="面向 AI 辅助工程工作的场景地图。">
+    <meta name="description" content="AI 编程工具变化很快。真正难的，还是在一个具体工程场景里判断：我现在该试什么？ Ctrl Alt Ship 是一张场景地图。先看你眼前是什么工作，再打开对应场景，把它当成一份独立指南来用。">
     <link rel="stylesheet" href="styles.css">
   </head>
   <body>
@@ -13,7 +13,6 @@
         <a class="brand" href="zh-CN.html">Ctrl Alt Ship</a>
         <nav class="nav" aria-label="Primary">
           <a href="#scenarios">场景</a>
-          <a href="scenarios-zh-CN.html">教程</a>
           <a href="#how">怎么用</a>
           <a href="index.html">English</a>
         </nav>
@@ -23,10 +22,8 @@
         <section class="hero tutorial-hero">
           <div>
             <p class="eyebrow">从真实工程工作出发</p>
-            <h1>先找到场景，再选择工具。</h1>
-            <p class="lede">
-              Ctrl Alt Ship 帮工程团队从眼前的工作开始判断，再打开一份读得下去的指南：路径、取舍、工具、例子和检查方式都放在场景里。
-            </p>
+            <h1>Ctrl Alt Ship</h1>
+            <p class="lede">AI 编程工具变化很快。真正难的，还是在一个具体工程场景里判断：我现在该试什么？ Ctrl Alt Ship 是一张场景地图。先看你眼前是什么工作，再打开对应场景，把它当成一份独立指南来用。</p>
             <div class="actions">
               <a class="button" href="#scenarios">查看场景</a>
               <a class="button secondary" href="index.html">Read in English</a>
@@ -37,69 +34,56 @@
 
         <section class="section" id="scenarios">
           <h2>场景地图</h2>
-          <p>选择最贴近当前工作的场景。每个场景都会展开成一份深挖指南，而不是工具列表。</p>
+          <p>选择最贴近当前工作的场景。每个场景都会打开成一份独立教程，而不是一个工具列表。</p>
           <div class="grid">
-            <a class="card" href="scenarios-zh-CN.html#requirements-to-tasks">
+            <a class="card" href="scenarios/requirements-to-tasks/zh-CN.html">
               <h3>需求到任务</h3>
-              <p>把模糊需求变成工程师或 AI assistant 可以安全开始的任务。</p>
+              <p>需求还很模糊，需要变成能执行的任务</p>
             </a>
-            <a class="card" href="scenarios-zh-CN.html#project-context-memory">
+<a class="card" href="scenarios/project-context-memory/zh-CN.html">
               <h3>项目上下文记忆</h3>
-              <p>让 AI 少漏掉本地启动方式、项目约定和上下文。</p>
+              <p>AI 总是漏掉项目上下文或本地约定</p>
             </a>
-            <a class="card" href="scenarios-zh-CN.html#coding-and-refactoring">
+<a class="card" href="scenarios/coding-and-refactoring/zh-CN.html">
               <h3>编码与重构</h3>
-              <p>用 AI 做实现、迁移和清理，同时保持对改动的控制。</p>
+              <p>想用 AI 做实现、迁移或重构</p>
             </a>
-            <a class="card" href="scenarios-zh-CN.html#debugging">
+<a class="card" href="scenarios/debugging/zh-CN.html">
               <h3>调试</h3>
-              <p>先从现象走到原因，再开始改代码。</p>
+              <p>有故障现象，但根因还没被证明</p>
             </a>
-            <a class="card" href="scenarios-zh-CN.html#automated-verification">
+<a class="card" href="scenarios/automated-verification/zh-CN.html">
               <h3>自动化验证</h3>
-              <p>拿到可重复的证据，证明 AI 生成的改动仍然有效。</p>
+              <p>AI 改了代码，你需要证明它仍然能跑</p>
             </a>
-            <a class="card" href="scenarios-zh-CN.html#code-review-quality-gates">
+<a class="card" href="scenarios/code-review-quality-gates/zh-CN.html">
               <h3>代码审查与质量门禁</h3>
-              <p>在 AI-assisted work 变成维护债之前先 review。</p>
+              <p>AI 生成的工作需要在 merge 前 review</p>
             </a>
-            <a class="card" href="scenarios-zh-CN.html#documentation-knowledge">
+<a class="card" href="scenarios/documentation-knowledge/zh-CN.html">
               <h3>文档与知识</h3>
-              <p>别让决策和项目知识继续消失在聊天里。</p>
+              <p>决策和项目知识总是散落在聊天里</p>
             </a>
-            <a class="card" href="scenarios-zh-CN.html#release-change-management">
+<a class="card" href="scenarios/release-change-management/zh-CN.html">
               <h3>发布与变更管理</h3>
-              <p>准备 release notes、灰度步骤、迁移说明和回滚路径。</p>
+              <p>一个改动需要 release notes、灰度或回滚思考</p>
             </a>
-            <a class="card" href="scenarios-zh-CN.html#incident-response">
+<a class="card" href="scenarios/incident-response/zh-CN.html">
               <h3>事故响应</h3>
-              <p>把日志、告警、dashboard 和聊天记录整理成共享事故图景。</p>
+              <p>日志、告警和聊天记录需要整理成事故时间线</p>
             </a>
-            <a class="card" href="scenarios-zh-CN.html#team-ai-governance">
+<a class="card" href="scenarios/team-ai-governance/zh-CN.html">
               <h3>团队 AI 治理</h3>
-              <p>为 AI 工具、数据、review 和 ownership 设定团队边界。</p>
+              <p>团队需要统一 AI 使用边界</p>
             </a>
-          </div>
-          <div class="actions">
-            <a class="button secondary" href="scenarios-zh-CN.html">打开场景深挖指南</a>
           </div>
         </section>
 
         <section class="section" id="how">
           <h2>怎么用</h2>
-          <div class="steps">
-            <div class="step">
-              <strong>1. 先看处境</strong>
-              选择最贴近当前工作的场景，而不是先追最新工具。
-            </div>
-            <div class="step">
-              <strong>2. 先走一小步</strong>
-              可以是一张 brief、一次检查、一条时间线，或者一份可 review 的计划。
-            </div>
-            <div class="step">
-              <strong>3. 最后再比较工具</strong>
-              工作流足够清楚之后，再判断工具是否合适。
-            </div>
+          <div class="home-copy">
+            <p>选择最贴近当前工作的场景。把它当教程读，不要当 spec 读。每一页都会先从工程师真实会遇到的那种混乱时刻讲起，再给路线、例子、检查方式和容易踩的坑。</p>
+<p>工具说明只用于比较。先确定场景，再看工具。</p>
           </div>
         </section>
       </main>

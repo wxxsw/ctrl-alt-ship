@@ -1,0 +1,163 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Incident Response | Ctrl Alt Ship</title>
+    <meta name="description" content="Use this when logs, alerts, dashboards, and chats need to become a shared incident picture.">
+    <link rel="stylesheet" href="../../styles.css">
+  </head>
+  <body>
+    <div class="page">
+      <header class="topbar">
+        <a class="brand" href="../../index.html">Ctrl Alt Ship</a>
+        <nav class="nav" aria-label="Primary">
+          <a href="../../index.html">Home</a>
+          <a href="zh-CN.html">简体中文</a>
+        </nav>
+      </header>
+
+      <main class="doc-layout">
+        <aside class="side-nav" aria-label="Scenario navigation">
+          <strong>Scenarios</strong>
+          <a href="../requirements-to-tasks/">Requirements to Tasks</a>
+<a href="../project-context-memory/">Project Context Memory</a>
+<a href="../coding-and-refactoring/">Coding and Refactoring</a>
+<a href="../debugging/">Debugging</a>
+<a href="../automated-verification/">Automated Verification</a>
+<a href="../code-review-quality-gates/">Code Review and Quality Gates</a>
+<a href="../documentation-knowledge/">Documentation and Knowledge</a>
+<a href="../release-change-management/">Release and Change Management</a>
+<a href="../incident-response/" aria-current="page">Incident Response</a>
+<a href="../team-ai-governance/">Team AI Governance</a>
+        </aside>
+
+        <article class="doc-body">
+          <p class="eyebrow">Scenario guide</p>
+          <h1>Incident Response</h1>
+          <p class="lede">Use this when logs, alerts, dashboards, and chats need to become a shared incident picture.</p>
+          <div class="doc-actions">
+            <a class="button secondary" href="https://github.com/wxxsw/ctrl-alt-ship/blob/main/scenarios/incident-response/README.md">View source README</a>
+          </div>
+          <h2>The situation</h2>
+<p>This scenario is for active or recent incidents. AI can summarize timelines, cluster logs, draft status updates, and propose hypotheses. It should not replace incident command, ownership, or direct system evidence.</p>
+<p>During an incident, clarity beats cleverness. The team needs one shared picture: what is happening, who is affected, what changed, what has been tried, what decision is next, and who owns it.</p>
+<h2>What you should have afterward</h2>
+<ul>
+<li>A live incident timeline with facts, actions, owners, and open questions.</li>
+<li>A separation between mitigation, root-cause investigation, and communication.</li>
+<li>A post-incident note that produces follow-up tasks instead of blame.</li>
+</ul>
+<h2>Start here when</h2>
+<ul>
+<li>Alerts, logs, customer reports, and chats are arriving at the same time.</li>
+<li>Several people are investigating and context is fragmenting.</li>
+<li>You need status updates, timelines, or handoff notes.</li>
+<li>A mitigation is needed before full root cause is known.</li>
+<li>An incident should produce durable follow-up work.</li>
+</ul>
+<h2>Start somewhere else when</h2>
+<ul>
+<li>The issue is a local bug with no active customer impact. Start with Debugging.</li>
+<li>The expected behavior is unclear. Start with Requirements to Tasks.</li>
+<li>Sensitive customer data would need to be pasted into an unsafe tool.</li>
+<li>The team has no incident owner. Pick an incident commander before optimizing tooling.</li>
+</ul>
+<h2>How to choose a route</h2>
+<p>A quick way to read this page:</p>
+<pre class="mermaid">flowchart LR
+  A[&quot;What is stuck?&quot;] --&gt; B[&quot;Pick a route&quot;]
+  B --&gt; C[&quot;Take one small step&quot;]
+  C --&gt; D[&quot;Collect evidence&quot;]
+  D --&gt; E[&quot;Review or share&quot;]</pre>
+<ul>
+<li>If customers are currently affected, assign incident command and mitigation owner first.</li>
+<li>If evidence is scattered, create a timeline before debating root cause.</li>
+<li>If the blast radius is unclear, identify affected users, regions, services, and time window.</li>
+<li>If communication is needed, draft status updates from confirmed facts only.</li>
+<li>If the incident is resolved, turn lessons into follow-up tasks, tests, runbooks, or alerts.</li>
+</ul>
+<h2>Common routes</h2>
+<h3>Incident command and coordination</h3>
+<p>Use this when: active incidents with multiple responders or customer impact.</p>
+<p>Skip it when: letting every responder chase their own theory without ownership.</p>
+<p>Tools that often show up: PagerDuty, Opsgenie, Slack/Teams incident channels, Zoom/Meet bridges, incident roles.</p>
+<h3>Observability triage</h3>
+<p>Use this when: alerts, errors, latency, traffic drops, queue growth, and partial outages.</p>
+<p>Skip it when: jumping from a graph spike to root cause without checking deployments and logs.</p>
+<p>Tools that often show up: Datadog, Grafana, New Relic, Sentry, OpenTelemetry, cloud provider logs.</p>
+<h3>Customer and stakeholder communication</h3>
+<p>Use this when: user-facing outages, degraded performance, data concerns, or support volume spikes.</p>
+<p>Skip it when: overexplaining unconfirmed causes in public updates.</p>
+<p>Tools that often show up: Statuspage, incident comms templates, support macros, customer success notes.</p>
+<h3>Post-incident learning</h3>
+<p>Use this when: after mitigation, when the team needs follow-up tasks and prevention work.</p>
+<p>Skip it when: turning the postmortem into blame or a long essay nobody acts on.</p>
+<p>Tools that often show up: postmortem templates, action item trackers, runbooks, test and alert backlogs.</p>
+<h2>Walk through it</h2>
+<ol>
+<li>Name incident commander, technical lead, scribe, and communication owner if needed.</li>
+<li>Create a timeline with timestamps, facts, actions, and links to evidence.</li>
+<li>State current impact and confidence level.</li>
+<li>Separate mitigation options from root-cause hypotheses.</li>
+<li>Update stakeholders from confirmed facts, not speculation.</li>
+<li>After mitigation, write root cause and contributing factors with evidence.</li>
+<li>Turn prevention into tracked work: tests, alerts, runbooks, dashboards, cleanup, or product changes.</li>
+</ol>
+<h2>Example</h2>
+<pre><code>Incident timeline:
+
+09:12 Alert: checkout 500 rate above 5 percent.
+09:14 Support reports EU checkout failures.
+09:18 Release 2026.07.05 identified as recent change.
+09:22 Mitigation: disable checkout_coupon_v2 for EU traffic.
+09:27 500 rate returns to baseline.
+
+Current impact:
+EU checkout with coupon only. No evidence of payment capture errors.
+
+Open questions:
+- Why did coupon recalculation drop currency_code?
+- Did any users retry successfully?
+
+Follow-up:
+- Add regression test for coupon plus non-default currency.
+- Add dashboard panel for checkout errors by currency.</code></pre>
+<h2>Check yourself</h2>
+<ul>
+<li>Is there a single incident owner?</li>
+<li>Does the timeline distinguish facts from hypotheses?</li>
+<li>Is customer impact stated with confidence level?</li>
+<li>Are mitigation and root-cause work separated?</li>
+<li>Did the incident produce tracked follow-up tasks?</li>
+</ul>
+<h2>Where people get burned</h2>
+<ul>
+<li>AI summarizes a thread and accidentally treats guesses as facts.</li>
+<li>Everyone debugs while nobody owns coordination or communication.</li>
+<li>The team debates root cause while mitigation is available.</li>
+<li>Status updates include unconfirmed technical theories.</li>
+<li>Postmortem action items are vague and never tracked.</li>
+</ul>
+<h2>When a team adopts it</h2>
+<p>Team practice should define incident roles and a timeline format before an incident happens. AI can help the scribe summarize, but the incident commander owns decisions.</p>
+<p>Use post-incident follow-up to strengthen other scenarios: better verification, better release checks, better docs, and better alerts.</p>
+<h2>Related scenarios</h2>
+<ul>
+<li><a href="../debugging/">Debugging</a></li>
+<li><a href="../release-change-management/">Release and Change Management</a></li>
+<li><a href="../documentation-knowledge/">Documentation and Knowledge</a></li>
+</ul>
+        </article>
+      </main>
+
+      <footer class="footer">
+        <p><a href="../../index.html">Back to scenario index</a></p>
+      </footer>
+    </div>
+    <script type="module">
+      import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
+      mermaid.initialize({ startOnLoad: true, theme: 'neutral' });
+    </script>
+  </body>
+</html>
