@@ -1,0 +1,14 @@
+.DS_Store
+node_modules/
+dist/
+.cache/
+.env
+.env.*
+
+# Local agent and assistant context. Keep these off the public repo.
+AGENTS.md
+CLAUDE.md
+.agents/
+.codex/
+.cursor/
+*.local.md
